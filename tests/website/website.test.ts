@@ -50,7 +50,13 @@ describe("site content stays honest", () => {
     const html = readFileSync(out, "utf8");
     expect(html).toContain("The secure, convention-driven backend framework for Node.js.");
     expect(html).toContain("Get started");
-    expect(html).not.toMatch(/href="https?:\/\/(www\.)?(github\.com|npmjs\.com)/);
+    const cfg = JSON.parse(readFileSync(join(root, "site.config.json"), "utf8")) as { repoUrl: string | null; npmUrl: string | null };
+    const allowed = [cfg.repoUrl, cfg.npmUrl].filter(Boolean) as string[];
+    for (const m of html.matchAll(/href="(https?:\/\/(?:www\.)?(?:github\.com|npmjs\.com)[^"]*)"/g))
+      expect(
+        allowed.some((a) => m[1]!.startsWith(a)),
+        m[1],
+      ).toBe(true);
   });
 });
 

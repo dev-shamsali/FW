@@ -56,5 +56,13 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.19"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-shamsali/framework-rhea.js.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/dev-shamsali/framework-rhea.js/issues"
   }
 }

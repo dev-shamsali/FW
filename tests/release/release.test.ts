@@ -15,9 +15,14 @@ function sandbox(name: string) {
   for (const f of ["set-repo.mjs", "check-release.mjs"]) cpSync(join(root, "scripts", f), join(d, "scripts", f));
   for (const p of ["core", "cli", "create-rhea"]) {
     mkdirSync(join(d, "packages", p), { recursive: true });
-    cpSync(join(root, "packages", p, "package.json"), join(d, "packages", p, "package.json"));
+    const pj = JSON.parse(readFileSync(join(root, "packages", p, "package.json"), "utf8"));
+    delete pj.repository;
+    delete pj.bugs;
+    writeFileSync(join(d, "packages", p, "package.json"), JSON.stringify(pj));
   }
-  cpSync(join(root, "site.config.json"), join(d, "site.config.json"));
+  const cfg = JSON.parse(readFileSync(join(root, "site.config.json"), "utf8"));
+  cfg.repoUrl = null;
+  writeFileSync(join(d, "site.config.json"), JSON.stringify(cfg));
   cpSync(join(root, "CHANGELOG.md"), join(d, "CHANGELOG.md"));
   return d;
 }

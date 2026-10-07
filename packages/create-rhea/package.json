@@ -38,5 +38,13 @@
   },
   "dependencies": {
     "@rheajs/cli": "0.1.0-alpha.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-shamsali/framework-rhea.js.git",
+    "directory": "packages/create-rhea"
+  },
+  "bugs": {
+    "url": "https://github.com/dev-shamsali/framework-rhea.js/issues"
   }
 }

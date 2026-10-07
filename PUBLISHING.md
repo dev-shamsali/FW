@@ -10,7 +10,7 @@ Everything here is done by you, the owner. Claude and CI never hold your credent
 | npm unscoped                | `create-rhea`                                       | Free                                                                                                                                                                                        |
 | npm `rhea`                  | not usable                                          | Taken by an unrelated AMQP library                                                                                                                                                          |
 | GitHub account/org `rheajs` | not usable                                          | **Taken** by someone else                                                                                                                                                                   |
-| GitHub repository           | your account, for example `<your-username>/rhea-js` | Pick any free name                                                                                                                                                                          |
+| GitHub repository           | your account, for example `dev-shamsali/framework-rhea.js` | Pick any free name                                                                                                                                                                          |
 
 If the `@rheajs` scope is not available to you on npm, tell Claude the scope you do own (your npm username scope, for example `@yourname`). It is a find-and-replace across packages, templates, docs and tests, and the test suite will verify it.
 
@@ -19,11 +19,11 @@ If the `@rheajs` scope is not available to you on npm, tell Claude the scope you
 1. Create an empty **public** repository named e.g. `rhea-js` (no README, no license; they exist locally). Enable 2FA on your account.
 2. From the project folder:
    ```bash
-   npm run set-repo -- <your-username>/rhea-js     # writes the real repo URL into package.json files and the site
+   npm run set-repo -- dev-shamsali/framework-rhea.js     # writes the real repo URL into package.json files and the site
    npm run build && npm run build:website
    git add -A && git commit -m "chore: set repository url"
    git branch -M main
-   git remote add origin git@github.com:<your-username>/rhea-js.git
+   git remote add origin git@github.com:dev-shamsali/framework-rhea.js.git
    git push -u origin main
    git checkout -b develop && git push -u origin develop
    ```

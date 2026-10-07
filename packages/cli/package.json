@@ -43,5 +43,13 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json && node -e \"require('fs').chmodSync('dist/bin.js',0o755)\"",
     "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-shamsali/framework-rhea.js.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/dev-shamsali/framework-rhea.js/issues"
   }
 }

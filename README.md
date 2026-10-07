@@ -45,8 +45,8 @@ Authentication, database adapters, a shared rate-limit store. See the roadmap in
 ## Develop
 
 ```bash
-git clone <this repository>
-cd <repository>
+git clone https://github.com/dev-shamsali/framework-rhea.js.git
+cd framework-rhea.js
 npm install
 npm run verify       # lint, typecheck, unit tests, build
 npm run test:e2e     # scaffolds, installs, builds and starts a real app (slow)
