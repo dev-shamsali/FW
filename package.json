@@ -7,8 +7,8 @@
   "workspaces": ["packages/*"],
   "engines": { "node": ">=20" },
   "scripts": {
-    "build": "npm run build -w @rheajs/core",
-    "typecheck": "tsc -p packages/core --noEmit",
+    "build": "npm run build -w @rheajs/core -w @rheajs/cli -w create-rhea",
+    "typecheck": "tsc -p packages/core --noEmit && tsc -p packages/cli --noEmit",
     "test": "vitest run",
     "lint": "eslint ."
   },
