@@ -1,0 +1,23 @@
+{
+  "name": "rhea-monorepo",
+  "private": true,
+  "version": "0.1.0-alpha.0",
+  "description": "Rhea.js monorepo. Made by Shams Ali Shaikh.",
+  "type": "module",
+  "workspaces": ["packages/*"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "npm run build -w @rheajs/core",
+    "typecheck": "tsc -p packages/core --noEmit",
+    "test": "vitest run",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.0.0",
+    "@types/supertest": "^6.0.3",
+    "supertest": "^7.3.1",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.3"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@rheajs/core",
+  "version": "0.1.0-alpha.0",
+  "description": "Secure, convention-driven backend framework core for Node.js and Express. Made by Shams Ali Shaikh.",
+  "author": "Shams Ali Shaikh",
+  "license": "MIT",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+  "files": ["dist", "README.md", "LICENSE"],
+  "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json" },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0",
+    "pino": "^10.4.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": { "@types/cors": "^2.8.19" }
+}
