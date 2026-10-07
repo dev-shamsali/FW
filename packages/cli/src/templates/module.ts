@@ -130,42 +130,31 @@ export function __CAMEL__(_req: Request, _res: Response, next: NextFunction): vo
   next();
 }
 `,
-  validator: `import { z } from "@rheajs/core";
-
-export const create__SP__Schema = z.object({
-  // TODO: describe the request body
-});
-
-export type Create__SP__Dto = z.infer<typeof create__SP__Schema>;
-`,
 };
 
+export type Part = "types" | "schema" | "repository" | "service" | "controller" | "routes";
+
+/** Which other parts a part imports. Generating a part also creates any of these that are missing. */
+export const PART_DEPS: Record<Part, Part[]> = {
+  types: [],
+  schema: [],
+  repository: ["types"],
+  service: ["repository", "types"],
+  controller: ["service", "repository", "types"],
+  routes: ["controller", "schema", "service", "repository", "types"],
+};
+
+export const partFile = (part: Part, n: Names): [string, string] => [
+  `src/modules/${n.kebab}/${n.kebab}.${part === "routes" ? "routes" : part}.ts`,
+  fill(T[part], n),
+];
+
 export const moduleFiles = (n: Names): Files => ({
-  [`src/modules/${n.kebab}/${n.kebab}.types.ts`]: fill(T.types, n),
-  [`src/modules/${n.kebab}/${n.kebab}.schema.ts`]: fill(T.schema, n),
-  [`src/modules/${n.kebab}/${n.kebab}.repository.ts`]: fill(T.repository, n),
-  [`src/modules/${n.kebab}/${n.kebab}.service.ts`]: fill(T.service, n),
-  [`src/modules/${n.kebab}/${n.kebab}.controller.ts`]: fill(T.controller, n),
-  [`src/modules/${n.kebab}/${n.kebab}.routes.ts`]: fill(T.routes, n),
+  ...Object.fromEntries((["types", "schema", "repository", "service", "controller", "routes"] as Part[]).map((p) => partFile(p, n))),
   [`tests/integration/${n.kebab}.test.ts`]: fill(T.test, n),
 });
 
-export const singleFile = (kind: string, n: Names): Files => {
-  switch (kind) {
-    case "controller":
-      return { [`src/modules/${n.kebab}/${n.kebab}.controller.ts`]: fill(T.controller, n) };
-    case "service":
-      return { [`src/modules/${n.kebab}/${n.kebab}.service.ts`]: fill(T.service, n) };
-    case "route":
-      return { [`src/modules/${n.kebab}/${n.kebab}.routes.ts`]: fill(T.routes, n) };
-    case "middleware":
-      return { [`src/middleware/${n.kebab}.ts`]: fill(T.middleware, n) };
-    case "validator":
-      return { [`src/modules/${n.kebab}/${n.kebab}.schema.ts`]: fill(T.validator, n) };
-    default:
-      return {};
-  }
-};
+export const middlewareFile = (n: Names): Files => ({ [`src/middleware/${n.kebab}.ts`]: fill(T.middleware, n) });
 
 export const registration = (n: Names) => ({
   importLine: `import { ${n.camel}Router } from "./${n.kebab}/${n.kebab}.routes.js";`,

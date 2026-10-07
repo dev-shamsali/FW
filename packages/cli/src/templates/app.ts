@@ -12,7 +12,7 @@ export function appFiles({ name, coreSpec, cliSpec }: AppTemplateOptions): Files
     version: "0.1.0",
     private: true,
     type: "module",
-    engines: { node: ">=20" },
+    engines: { node: ">=20.19.0" },
     scripts: {
       dev: "rhea dev",
       build: "rhea build",
@@ -28,17 +28,17 @@ export function appFiles({ name, coreSpec, cliSpec }: AppTemplateOptions): Files
     dependencies: { "@rheajs/core": coreSpec },
     devDependencies: {
       "@rheajs/cli": cliSpec,
-      "@eslint/js": "^10.0.0",
+      "@eslint/js": "^9.39.5",
       "@types/node": "^22.0.0",
       "@types/supertest": "^6.0.3",
-      "@vitest/coverage-v8": "^5.0.3",
-      eslint: "^10.12.0",
+      "@vitest/coverage-v8": "~4.0.18",
+      eslint: "^9.39.5",
       prettier: "^3.9.9",
       supertest: "^7.3.1",
       tsx: "^4.23.15",
       typescript: "~5.9.3",
       "typescript-eslint": "^8.71.1",
-      vitest: "^5.0.3",
+      vitest: "~4.0.18",
     },
   };
   return {

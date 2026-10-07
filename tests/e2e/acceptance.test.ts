@@ -46,8 +46,18 @@ describe("generated project user journey", () => {
   }, 300_000);
 
   it("generate module, test, typecheck, lint", () => {
-    const g = rhea(["generate", "module", "users"]);
-    expect(g.status, show(g)).toBe(0);
+    for (const name of ["users", "blog-posts", "categories", "class"]) {
+      const g = rhea(["generate", "module", name]);
+      expect(g.status, show(g)).toBe(0);
+    }
+    for (const [kind, name] of [
+      ["controller", "alpha"],
+      ["service", "beta"],
+      ["route", "gamma"],
+      ["validator", "delta"],
+    ] as const)
+      expect(rhea(["generate", kind, name]).status, kind).toBe(0);
+    expect(rhea(["generate", "middleware", "auth"]).status).toBe(0);
     for (const script of ["test", "typecheck", "lint"]) {
       const r = npm(["run", script], app);
       expect(r.status, `${script}\n${show(r)}`).toBe(0);

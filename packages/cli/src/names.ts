@@ -15,6 +15,58 @@ export interface Names {
   singularUpper: string;
 }
 
+const RESERVED = new Set([
+  "break",
+  "case",
+  "catch",
+  "class",
+  "const",
+  "continue",
+  "debugger",
+  "default",
+  "delete",
+  "do",
+  "else",
+  "enum",
+  "export",
+  "extends",
+  "false",
+  "finally",
+  "for",
+  "function",
+  "if",
+  "implements",
+  "import",
+  "in",
+  "instanceof",
+  "interface",
+  "let",
+  "new",
+  "null",
+  "package",
+  "private",
+  "protected",
+  "public",
+  "return",
+  "static",
+  "super",
+  "switch",
+  "this",
+  "throw",
+  "true",
+  "try",
+  "typeof",
+  "var",
+  "void",
+  "while",
+  "with",
+  "yield",
+  "await",
+  "arguments",
+  "eval",
+]);
+export const isReservedWord = (camel: string): boolean => RESERVED.has(camel);
+
 const VALID = /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/;
 
 function singular(s: string): string {

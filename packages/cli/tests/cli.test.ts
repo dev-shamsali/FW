@@ -1,4 +1,4 @@
-import { mkdtempSync, readFileSync, rmSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
+import { mkdtempSync, readFileSync, readdirSync, rmSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -127,5 +127,42 @@ describe("info, doctor, security commands", () => {
     process.chdir(join(dir, "r"));
     expect(await run(["start"])).toBe(1);
     expect(await run(["build"])).toBe(1);
+  });
+});
+
+describe("generator safety", () => {
+  it("writes nothing when any target already exists", async () => {
+    await run(["create", "s"]);
+    process.chdir(join(dir, "s"));
+    const before = readdirSync(join(dir, "s/src/modules/health"));
+    expect(await run(["generate", "module", "health"])).toBe(1);
+    expect(readdirSync(join(dir, "s/src/modules/health"))).toEqual(before);
+    expect(existsSync(join(dir, "s/tests/integration/health.test.ts"))).toBe(true);
+  });
+  it("rejects reserved words for middleware and registered module names", async () => {
+    await run(["create", "t"]);
+    process.chdir(join(dir, "t"));
+    expect(await run(["generate", "middleware", "delete"])).toBe(2);
+    expect(existsSync(join(dir, "t/src/middleware/delete.ts"))).toBe(false);
+    expect(await run(["generate", "module", "orders"])).toBe(0);
+    expect(await run(["generate", "module", "orders", "--force"])).toBe(0);
+    const idx = readFileSync(join(dir, "t/src/modules/index.ts"), "utf8");
+    expect(idx.match(/ordersRouter/g)?.length).toBe(2); // one import, one entry: not duplicated by --force
+  });
+});
+
+describe("standalone generators create their missing dependencies", () => {
+  it("service brings repository and types; existing files are left alone", async () => {
+    await run(["create", "u"]);
+    process.chdir(join(dir, "u"));
+    expect(await run(["generate", "service", "ledger"])).toBe(0);
+    for (const f of ["service", "repository", "types"]) expect(existsSync(join(dir, `u/src/modules/ledger/ledger.${f}.ts`)), f).toBe(true);
+    expect(existsSync(join(dir, "u/src/modules/ledger/ledger.controller.ts"))).toBe(false);
+    const before = readFileSync(join(dir, "u/src/modules/ledger/ledger.repository.ts"), "utf8");
+    writeFileSync(join(dir, "u/src/modules/ledger/ledger.repository.ts"), before + "// edited\n");
+    expect(await run(["generate", "route", "ledger"])).toBe(0); // brings controller + schema, keeps edited repo
+    expect(readFileSync(join(dir, "u/src/modules/ledger/ledger.repository.ts"), "utf8")).toContain("// edited");
+    expect(existsSync(join(dir, "u/src/modules/ledger/ledger.routes.ts"))).toBe(true);
+    expect(await run(["generate", "service", "ledger"])).toBe(1); // target exists
   });
 });

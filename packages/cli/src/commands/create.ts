@@ -1,21 +1,26 @@
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { dirname, relative, resolve, sep } from "node:path";
 import { appFiles } from "../templates/app.js";
 import { parseArgs } from "../args.js";
 import { npm } from "../proc.js";
 import { CliError, c, out } from "../ui.js";
 
+/** All-or-nothing: every target is checked before the first byte is written, so a conflict never leaves partial output. */
 export function writeFiles(root: string, files: Record<string, string>, force = false): string[] {
-  const written: string[] = [];
-  for (const [rel, content] of Object.entries(files)) {
-    const target = resolve(root, rel);
-    if (!target.startsWith(resolve(root))) throw new CliError(`Refusing to write outside project: ${rel}`);
-    if (existsSync(target) && !force) throw new CliError(`${rel} already exists. Use --force to overwrite.`);
-    mkdirSync(dirname(target), { recursive: true });
-    writeFileSync(target, content);
-    written.push(rel);
+  const base = resolve(root);
+  const targets = Object.keys(files).map((rel) => ({ rel, target: resolve(base, rel) }));
+  for (const { rel, target } of targets) {
+    if (target !== base && !target.startsWith(base + sep)) throw new CliError(`Refusing to write outside project: ${rel}`);
   }
-  return written;
+  if (!force) {
+    const existing = targets.filter((t) => existsSync(t.target)).map((t) => t.rel);
+    if (existing.length) throw new CliError(`Nothing written. Already exists:\n  ${existing.join("\n  ")}\nUse --force to overwrite.`);
+  }
+  for (const { target } of targets) {
+    mkdirSync(dirname(target), { recursive: true });
+    writeFileSync(target, files[relative(base, target).split(sep).join("/")] ?? "");
+  }
+  return targets.map((t) => t.rel);
 }
 
 export async function create(argv: string[]): Promise<number> {

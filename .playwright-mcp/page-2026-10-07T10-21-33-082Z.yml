@@ -1,0 +1,1795 @@
+- generic [ref=f4e2]:
+  - banner [ref=f4e4]:
+    - link "Skip to content":
+      - /url: "#geist-skip-nav"
+    - navigation [ref=f4e5]:
+      - generic [ref=f4e6]:
+        - generic [ref=f4e7]:
+          - link "Go to Vercel homepage" [ref=f4e8] [cursor=pointer]:
+            - /url: https://vercel.com/home?utm_source=next-site&utm_medium=banner&utm_campaign=docs_app_getting-started_installation
+            - img "Vercel" [ref=f4e9]
+          - link "Go to the homepage" [ref=f4e13] [cursor=pointer]:
+            - /url: /
+            - img "NextjsLogotype" [ref=f4e14]
+        - link "Showcase" [ref=f4e15] [cursor=pointer]:
+          - /url: /showcase
+        - link "Docs" [ref=f4e16] [cursor=pointer]:
+          - /url: /docs
+        - link "Blog" [ref=f4e17] [cursor=pointer]:
+          - /url: /blog
+        - link "Templates" [ref=f4e18] [cursor=pointer]:
+          - /url: https://vercel.com/templates/next.js?utm_source=next-site&utm_medium=navbar&utm_campaign=next_site_nav_templates
+        - link "Enterprise" [ref=f4e21] [cursor=pointer]:
+          - /url: https://vercel.com/contact/sales?utm_source=next-site&utm_medium=navbar&utm_campaign=next_site_nav_enterprise
+      - generic [ref=f4e24]:
+        - button "Search documentation... CtrlK" [ref=f4e25] [cursor=pointer]:
+          - text: Search documentation...
+          - generic [ref=f4e26]: CtrlK
+        - button "Feedback" [ref=f4e27] [cursor=pointer]
+        - link "Learn" [ref=f4e29] [cursor=pointer]:
+          - /url: /learn
+  - main [ref=f4e31]:
+    - generic [ref=f4e33]:
+      - generic [ref=f4e34]:
+        - generic [ref=f4e35]:
+          - combobox "Open directory select" [ref=f4e36] [cursor=pointer]:
+            - generic:
+              - generic:
+                - generic:
+                  - paragraph: Using App Router
+                  - paragraph: Features available in /app
+          - combobox [aria-hidden] [ref=f4e37]
+          - combobox "Open version select" [ref=f4e38] [cursor=pointer]:
+            - generic:
+              - generic:
+                - generic:
+                  - paragraph: Latest Version
+                  - paragraph: 16.4.0
+          - combobox [aria-hidden] [ref=f4e39]
+        - navigation [ref=f4e41]:
+          - list [ref=f4e42]:
+            - listitem [ref=f4e43]:
+              - link "Getting Started" [ref=f4e44] [cursor=pointer]:
+                - /url: /docs/app/getting-started
+              - list [ref=f4e49]:
+                - listitem [ref=f4e50]:
+                  - link "Installation" [ref=f4e51] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/installation
+                - listitem [ref=f4e54]:
+                  - link "Project Structure" [ref=f4e55] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/project-structure
+                - listitem [ref=f4e58]:
+                  - link "Layouts and Pages" [ref=f4e59] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/layouts-and-pages
+                - listitem [ref=f4e62]:
+                  - link "Linking and Navigating" [ref=f4e63] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/linking-and-navigating
+                - listitem [ref=f4e66]:
+                  - link "Server and Client Components" [ref=f4e67] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/server-and-client-components
+                - listitem [ref=f4e70]:
+                  - link "Fetching Data" [ref=f4e71] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/fetching-data
+                - listitem [ref=f4e74]:
+                  - link "Mutating Data" [ref=f4e75] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/mutating-data
+                - listitem [ref=f4e78]:
+                  - link "Caching" [ref=f4e79] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/caching
+                - listitem [ref=f4e82]:
+                  - link "Revalidating" [ref=f4e83] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/revalidating
+                - listitem [ref=f4e86]:
+                  - link "Error Handling" [ref=f4e87] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/error-handling
+                - listitem [ref=f4e90]:
+                  - link "CSS" [ref=f4e91] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/css
+                - listitem [ref=f4e94]:
+                  - link "Image Optimization" [ref=f4e95] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/images
+                - listitem [ref=f4e98]:
+                  - link "Font Optimization" [ref=f4e99] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/fonts
+                - listitem [ref=f4e102]:
+                  - link "Metadata and OG images" [ref=f4e103] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/metadata-and-og-images
+                - listitem [ref=f4e106]:
+                  - link "Route Handlers" [ref=f4e107] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/route-handlers
+                - listitem [ref=f4e110]:
+                  - link "Proxy" [ref=f4e111] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/proxy
+                - listitem [ref=f4e114]:
+                  - link "Deploying" [ref=f4e115] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/deploying
+                - listitem [ref=f4e118]:
+                  - link "Upgrading" [ref=f4e119] [cursor=pointer]:
+                    - /url: /docs/app/getting-started/upgrading
+          - list [ref=f4e122]:
+            - listitem [ref=f4e123]:
+              - link "Guides" [ref=f4e124] [cursor=pointer]:
+                - /url: /docs/app/guides
+              - list [ref=f4e129]:
+                - listitem [ref=f4e130]:
+                  - link "Adopting Partial Prefetching" [ref=f4e131] [cursor=pointer]:
+                    - /url: /docs/app/guides/adopting-partial-prefetching
+                - listitem [ref=f4e134]:
+                  - link "AI Coding Agents" [ref=f4e135] [cursor=pointer]:
+                    - /url: /docs/app/guides/ai-agents
+                - listitem [ref=f4e138]:
+                  - link "Analytics" [ref=f4e139] [cursor=pointer]:
+                    - /url: /docs/app/guides/analytics
+                - listitem [ref=f4e142]:
+                  - link "Authentication" [ref=f4e143] [cursor=pointer]:
+                    - /url: /docs/app/guides/authentication
+                - listitem [ref=f4e146]:
+                  - link "Authentication with Cache Components" [ref=f4e147] [cursor=pointer]:
+                    - /url: /docs/app/guides/authentication-with-cache-components
+                - listitem [ref=f4e150]:
+                  - link "Backend for Frontend" [ref=f4e151] [cursor=pointer]:
+                    - /url: /docs/app/guides/backend-for-frontend
+                - listitem [ref=f4e154]:
+                  - link "Building" [ref=f4e155] [cursor=pointer]:
+                    - /url: /docs/app/guides/building
+                - listitem [ref=f4e158]:
+                  - link "Caching (Previous Model)" [ref=f4e159] [cursor=pointer]:
+                    - /url: /docs/app/guides/caching-without-cache-components
+                - listitem [ref=f4e162]:
+                  - link "CDN Caching" [ref=f4e163] [cursor=pointer]:
+                    - /url: /docs/app/guides/cdn-caching
+                - listitem [ref=f4e166]:
+                  - link "CI Build Caching" [ref=f4e167] [cursor=pointer]:
+                    - /url: /docs/app/guides/ci-build-caching
+                - listitem [ref=f4e170]:
+                  - link "Client-side data fetching" [ref=f4e171] [cursor=pointer]:
+                    - /url: /docs/app/guides/client-side-data-fetching
+                  - list [ref=f4e176]:
+                    - listitem [ref=f4e177]:
+                      - link "SWR" [ref=f4e178] [cursor=pointer]:
+                        - /url: /docs/app/guides/client-side-data-fetching/swr
+                    - listitem [ref=f4e181]:
+                      - link "TanStack Query" [ref=f4e182] [cursor=pointer]:
+                        - /url: /docs/app/guides/client-side-data-fetching/tanstack-query
+                - listitem [ref=f4e185]:
+                  - link "Content Security Policy" [ref=f4e186] [cursor=pointer]:
+                    - /url: /docs/app/guides/content-security-policy
+                - listitem [ref=f4e189]:
+                  - link "CSS-in-JS" [ref=f4e190] [cursor=pointer]:
+                    - /url: /docs/app/guides/css-in-js
+                - listitem [ref=f4e193]:
+                  - link "Custom Server" [ref=f4e194] [cursor=pointer]:
+                    - /url: /docs/app/guides/custom-server
+                - listitem [ref=f4e197]:
+                  - link "Data Security" [ref=f4e198] [cursor=pointer]:
+                    - /url: /docs/app/guides/data-security
+                - listitem [ref=f4e201]:
+                  - link "Debugging" [ref=f4e202] [cursor=pointer]:
+                    - /url: /docs/app/guides/debugging
+                - listitem [ref=f4e205]:
+                  - link "Deploying to Platforms" [ref=f4e206] [cursor=pointer]:
+                    - /url: /docs/app/guides/deploying-to-platforms
+                - listitem [ref=f4e209]:
+                  - link "Draft Mode" [ref=f4e210] [cursor=pointer]:
+                    - /url: /docs/app/guides/draft-mode
+                - listitem [ref=f4e213]:
+                  - link "Environment Variables" [ref=f4e214] [cursor=pointer]:
+                    - /url: /docs/app/guides/environment-variables
+                - listitem [ref=f4e217]:
+                  - link "Forms" [ref=f4e218] [cursor=pointer]:
+                    - /url: /docs/app/guides/forms
+                - listitem [ref=f4e221]:
+                  - link "How Revalidation Works" [ref=f4e222] [cursor=pointer]:
+                    - /url: /docs/app/guides/how-revalidation-works
+                - listitem [ref=f4e225]:
+                  - link "ISR" [ref=f4e226] [cursor=pointer]:
+                    - /url: /docs/app/guides/incremental-static-regeneration
+                - listitem [ref=f4e229]:
+                  - link "ISR with Cache Components" [ref=f4e230] [cursor=pointer]:
+                    - /url: /docs/app/guides/incremental-static-regeneration-cache-components
+                - listitem [ref=f4e233]:
+                  - link "Instant navigation" [ref=f4e234] [cursor=pointer]:
+                    - /url: /docs/app/guides/instant-navigation
+                - listitem [ref=f4e237]:
+                  - link "Instrumentation" [ref=f4e238] [cursor=pointer]:
+                    - /url: /docs/app/guides/instrumentation
+                - listitem [ref=f4e241]:
+                  - link "Interactive apps" [ref=f4e242] [cursor=pointer]:
+                    - /url: /docs/app/guides/interactive-apps
+                - listitem [ref=f4e245]:
+                  - link "Internationalization" [ref=f4e246] [cursor=pointer]:
+                    - /url: /docs/app/guides/internationalization
+                - listitem [ref=f4e249]:
+                  - link "JSON-LD" [ref=f4e250] [cursor=pointer]:
+                    - /url: /docs/app/guides/json-ld
+                - listitem [ref=f4e253]:
+                  - link "Keeping pages static" [ref=f4e254] [cursor=pointer]:
+                    - /url: /docs/app/guides/keeping-pages-static
+                - listitem [ref=f4e257]:
+                  - link "Lazy Loading" [ref=f4e258] [cursor=pointer]:
+                    - /url: /docs/app/guides/lazy-loading
+                - listitem [ref=f4e261]:
+                  - link "Development Environment" [ref=f4e262] [cursor=pointer]:
+                    - /url: /docs/app/guides/local-development
+                - listitem [ref=f4e265]:
+                  - link "Next.js MCP Server" [ref=f4e266] [cursor=pointer]:
+                    - /url: /docs/app/guides/mcp
+                - listitem [ref=f4e269]:
+                  - link "MDX" [ref=f4e270] [cursor=pointer]:
+                    - /url: /docs/app/guides/mdx
+                - listitem [ref=f4e273]:
+                  - link "Memory Usage" [ref=f4e274] [cursor=pointer]:
+                    - /url: /docs/app/guides/memory-usage
+                - listitem [ref=f4e277]:
+                  - link "Migrating" [ref=f4e278] [cursor=pointer]:
+                    - /url: /docs/app/guides/migrating
+                  - list [ref=f4e283]:
+                    - listitem [ref=f4e284]:
+                      - link "App Router" [ref=f4e285] [cursor=pointer]:
+                        - /url: /docs/app/guides/migrating/app-router-migration
+                    - listitem [ref=f4e288]:
+                      - link "Create React App" [ref=f4e289] [cursor=pointer]:
+                        - /url: /docs/app/guides/migrating/from-create-react-app
+                    - listitem [ref=f4e292]:
+                      - link "Vite" [ref=f4e293] [cursor=pointer]:
+                        - /url: /docs/app/guides/migrating/from-vite
+                - listitem [ref=f4e296]:
+                  - link "Migrating to Cache Components" [ref=f4e297] [cursor=pointer]:
+                    - /url: /docs/app/guides/migrating-to-cache-components
+                - listitem [ref=f4e300]:
+                  - link "Multi-tenant" [ref=f4e301] [cursor=pointer]:
+                    - /url: /docs/app/guides/multi-tenant
+                - listitem [ref=f4e304]:
+                  - link "Multi-zones" [ref=f4e305] [cursor=pointer]:
+                    - /url: /docs/app/guides/multi-zones
+                - listitem [ref=f4e308]:
+                  - link "Offline support" [ref=f4e309] [cursor=pointer]:
+                    - /url: /docs/app/guides/offline-support
+                - listitem [ref=f4e314]:
+                  - link "OpenTelemetry" [ref=f4e315] [cursor=pointer]:
+                    - /url: /docs/app/guides/open-telemetry
+                - listitem [ref=f4e318]:
+                  - link "Optimizing prefetching" [ref=f4e319] [cursor=pointer]:
+                    - /url: /docs/app/guides/optimizing-prefetching
+                - listitem [ref=f4e322]:
+                  - link "Optimizing the static shell" [ref=f4e323] [cursor=pointer]:
+                    - /url: /docs/app/guides/optimizing-the-static-shell
+                - listitem [ref=f4e326]:
+                  - link "Package Bundling" [ref=f4e327] [cursor=pointer]:
+                    - /url: /docs/app/guides/package-bundling
+                - listitem [ref=f4e330]:
+                  - link "PPR Platform Guide" [ref=f4e331] [cursor=pointer]:
+                    - /url: /docs/app/guides/ppr-platform-guide
+                - listitem [ref=f4e334]:
+                  - link "Prefetching" [ref=f4e335] [cursor=pointer]:
+                    - /url: /docs/app/guides/prefetching
+                - listitem [ref=f4e338]:
+                  - link "Preserving UI state" [ref=f4e339] [cursor=pointer]:
+                    - /url: /docs/app/guides/preserving-ui-state
+                - listitem [ref=f4e342]:
+                  - link "Preventing Flash" [ref=f4e343] [cursor=pointer]:
+                    - /url: /docs/app/guides/preventing-flash-before-hydration
+                - listitem [ref=f4e346]:
+                  - link "Production" [ref=f4e347] [cursor=pointer]:
+                    - /url: /docs/app/guides/production-checklist
+                - listitem [ref=f4e350]:
+                  - link "PWAs" [ref=f4e351] [cursor=pointer]:
+                    - /url: /docs/app/guides/progressive-web-apps
+                - listitem [ref=f4e354]:
+                  - link "Public pages" [ref=f4e355] [cursor=pointer]:
+                    - /url: /docs/app/guides/public-static-pages
+                - listitem [ref=f4e358]:
+                  - link "Redirecting" [ref=f4e359] [cursor=pointer]:
+                    - /url: /docs/app/guides/redirecting
+                - listitem [ref=f4e362]:
+                  - link "Rendering Philosophy" [ref=f4e363] [cursor=pointer]:
+                    - /url: /docs/app/guides/rendering-philosophy
+                - listitem [ref=f4e366]:
+                  - link "Sass" [ref=f4e367] [cursor=pointer]:
+                    - /url: /docs/app/guides/sass
+                - listitem [ref=f4e370]:
+                  - link "Scripts" [ref=f4e371] [cursor=pointer]:
+                    - /url: /docs/app/guides/scripts
+                - listitem [ref=f4e374]:
+                  - link "Self-Hosting" [ref=f4e375] [cursor=pointer]:
+                    - /url: /docs/app/guides/self-hosting
+                - listitem [ref=f4e378]:
+                  - link "Server Actions" [ref=f4e379] [cursor=pointer]:
+                    - /url: /docs/app/guides/server-actions
+                - listitem [ref=f4e382]:
+                  - link "Server and Client Boundary" [ref=f4e383] [cursor=pointer]:
+                    - /url: /docs/app/guides/server-and-client-boundary
+                - listitem [ref=f4e386]:
+                  - link "SPAs" [ref=f4e387] [cursor=pointer]:
+                    - /url: /docs/app/guides/single-page-applications
+                - listitem [ref=f4e390]:
+                  - link "Static Exports" [ref=f4e391] [cursor=pointer]:
+                    - /url: /docs/app/guides/static-exports
+                - listitem [ref=f4e394]:
+                  - link "Streaming" [ref=f4e395] [cursor=pointer]:
+                    - /url: /docs/app/guides/streaming
+                - listitem [ref=f4e398]:
+                  - link "Tailwind CSS v3" [ref=f4e399] [cursor=pointer]:
+                    - /url: /docs/app/guides/tailwind-v3-css
+                - listitem [ref=f4e402]:
+                  - link "Testing" [ref=f4e403] [cursor=pointer]:
+                    - /url: /docs/app/guides/testing
+                  - list [ref=f4e408]:
+                    - listitem [ref=f4e409]:
+                      - link "Cypress" [ref=f4e410] [cursor=pointer]:
+                        - /url: /docs/app/guides/testing/cypress
+                    - listitem [ref=f4e413]:
+                      - link "Jest" [ref=f4e414] [cursor=pointer]:
+                        - /url: /docs/app/guides/testing/jest
+                    - listitem [ref=f4e417]:
+                      - link "Playwright" [ref=f4e418] [cursor=pointer]:
+                        - /url: /docs/app/guides/testing/playwright
+                    - listitem [ref=f4e421]:
+                      - link "Vitest" [ref=f4e422] [cursor=pointer]:
+                        - /url: /docs/app/guides/testing/vitest
+                - listitem [ref=f4e425]:
+                  - link "Third Party Libraries" [ref=f4e426] [cursor=pointer]:
+                    - /url: /docs/app/guides/third-party-libraries
+                - listitem [ref=f4e429]:
+                  - link "Upgrading" [ref=f4e430] [cursor=pointer]:
+                    - /url: /docs/app/guides/upgrading
+                  - list [ref=f4e435]:
+                    - listitem [ref=f4e436]:
+                      - link "Upgrade with a coding agent" [ref=f4e437] [cursor=pointer]:
+                        - /url: /docs/app/guides/upgrading/agent-upgrade
+                    - listitem [ref=f4e442]:
+                      - link "Codemods" [ref=f4e443] [cursor=pointer]:
+                        - /url: /docs/app/guides/upgrading/codemods
+                    - listitem [ref=f4e446]:
+                      - link "Version 14" [ref=f4e447] [cursor=pointer]:
+                        - /url: /docs/app/guides/upgrading/version-14
+                    - listitem [ref=f4e450]:
+                      - link "Version 15" [ref=f4e451] [cursor=pointer]:
+                        - /url: /docs/app/guides/upgrading/version-15
+                    - listitem [ref=f4e454]:
+                      - link "Version 16" [ref=f4e455] [cursor=pointer]:
+                        - /url: /docs/app/guides/upgrading/version-16
+                - listitem [ref=f4e458]:
+                  - link "Videos" [ref=f4e459] [cursor=pointer]:
+                    - /url: /docs/app/guides/videos
+                - listitem [ref=f4e462]:
+                  - link "View transitions" [ref=f4e463] [cursor=pointer]:
+                    - /url: /docs/app/guides/view-transitions
+          - list [ref=f4e466]:
+            - listitem [ref=f4e467]:
+              - link "API Reference" [ref=f4e468] [cursor=pointer]:
+                - /url: /docs/app/api-reference
+              - list [ref=f4e473]:
+                - listitem [ref=f4e474]:
+                  - link "Directives" [ref=f4e475] [cursor=pointer]:
+                    - /url: /docs/app/api-reference/directives
+                  - list [ref=f4e480]:
+                    - listitem [ref=f4e481]:
+                      - link "use cache" [ref=f4e482] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/directives/use-cache
+                    - listitem [ref=f4e485]:
+                      - 'link "use cache: private" [ref=f4e486] [cursor=pointer]':
+                        - /url: /docs/app/api-reference/directives/use-cache-private
+                    - listitem [ref=f4e489]:
+                      - 'link "use cache: remote" [ref=f4e490] [cursor=pointer]':
+                        - /url: /docs/app/api-reference/directives/use-cache-remote
+                    - listitem [ref=f4e493]:
+                      - link "use client" [ref=f4e494] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/directives/use-client
+                    - listitem [ref=f4e497]:
+                      - link "use server" [ref=f4e498] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/directives/use-server
+                - listitem [ref=f4e501]:
+                  - link "Components" [ref=f4e502] [cursor=pointer]:
+                    - /url: /docs/app/api-reference/components
+                  - list [ref=f4e507]:
+                    - listitem [ref=f4e508]:
+                      - link "Font" [ref=f4e509] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/components/font
+                    - listitem [ref=f4e512]:
+                      - link "Form Component" [ref=f4e513] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/components/form
+                    - listitem [ref=f4e516]:
+                      - link "Image Component" [ref=f4e517] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/components/image
+                    - listitem [ref=f4e520]:
+                      - link "Link Component" [ref=f4e521] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/components/link
+                    - listitem [ref=f4e524]:
+                      - link "Script Component" [ref=f4e525] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/components/script
+                - listitem [ref=f4e528]:
+                  - link "File-system conventions" [ref=f4e529] [cursor=pointer]:
+                    - /url: /docs/app/api-reference/file-conventions
+                  - list [ref=f4e534]:
+                    - listitem [ref=f4e535]:
+                      - link "default.js" [ref=f4e536] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/default
+                    - listitem [ref=f4e539]:
+                      - link "Dynamic Segments" [ref=f4e540] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/dynamic-routes
+                    - listitem [ref=f4e543]:
+                      - link "error.js" [ref=f4e544] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/error
+                    - listitem [ref=f4e547]:
+                      - link "forbidden.js" [ref=f4e548] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/forbidden
+                    - listitem [ref=f4e553]:
+                      - link "instrumentation.js" [ref=f4e554] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/instrumentation
+                    - listitem [ref=f4e557]:
+                      - link "instrumentation-client.js" [ref=f4e558] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/instrumentation-client
+                    - listitem [ref=f4e561]:
+                      - link "Intercepting Routes" [ref=f4e562] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/intercepting-routes
+                    - listitem [ref=f4e565]:
+                      - link "layout.js" [ref=f4e566] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/layout
+                    - listitem [ref=f4e569]:
+                      - link "loading.js" [ref=f4e570] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/loading
+                    - listitem [ref=f4e573]:
+                      - link "mdx-components.js" [ref=f4e574] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/mdx-components
+                    - listitem [ref=f4e577]:
+                      - link "not-found.js" [ref=f4e578] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/not-found
+                    - listitem [ref=f4e581]:
+                      - link "page.js" [ref=f4e582] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/page
+                    - listitem [ref=f4e585]:
+                      - link "Parallel Routes" [ref=f4e586] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/parallel-routes
+                    - listitem [ref=f4e589]:
+                      - link "proxy.js" [ref=f4e590] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/proxy
+                    - listitem [ref=f4e593]:
+                      - link "public" [ref=f4e594] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/public-folder
+                    - listitem [ref=f4e597]:
+                      - link "route.js" [ref=f4e598] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/route
+                    - listitem [ref=f4e601]:
+                      - link "Route Groups" [ref=f4e602] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/route-groups
+                    - listitem [ref=f4e605]:
+                      - link "src" [ref=f4e606] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/src-folder
+                    - listitem [ref=f4e609]:
+                      - link "template.js" [ref=f4e610] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/template
+                    - listitem [ref=f4e613]:
+                      - link "unauthorized.js" [ref=f4e614] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/unauthorized
+                    - listitem [ref=f4e619]:
+                      - link "Metadata Files" [ref=f4e620] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/metadata
+                      - list [ref=f4e625]:
+                        - listitem [ref=f4e626]:
+                          - link "favicon, icon, and apple-icon" [ref=f4e627] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/file-conventions/metadata/app-icons
+                        - listitem [ref=f4e630]:
+                          - link "manifest.json" [ref=f4e631] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/file-conventions/metadata/manifest
+                        - listitem [ref=f4e634]:
+                          - link "opengraph-image and twitter-image" [ref=f4e635] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/file-conventions/metadata/opengraph-image
+                        - listitem [ref=f4e638]:
+                          - link "robots.txt" [ref=f4e639] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/file-conventions/metadata/robots
+                        - listitem [ref=f4e642]:
+                          - link "sitemap.xml" [ref=f4e643] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/file-conventions/metadata/sitemap
+                    - listitem [ref=f4e646]:
+                      - link "Route Segment Config" [ref=f4e647] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/file-conventions/route-segment-config
+                      - list [ref=f4e652]:
+                        - listitem [ref=f4e653]:
+                          - link "dynamicParams" [ref=f4e654] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/file-conventions/route-segment-config/dynamicParams
+                        - listitem [ref=f4e657]:
+                          - link "ensureStatic" [ref=f4e658] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/file-conventions/route-segment-config/ensureStatic
+                        - listitem [ref=f4e661]:
+                          - link "instant" [ref=f4e662] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/file-conventions/route-segment-config/instant
+                        - listitem [ref=f4e665]:
+                          - link "maxDuration" [ref=f4e666] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/file-conventions/route-segment-config/maxDuration
+                        - listitem [ref=f4e669]:
+                          - link "preferredRegion (deprecated)" [ref=f4e670] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/file-conventions/route-segment-config/preferredRegion
+                        - listitem [ref=f4e673]:
+                          - link "prefetch config" [ref=f4e674] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/file-conventions/route-segment-config/prefetch
+                        - listitem [ref=f4e677]:
+                          - link "runtime" [ref=f4e678] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/file-conventions/route-segment-config/runtime
+                - listitem [ref=f4e681]:
+                  - link "Functions" [ref=f4e682] [cursor=pointer]:
+                    - /url: /docs/app/api-reference/functions
+                  - list [ref=f4e687]:
+                    - listitem [ref=f4e688]:
+                      - link "after" [ref=f4e689] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/after
+                    - listitem [ref=f4e692]:
+                      - link "cacheLife" [ref=f4e693] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/cacheLife
+                    - listitem [ref=f4e696]:
+                      - link "cacheTag" [ref=f4e697] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/cacheTag
+                    - listitem [ref=f4e700]:
+                      - link "catchError" [ref=f4e701] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/catchError
+                    - listitem [ref=f4e704]:
+                      - link "connection" [ref=f4e705] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/connection
+                    - listitem [ref=f4e708]:
+                      - link "cookies" [ref=f4e709] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/cookies
+                    - listitem [ref=f4e712]:
+                      - link "draftMode" [ref=f4e713] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/draft-mode
+                    - listitem [ref=f4e716]:
+                      - link "fetch" [ref=f4e717] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/fetch
+                    - listitem [ref=f4e720]:
+                      - link "forbidden" [ref=f4e721] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/forbidden
+                    - listitem [ref=f4e726]:
+                      - link "generateImageMetadata" [ref=f4e727] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/generate-image-metadata
+                    - listitem [ref=f4e730]:
+                      - link "generateMetadata" [ref=f4e731] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/generate-metadata
+                    - listitem [ref=f4e734]:
+                      - link "generateSitemaps" [ref=f4e735] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/generate-sitemaps
+                    - listitem [ref=f4e738]:
+                      - link "generateStaticParams" [ref=f4e739] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/generate-static-params
+                    - listitem [ref=f4e742]:
+                      - link "generateViewport" [ref=f4e743] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/generate-viewport
+                    - listitem [ref=f4e746]:
+                      - link "headers" [ref=f4e747] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/headers
+                    - listitem [ref=f4e750]:
+                      - link "ImageResponse" [ref=f4e751] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/image-response
+                    - listitem [ref=f4e754]:
+                      - link "io" [ref=f4e755] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/io
+                    - listitem [ref=f4e758]:
+                      - link "navigation()" [ref=f4e759] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/navigation
+                    - listitem [ref=f4e762]:
+                      - link "NextRequest" [ref=f4e763] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/next-request
+                    - listitem [ref=f4e766]:
+                      - link "NextResponse" [ref=f4e767] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/next-response
+                    - listitem [ref=f4e770]:
+                      - link "root-params" [ref=f4e771] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/next-root-params
+                    - listitem [ref=f4e774]:
+                      - link "notFound" [ref=f4e775] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/not-found
+                    - listitem [ref=f4e778]:
+                      - link "permanentRedirect" [ref=f4e779] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/permanentRedirect
+                    - listitem [ref=f4e782]:
+                      - link "prefetch()" [ref=f4e783] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/prefetch
+                    - listitem [ref=f4e786]:
+                      - link "redirect" [ref=f4e787] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/redirect
+                    - listitem [ref=f4e790]:
+                      - link "refresh" [ref=f4e791] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/refresh
+                    - listitem [ref=f4e794]:
+                      - link "revalidatePath" [ref=f4e795] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/revalidatePath
+                    - listitem [ref=f4e798]:
+                      - link "revalidateTag" [ref=f4e799] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/revalidateTag
+                    - listitem [ref=f4e802]:
+                      - link "unauthorized" [ref=f4e803] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/unauthorized
+                    - listitem [ref=f4e808]:
+                      - link "unstable_cache" [ref=f4e809] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/unstable_cache
+                    - listitem [ref=f4e812]:
+                      - link "unstable_noStore" [ref=f4e813] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/unstable_noStore
+                    - listitem [ref=f4e818]:
+                      - link "unstable_rethrow" [ref=f4e819] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/unstable_rethrow
+                    - listitem [ref=f4e824]:
+                      - link "updateTag" [ref=f4e825] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/updateTag
+                    - listitem [ref=f4e828]:
+                      - link "useLinkStatus" [ref=f4e829] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/use-link-status
+                    - listitem [ref=f4e832]:
+                      - link "useOffline" [ref=f4e833] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/use-offline
+                    - listitem [ref=f4e838]:
+                      - link "useParams" [ref=f4e839] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/use-params
+                    - listitem [ref=f4e842]:
+                      - link "usePathname" [ref=f4e843] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/use-pathname
+                    - listitem [ref=f4e846]:
+                      - link "useReportWebVitals" [ref=f4e847] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/use-report-web-vitals
+                    - listitem [ref=f4e850]:
+                      - link "useRouter" [ref=f4e851] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/use-router
+                    - listitem [ref=f4e854]:
+                      - link "useSearchParams" [ref=f4e855] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/use-search-params
+                    - listitem [ref=f4e858]:
+                      - link "useSelectedLayoutSegment" [ref=f4e859] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/use-selected-layout-segment
+                    - listitem [ref=f4e862]:
+                      - link "useSelectedLayoutSegments" [ref=f4e863] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/use-selected-layout-segments
+                    - listitem [ref=f4e866]:
+                      - link "userAgent" [ref=f4e867] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/functions/userAgent
+                - listitem [ref=f4e870]:
+                  - link "Configuration" [ref=f4e871] [cursor=pointer]:
+                    - /url: /docs/app/api-reference/config
+                  - list [ref=f4e876]:
+                    - listitem [ref=f4e877]:
+                      - link "next.config.js" [ref=f4e878] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/config/next-config-js
+                      - list [ref=f4e883]:
+                        - listitem [ref=f4e884]:
+                          - link "adapterPath" [ref=f4e885] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/adapterPath
+                        - listitem [ref=f4e888]:
+                          - link "agentFeedback" [ref=f4e889] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/agentFeedback
+                        - listitem [ref=f4e894]:
+                          - link "agentRules" [ref=f4e895] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/agentRules
+                        - listitem [ref=f4e898]:
+                          - link "agentUpgrade" [ref=f4e899] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/agentUpgrade
+                        - listitem [ref=f4e904]:
+                          - link "allowedDevOrigins" [ref=f4e905] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/allowedDevOrigins
+                        - listitem [ref=f4e908]:
+                          - link "appDir" [ref=f4e909] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/appDir
+                        - listitem [ref=f4e914]:
+                          - link "assetPrefix" [ref=f4e915] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/assetPrefix
+                        - listitem [ref=f4e918]:
+                          - link "authInterrupts" [ref=f4e919] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/authInterrupts
+                        - listitem [ref=f4e924]:
+                          - link "basePath" [ref=f4e925] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/basePath
+                        - listitem [ref=f4e928]:
+                          - link "cacheComponents" [ref=f4e929] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/cacheComponents
+                        - listitem [ref=f4e932]:
+                          - link "cacheHandlers" [ref=f4e933] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/cacheHandlers
+                        - listitem [ref=f4e936]:
+                          - link "cacheLife" [ref=f4e937] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/cacheLife
+                        - listitem [ref=f4e940]:
+                          - link "cacheMaxMemorySize" [ref=f4e941] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/cacheMaxMemorySize
+                        - listitem [ref=f4e944]:
+                          - link "compress" [ref=f4e945] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/compress
+                        - listitem [ref=f4e948]:
+                          - link "crossOrigin" [ref=f4e949] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/crossOrigin
+                        - listitem [ref=f4e952]:
+                          - link "cssChunking" [ref=f4e953] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/cssChunking
+                        - listitem [ref=f4e958]:
+                          - link "deploymentId" [ref=f4e959] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/deploymentId
+                        - listitem [ref=f4e962]:
+                          - link "devIndicators" [ref=f4e963] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/devIndicators
+                        - listitem [ref=f4e966]:
+                          - link "distDir" [ref=f4e967] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/distDir
+                        - listitem [ref=f4e970]:
+                          - link "enablePrerenderSourceMaps" [ref=f4e971] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/enablePrerenderSourceMaps
+                        - listitem [ref=f4e974]:
+                          - link "env" [ref=f4e975] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/env
+                        - listitem [ref=f4e980]:
+                          - link "expireTime" [ref=f4e981] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/expireTime
+                        - listitem [ref=f4e984]:
+                          - link "exportPathMap" [ref=f4e985] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/exportPathMap
+                        - listitem [ref=f4e990]:
+                          - link "exposeTestingApiInProductionBuild" [ref=f4e991] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/exposeTestingApiInProductionBuild
+                        - listitem [ref=f4e996]:
+                          - link "generateBuildId" [ref=f4e997] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/generateBuildId
+                        - listitem [ref=f4e1000]:
+                          - link "generateEtags" [ref=f4e1001] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/generateEtags
+                        - listitem [ref=f4e1004]:
+                          - link "headers" [ref=f4e1005] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/headers
+                        - listitem [ref=f4e1008]:
+                          - link "htmlLimitedBots" [ref=f4e1009] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/htmlLimitedBots
+                        - listitem [ref=f4e1012]:
+                          - link "httpAgentOptions" [ref=f4e1013] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/httpAgentOptions
+                        - listitem [ref=f4e1016]:
+                          - link "images" [ref=f4e1017] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/images
+                        - listitem [ref=f4e1020]:
+                          - link "cacheHandler" [ref=f4e1021] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/incrementalCacheHandlerPath
+                        - listitem [ref=f4e1024]:
+                          - link "inlineCss" [ref=f4e1025] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/inlineCss
+                        - listitem [ref=f4e1030]:
+                          - link "instrumentationClientInject" [ref=f4e1031] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/instrumentationClientInject
+                        - listitem [ref=f4e1034]:
+                          - link "logging" [ref=f4e1035] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/logging
+                        - listitem [ref=f4e1038]:
+                          - link "mdxRs" [ref=f4e1039] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/mdxRs
+                        - listitem [ref=f4e1044]:
+                          - link "onDemandEntries" [ref=f4e1045] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/onDemandEntries
+                        - listitem [ref=f4e1048]:
+                          - link "optimizePackageImports" [ref=f4e1049] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/optimizePackageImports
+                        - listitem [ref=f4e1054]:
+                          - link "output" [ref=f4e1055] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/output
+                        - listitem [ref=f4e1058]:
+                          - link "outputHashSalt" [ref=f4e1059] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/outputHashSalt
+                        - listitem [ref=f4e1062]:
+                          - link "pageExtensions" [ref=f4e1063] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/pageExtensions
+                        - listitem [ref=f4e1066]:
+                          - link "partialPrefetching" [ref=f4e1067] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/partialPrefetching
+                        - listitem [ref=f4e1070]:
+                          - link "poweredByHeader" [ref=f4e1071] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/poweredByHeader
+                        - listitem [ref=f4e1074]:
+                          - link "prefetchInlining" [ref=f4e1075] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/prefetchInlining
+                        - listitem [ref=f4e1080]:
+                          - link "productionBrowserSourceMaps" [ref=f4e1081] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/productionBrowserSourceMaps
+                        - listitem [ref=f4e1084]:
+                          - link "proxyClientMaxBodySize" [ref=f4e1085] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/proxyClientMaxBodySize
+                        - listitem [ref=f4e1090]:
+                          - link "reactCompiler" [ref=f4e1091] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/reactCompiler
+                        - listitem [ref=f4e1094]:
+                          - link "reactMaxHeadersLength" [ref=f4e1095] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/reactMaxHeadersLength
+                        - listitem [ref=f4e1098]:
+                          - link "reactStrictMode" [ref=f4e1099] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/reactStrictMode
+                        - listitem [ref=f4e1102]:
+                          - link "redirects" [ref=f4e1103] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/redirects
+                        - listitem [ref=f4e1106]:
+                          - link "rewrites" [ref=f4e1107] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/rewrites
+                        - listitem [ref=f4e1110]:
+                          - link "sassOptions" [ref=f4e1111] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/sassOptions
+                        - listitem [ref=f4e1114]:
+                          - link "serverActions" [ref=f4e1115] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/serverActions
+                        - listitem [ref=f4e1118]:
+                          - link "serverComponentsHmrCache" [ref=f4e1119] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/serverComponentsHmrCache
+                        - listitem [ref=f4e1124]:
+                          - link "serverExternalPackages" [ref=f4e1125] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/serverExternalPackages
+                        - listitem [ref=f4e1128]:
+                          - link "skipProxyUrlNormalize" [ref=f4e1129] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/skipProxyUrlNormalize
+                        - listitem [ref=f4e1132]:
+                          - link "skipTrailingSlashRedirect" [ref=f4e1133] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/skipTrailingSlashRedirect
+                        - listitem [ref=f4e1136]:
+                          - link "staleTimes" [ref=f4e1137] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/staleTimes
+                        - listitem [ref=f4e1142]:
+                          - link "staticGeneration*" [ref=f4e1143] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/staticGeneration
+                        - listitem [ref=f4e1148]:
+                          - link "supportsImmutableAssets" [ref=f4e1149] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/supportsImmutableAssets
+                        - listitem [ref=f4e1152]:
+                          - link "taint" [ref=f4e1153] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/taint
+                        - listitem [ref=f4e1158]:
+                          - link "trailingSlash" [ref=f4e1159] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/trailingSlash
+                        - listitem [ref=f4e1162]:
+                          - link "transpilePackages" [ref=f4e1163] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/transpilePackages
+                        - listitem [ref=f4e1166]:
+                          - link "turbopack" [ref=f4e1167] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/turbopack
+                        - listitem [ref=f4e1170]:
+                          - link "turbopackChunking" [ref=f4e1171] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/turbopackChunking
+                        - listitem [ref=f4e1176]:
+                          - link "turbopackFileSystemCache" [ref=f4e1177] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/turbopackFileSystemCache
+                        - listitem [ref=f4e1180]:
+                          - link "turbopackGc" [ref=f4e1181] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/turbopackGc
+                        - listitem [ref=f4e1186]:
+                          - link "turbopack.ignoreIssue" [ref=f4e1187] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/turbopackIgnoreIssue
+                        - listitem [ref=f4e1190]:
+                          - link "turbopackLazyDynamicImports" [ref=f4e1191] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/turbopackLazyDynamicImports
+                        - listitem [ref=f4e1196]:
+                          - link "turbopackLazyDynamicImportsSSR" [ref=f4e1197] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/turbopackLazyDynamicImportsSSR
+                        - listitem [ref=f4e1202]:
+                          - link "turbopackLocalPostcssConfig" [ref=f4e1203] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/turbopackLocalPostcssConfig
+                        - listitem [ref=f4e1206]:
+                          - link "turbopackMemoryEviction" [ref=f4e1207] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/turbopackMemoryEviction
+                        - listitem [ref=f4e1210]:
+                          - link "turbopackPluginRuntimeStrategy" [ref=f4e1211] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/turbopackPluginRuntimeStrategy
+                        - listitem [ref=f4e1216]:
+                          - link "turbopackRustReactCompiler" [ref=f4e1217] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/turbopackRustReactCompiler
+                        - listitem [ref=f4e1222]:
+                          - link "typedRoutes" [ref=f4e1223] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/typedRoutes
+                        - listitem [ref=f4e1226]:
+                          - link "typescript" [ref=f4e1227] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/typescript
+                        - listitem [ref=f4e1230]:
+                          - link "urlImports" [ref=f4e1231] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/urlImports
+                        - listitem [ref=f4e1236]:
+                          - link "useLightningcss" [ref=f4e1237] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/useLightningcss
+                        - listitem [ref=f4e1242]:
+                          - link "useOffline" [ref=f4e1243] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/useOffline
+                        - listitem [ref=f4e1248]:
+                          - link "useTypeScriptCli" [ref=f4e1249] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/useTypeScriptCli
+                        - listitem [ref=f4e1254]:
+                          - link "webpack" [ref=f4e1255] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/webpack
+                        - listitem [ref=f4e1258]:
+                          - link "webVitalsAttribution" [ref=f4e1259] [cursor=pointer]:
+                            - /url: /docs/app/api-reference/config/next-config-js/webVitalsAttribution
+                    - listitem [ref=f4e1264]:
+                      - link "TypeScript" [ref=f4e1265] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/config/typescript
+                    - listitem [ref=f4e1268]:
+                      - link "ESLint" [ref=f4e1269] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/config/eslint
+                - listitem [ref=f4e1272]:
+                  - link "CLI" [ref=f4e1273] [cursor=pointer]:
+                    - /url: /docs/app/api-reference/cli
+                  - list [ref=f4e1278]:
+                    - listitem [ref=f4e1279]:
+                      - link "create-next-app" [ref=f4e1280] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/cli/create-next-app
+                    - listitem [ref=f4e1283]:
+                      - link "next CLI" [ref=f4e1284] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/cli/next
+                - listitem [ref=f4e1287]:
+                  - link "Adapters" [ref=f4e1288] [cursor=pointer]:
+                    - /url: /docs/app/api-reference/adapters
+                  - list [ref=f4e1293]:
+                    - listitem [ref=f4e1294]:
+                      - link "Configuration" [ref=f4e1295] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/configuration
+                    - listitem [ref=f4e1298]:
+                      - link "Creating an Adapter" [ref=f4e1299] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/creating-an-adapter
+                    - listitem [ref=f4e1302]:
+                      - link "API Reference" [ref=f4e1303] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/api-reference
+                    - listitem [ref=f4e1306]:
+                      - link "Testing Adapters" [ref=f4e1307] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/testing-adapters
+                    - listitem [ref=f4e1310]:
+                      - link "Routing with @next/routing" [ref=f4e1311] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/routing-with-next-routing
+                    - listitem [ref=f4e1314]:
+                      - link "Implementing PPR in an Adapter" [ref=f4e1315] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/implementing-ppr-in-an-adapter
+                    - listitem [ref=f4e1318]:
+                      - link "Runtime Integration" [ref=f4e1319] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/runtime-integration
+                    - listitem [ref=f4e1322]:
+                      - link "Invoking Entrypoints" [ref=f4e1323] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/invoking-entrypoints
+                    - listitem [ref=f4e1326]:
+                      - link "Output Types" [ref=f4e1327] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/output-types
+                    - listitem [ref=f4e1330]:
+                      - link "Routing Information" [ref=f4e1331] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/routing-information
+                    - listitem [ref=f4e1334]:
+                      - link "Use Cases" [ref=f4e1335] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/use-cases
+                    - listitem [ref=f4e1338]:
+                      - link "Supporting Immutable Static Assets" [ref=f4e1339] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/immutable-static-assets
+                    - listitem [ref=f4e1342]:
+                      - link "Supported Providers" [ref=f4e1343] [cursor=pointer]:
+                        - /url: /docs/app/api-reference/adapters/supported-providers
+                - listitem [ref=f4e1346]:
+                  - link "Edge Runtime" [ref=f4e1347] [cursor=pointer]:
+                    - /url: /docs/app/api-reference/edge
+                - listitem [ref=f4e1350]:
+                  - link "Turbopack" [ref=f4e1351] [cursor=pointer]:
+                    - /url: /docs/app/api-reference/turbopack
+          - list [ref=f4e1354]:
+            - listitem [ref=f4e1355]:
+              - link "Glossary" [ref=f4e1356] [cursor=pointer]:
+                - /url: /docs/app/glossary
+          - list [ref=f4e1359]:
+            - listitem [ref=f4e1360]:
+              - link "Architecture" [ref=f4e1361] [cursor=pointer]:
+                - /url: /docs/architecture
+              - list [ref=f4e1366]:
+                - listitem [ref=f4e1367]:
+                  - link "Accessibility" [ref=f4e1368] [cursor=pointer]:
+                    - /url: /docs/architecture/accessibility
+                - listitem [ref=f4e1371]:
+                  - link "Fast Refresh" [ref=f4e1372] [cursor=pointer]:
+                    - /url: /docs/architecture/fast-refresh
+                - listitem [ref=f4e1375]:
+                  - link "Next.js Compiler" [ref=f4e1376] [cursor=pointer]:
+                    - /url: /docs/architecture/nextjs-compiler
+                - listitem [ref=f4e1379]:
+                  - link "Supported Browsers" [ref=f4e1380] [cursor=pointer]:
+                    - /url: /docs/architecture/supported-browsers
+          - list [ref=f4e1383]:
+            - listitem [ref=f4e1384]:
+              - link "Community" [ref=f4e1385] [cursor=pointer]:
+                - /url: /docs/community
+              - list [ref=f4e1390]:
+                - listitem [ref=f4e1391]:
+                  - link "Contribution Guide" [ref=f4e1392] [cursor=pointer]:
+                    - /url: /docs/community/contribution-guide
+                - listitem [ref=f4e1395]:
+                  - link "Rspack" [ref=f4e1396] [cursor=pointer]:
+                    - /url: /docs/community/rspack
+      - navigation [ref=f4e1401]:
+        - generic [ref=f4e1402]:
+          - generic [ref=f4e1403]: On this page
+          - list [ref=f4e1407]:
+            - listitem [ref=f4e1408]:
+              - link "Quick start" [ref=f4e1409] [cursor=pointer]:
+                - /url: "#quick-start"
+            - listitem [ref=f4e1410]:
+              - link "System requirements" [ref=f4e1411] [cursor=pointer]:
+                - /url: "#system-requirements"
+            - listitem [ref=f4e1412]:
+              - link "Supported browsers" [ref=f4e1413] [cursor=pointer]:
+                - /url: "#supported-browsers"
+            - listitem [ref=f4e1414]:
+              - link "Create with the CLI" [ref=f4e1415] [cursor=pointer]:
+                - /url: "#create-with-the-cli"
+            - listitem [ref=f4e1416]:
+              - link "Manual installation" [ref=f4e1417] [cursor=pointer]:
+                - /url: "#manual-installation"
+            - listitem [ref=f4e1418]:
+              - link "Create the app directory" [ref=f4e1419] [cursor=pointer]:
+                - /url: "#create-the-app-directory"
+            - listitem [ref=f4e1420]:
+              - link "Create the public folder (optional)" [ref=f4e1421] [cursor=pointer]:
+                - /url: "#create-the-public-folder-optional"
+            - listitem [ref=f4e1422]:
+              - link "Run the development server" [ref=f4e1423] [cursor=pointer]:
+                - /url: "#run-the-development-server"
+            - listitem [ref=f4e1424]:
+              - link "Set up TypeScript" [ref=f4e1425] [cursor=pointer]:
+                - /url: "#set-up-typescript"
+            - listitem [ref=f4e1426]:
+              - link "IDE Plugin" [ref=f4e1427] [cursor=pointer]:
+                - /url: "#ide-plugin"
+            - listitem [ref=f4e1428]:
+              - link "Set up your editor" [ref=f4e1429] [cursor=pointer]:
+                - /url: "#set-up-your-editor"
+            - listitem [ref=f4e1430]:
+              - link "Set up linting" [ref=f4e1431] [cursor=pointer]:
+                - /url: "#set-up-linting"
+            - listitem [ref=f4e1432]:
+              - link "Set up Absolute Imports and Module Path Aliases" [ref=f4e1433] [cursor=pointer]:
+                - /url: "#set-up-absolute-imports-and-module-path-aliases"
+            - listitem [ref=f4e1434]:
+              - link "Upgrade your Next.js app" [ref=f4e1435] [cursor=pointer]:
+                - /url: "#upgrade-your-nextjs-app"
+          - link "Edit this page on GitHub" [ref=f4e1437] [cursor=pointer]:
+            - /url: https://github.com/vercel/next.js/edit/canary/docs/01-app/01-getting-started/01-installation.mdx
+          - button "Scroll to top" [ref=f4e1440] [cursor=pointer]
+      - article [ref=f4e1443]:
+        - generic [ref=f4e1444]:
+          - generic [ref=f4e1445]:
+            - text: "This page is also available as Markdown: request this page's URL with an"
+            - code [ref=f4e1446]: "Accept: text/markdown"
+            - text: header. For an index of Next.js documentation, see
+            - link "/docs/llms.txt" [ref=f4e1447] [cursor=pointer]:
+              - /url: /docs/llms.txt
+            - text: .
+          - generic [ref=f4e1448]:
+            - navigation "Breadcrumb" [ref=f4e1449]:
+              - link "App Router" [ref=f4e1450] [cursor=pointer]:
+                - /url: /docs/app
+              - link "Getting Started" [ref=f4e1454] [cursor=pointer]:
+                - /url: /docs/app/getting-started
+              - generic [ref=f4e1458]: Installation
+            - generic [ref=f4e1459]:
+              - button "Copy page" [ref=f4e1460] [cursor=pointer]
+              - button "Copy page" [ref=f4e1462] [cursor=pointer]
+          - generic [ref=f4e1467]:
+            - heading "Installation" [level=1] [ref=f4e1468]
+            - generic [ref=f4e1469]: Last updated October 2, 2026
+            - paragraph [ref=f4e1470]: Create a new Next.js app and run it locally.
+            - heading "Quick startLink to this section" [level=2] [ref=f4e1471]:
+              - text: Quick start
+              - link "Link to this section":
+                - /url: "#quick-start"
+            - list [ref=f4e1472]:
+              - listitem [ref=f4e1473]:
+                - text: Create a new Next.js app named
+                - code [ref=f4e1474]: my-app
+              - listitem [ref=f4e1475]:
+                - code [ref=f4e1476]: cd my-app
+                - text: and start the dev server.
+              - listitem [ref=f4e1477]:
+                - text: Visit
+                - code [ref=f4e1478]: http://localhost:3000
+                - text: .
+            - generic [ref=f4e1479]:
+              - tablist [ref=f4e1481]:
+                - tab "pnpm" [selected] [ref=f4e1482] [cursor=pointer]
+                - tab "npm" [ref=f4e1483] [cursor=pointer]
+                - tab "yarn" [ref=f4e1484] [cursor=pointer]
+                - tab "bun" [ref=f4e1485] [cursor=pointer]
+              - generic [ref=f4e1486]:
+                - generic [ref=f4e1487]: Terminal
+                - button "Copy to clipboard" [ref=f4e1493] [cursor=pointer]
+              - code [ref=f4e1504]:
+                - generic [ref=f4e1505]: pnpm create next-app@latest my-app --yes
+                - generic [ref=f4e1506]: cd my-app
+                - generic [ref=f4e1507]: pnpm dev
+            - list [ref=f4e1508]:
+              - listitem [ref=f4e1509]:
+                - text: "-"
+                - code [ref=f4e1510]: "--yes"
+                - text: skips prompts using saved preferences or defaults. The default setup enables TypeScript, Tailwind CSS, ESLint, App Router, and Turbopack, with import alias
+                - code [ref=f4e1511]: "@/*"
+                - text: ", and includes"
+                - code [ref=f4e1512]: AGENTS.md
+                - text: to guide coding agents to write up-to-date Next.js code.
+            - heading "System requirementsLink to this section" [level=2] [ref=f4e1513]:
+              - text: System requirements
+              - link "Link to this section":
+                - /url: "#system-requirements"
+            - paragraph [ref=f4e1514]: "Before you begin, make sure your development environment meets the following requirements:"
+            - list [ref=f4e1515]:
+              - listitem [ref=f4e1516]:
+                - text: "- Minimum Node.js version:"
+                - link [ref=f4e1517] [cursor=pointer]:
+                  - /url: https://nodejs.org/
+              - listitem [ref=f4e1521]: "- Operating systems: macOS, Windows (including WSL), and Linux."
+            - heading "Supported browsersLink to this section" [level=2] [ref=f4e1522]:
+              - text: Supported browsers
+              - link "Link to this section":
+                - /url: "#supported-browsers"
+            - paragraph [ref=f4e1523]: Next.js supports modern browsers with zero configuration.
+            - list [ref=f4e1524]:
+              - listitem [ref=f4e1525]: "- Chrome 111+"
+              - listitem [ref=f4e1526]: "- Edge 111+"
+              - listitem [ref=f4e1527]: "- Firefox 111+"
+              - listitem [ref=f4e1528]: "- Safari 16.4+"
+            - paragraph [ref=f4e1529]:
+              - text: Learn more about
+              - link "browser support" [ref=f4e1530] [cursor=pointer]:
+                - /url: /docs/architecture/supported-browsers
+              - text: ", including how to configure polyfills and target specific browsers."
+            - heading "Create with the CLILink to this section" [level=2] [ref=f4e1531]:
+              - text: Create with the CLI
+              - link "Link to this section":
+                - /url: "#create-with-the-cli"
+            - paragraph [ref=f4e1532]:
+              - text: The quickest way to create a new Next.js app is using
+              - link [ref=f4e1533] [cursor=pointer]:
+                - /url: /docs/app/api-reference/cli/create-next-app
+                - code [ref=f4e1534]: create-next-app
+              - text: ", which sets up everything automatically for you. To create a project, run:"
+            - generic [ref=f4e1535]:
+              - tablist [ref=f4e1537]:
+                - tab "pnpm" [selected] [ref=f4e1538] [cursor=pointer]
+                - tab "npm" [ref=f4e1539] [cursor=pointer]
+                - tab "yarn" [ref=f4e1540] [cursor=pointer]
+                - tab "bun" [ref=f4e1541] [cursor=pointer]
+              - generic [ref=f4e1542]:
+                - generic [ref=f4e1543]: Terminal
+                - button "Copy to clipboard" [ref=f4e1549] [cursor=pointer]
+              - code [ref=f4e1560]:
+                - generic [ref=f4e1561]: pnpm create next-app
+            - paragraph [ref=f4e1562]: "On installation, you'll see the following prompts:"
+            - generic [ref=f4e1563]:
+              - generic [ref=f4e1564]:
+                - generic [ref=f4e1565]: Terminal
+                - button "Copy to clipboard" [ref=f4e1571] [cursor=pointer]
+              - code [ref=f4e1582]:
+                - generic [ref=f4e1583]: What is your project named? my-app
+                - generic [ref=f4e1584]: Would you like to use the recommended Next.js defaults?
+                - generic [ref=f4e1585]: Yes, use recommended defaults - TypeScript, ESLint, No React Compiler, Tailwind CSS, No src/ directory, App Router, Cache Components, AGENTS.md
+                - generic [ref=f4e1586]: No, reuse previous settings
+                - generic [ref=f4e1587]: No, customize settings - Choose your own preferences
+            - paragraph [ref=f4e1588]:
+              - text: If you choose to
+              - code [ref=f4e1589]: customize settings
+              - text: ", you'll see the following prompts:"
+            - generic [ref=f4e1590]:
+              - generic [ref=f4e1591]:
+                - generic [ref=f4e1592]: Terminal
+                - button "Copy to clipboard" [ref=f4e1598] [cursor=pointer]
+              - code [ref=f4e1609]:
+                - generic [ref=f4e1610]: Would you like to use TypeScript? No / Yes
+                - generic [ref=f4e1611]: Which linter would you like to use? ESLint / Biome / None
+                - generic [ref=f4e1612]: Would you like to use React Compiler? No / Yes
+                - generic [ref=f4e1613]: Would you like to use Tailwind CSS? No / Yes
+                - generic [ref=f4e1614]: "Would you like your code inside a `src/` directory? No / Yes"
+                - generic [ref=f4e1615]: Would you like to use App Router? (recommended) No / Yes
+                - generic [ref=f4e1616]: Would you like to use Cache Components? No / Yes
+                - generic [ref=f4e1617]: "Would you like to customize the import alias (`@/*` by default)? No / Yes"
+                - generic [ref=f4e1618]: What import alias would you like configured? @/*
+                - generic [ref=f4e1619]: Would you like to include AGENTS.md to guide coding agents to write up-to-date Next.js code? No / Yes
+            - paragraph [ref=f4e1620]:
+              - text: After the prompts,
+              - link [ref=f4e1621] [cursor=pointer]:
+                - /url: /docs/app/api-reference/cli/create-next-app
+                - code [ref=f4e1622]: create-next-app
+              - text: will create a folder with your project name and install the required dependencies.
+            - heading "Manual installationLink to this section" [level=2] [ref=f4e1623]:
+              - text: Manual installation
+              - link "Link to this section":
+                - /url: "#manual-installation"
+            - paragraph [ref=f4e1624]: "To manually create a new Next.js app, install the required packages:"
+            - generic [ref=f4e1625]:
+              - tablist [ref=f4e1627]:
+                - tab "pnpm" [selected] [ref=f4e1628] [cursor=pointer]
+                - tab "npm" [ref=f4e1629] [cursor=pointer]
+                - tab "yarn" [ref=f4e1630] [cursor=pointer]
+                - tab "bun" [ref=f4e1631] [cursor=pointer]
+              - generic [ref=f4e1632]:
+                - generic [ref=f4e1633]: Terminal
+                - button "Copy to clipboard" [ref=f4e1639] [cursor=pointer]
+              - code [ref=f4e1650]:
+                - generic [ref=f4e1651]: pnpm i next@latest react@latest react-dom@latest
+            - blockquote [ref=f4e1652]:
+              - paragraph [ref=f4e1653]:
+                - strong [ref=f4e1654]: Good to know
+                - text: ":"
+              - list [ref=f4e1655]:
+                - listitem [ref=f4e1656]:
+                  - text: "- The"
+                  - code [ref=f4e1657]: App Router
+                  - text: uses
+                  - link [ref=f4e1658] [cursor=pointer]:
+                    - /url: https://react.dev/blog/2023/05/03/react-canaries
+                  - text: built-in, which include all the stable React 19 changes, as well as newer features being validated in frameworks, but you should still declare react and react-dom in package.json for tooling and ecosystem compatibility.
+                - listitem [ref=f4e1662]:
+                  - text: "- The"
+                  - code [ref=f4e1663]: Pages Router
+                  - text: uses the React version from your
+                  - code [ref=f4e1664]: package.json
+                  - text: .
+            - paragraph [ref=f4e1665]:
+              - text: Then, add the following scripts to your
+              - code [ref=f4e1666]: package.json
+              - text: "file:"
+            - generic [ref=f4e1667]:
+              - generic [ref=f4e1668]:
+                - generic [ref=f4e1669]: package.json
+                - button "Copy to clipboard" [ref=f4e1675] [cursor=pointer]
+              - code [ref=f4e1686]:
+                - generic [ref=f4e1687]: "{"
+                - generic [ref=f4e1688]: "\"scripts\": {"
+                - generic [ref=f4e1689]: "\"dev\": \"next dev\","
+                - generic [ref=f4e1690]: "\"build\": \"next build\","
+                - generic [ref=f4e1691]: "\"start\": \"next start\","
+                - generic [ref=f4e1692]: "\"lint\": \"eslint\","
+                - generic [ref=f4e1693]: "\"lint:fix\": \"eslint --fix\""
+                - generic [ref=f4e1694]: "}"
+                - generic [ref=f4e1695]: "}"
+            - paragraph [ref=f4e1696]: "These scripts refer to the different stages of developing an application:"
+            - list [ref=f4e1697]:
+              - listitem [ref=f4e1698]:
+                - text: "-"
+                - code [ref=f4e1699]: next dev
+                - text: ": Starts the development server using Turbopack (default bundler)."
+              - listitem [ref=f4e1700]:
+                - text: "-"
+                - code [ref=f4e1701]: next build
+                - text: ": Builds the application for production."
+              - listitem [ref=f4e1702]:
+                - text: "-"
+                - code [ref=f4e1703]: next start
+                - text: ": Starts the production server."
+              - listitem [ref=f4e1704]:
+                - text: "-"
+                - code [ref=f4e1705]: eslint
+                - text: ": Runs ESLint."
+            - paragraph [ref=f4e1706]:
+              - text: Turbopack is now the default bundler. To use Webpack run
+              - code [ref=f4e1707]: next dev --webpack
+              - text: or
+              - code [ref=f4e1708]: next build --webpack
+              - text: . See the
+              - link "Turbopack docs" [ref=f4e1709] [cursor=pointer]:
+                - /url: /docs/app/api-reference/turbopack
+              - text: for configuration details.
+            - heading [level=3] [ref=f4e1710]:
+              - text: Create the
+              - code [ref=f4e1711]: app
+              - text: directory
+              - link "Link to this section":
+                - /url: "#create-the-app-directory"
+            - paragraph [ref=f4e1712]: Next.js uses file-system routing, which means the routes in your application are determined by how you structure your files.
+            - paragraph [ref=f4e1713]:
+              - text: Create an
+              - code [ref=f4e1714]: app
+              - text: folder. Then, inside
+              - code [ref=f4e1715]: app
+              - text: ", create a"
+              - code [ref=f4e1716]: layout.tsx
+              - text: file. This file is the
+              - link "root layout" [ref=f4e1717] [cursor=pointer]:
+                - /url: /docs/app/api-reference/file-conventions/layout#root-layout
+              - text: . It's required and must contain the
+              - code [ref=f4e1718]: <html>
+              - text: and
+              - code [ref=f4e1719]: <body>
+              - text: tags.
+            - generic [ref=f4e1720]:
+              - generic [ref=f4e1721]:
+                - generic [ref=f4e1722]: app/layout.tsx
+                - generic [ref=f4e1729]:
+                  - generic [ref=f4e1730]:
+                    - generic [ref=f4e1732] [cursor=pointer]: TypeScript
+                    - combobox [ref=f4e1735] [cursor=pointer]:
+                      - option "JavaScript"
+                      - option "TypeScript" [selected]
+                  - button "Copy to clipboard" [ref=f4e1736] [cursor=pointer]
+              - code [ref=f4e1747]:
+                - generic [ref=f4e1748]: "export default function RootLayout({"
+                - generic [ref=f4e1749]: children,
+                - generic [ref=f4e1750]: "}: {"
+                - generic [ref=f4e1751]: "children: React.ReactNode"
+                - generic [ref=f4e1752]: "}) {"
+                - generic [ref=f4e1753]: return (
+                - generic [ref=f4e1754]: <html lang="en">
+                - generic [ref=f4e1755]: "<body>{children}</body>"
+                - generic [ref=f4e1756]: </html>
+                - generic [ref=f4e1757]: )
+                - generic [ref=f4e1758]: "}"
+            - paragraph [ref=f4e1759]:
+              - text: Create a home page
+              - code [ref=f4e1760]: app/page.tsx
+              - text: "with some initial content:"
+            - generic [ref=f4e1761]:
+              - generic [ref=f4e1762]:
+                - generic [ref=f4e1763]: app/page.tsx
+                - generic [ref=f4e1770]:
+                  - generic [ref=f4e1771]:
+                    - generic [ref=f4e1773] [cursor=pointer]: TypeScript
+                    - combobox [ref=f4e1776] [cursor=pointer]:
+                      - option "JavaScript"
+                      - option "TypeScript" [selected]
+                  - button "Copy to clipboard" [ref=f4e1777] [cursor=pointer]
+              - code [ref=f4e1788]:
+                - generic [ref=f4e1789]: "export default function Page() {"
+                - generic [ref=f4e1790]: return <h1>Hello, Next.js!</h1>
+                - generic [ref=f4e1791]: "}"
+            - paragraph [ref=f4e1792]:
+              - text: Both
+              - code [ref=f4e1793]: layout.tsx
+              - text: and
+              - code [ref=f4e1794]: page.tsx
+              - text: will be rendered when the user visits the root of your application (
+              - code [ref=f4e1795]: /
+              - text: ).
+            - figure [ref=f4e1796]:
+              - img "App Folder Structure" [ref=f4e1797]
+            - blockquote [ref=f4e1798]:
+              - paragraph [ref=f4e1799]:
+                - strong [ref=f4e1800]: Good to know
+                - text: ":"
+              - list [ref=f4e1801]:
+                - listitem [ref=f4e1802]:
+                  - text: "- If you forget to create the root layout, Next.js will automatically create this file when running the development server with"
+                  - code [ref=f4e1803]: next dev
+                  - text: .
+                - listitem [ref=f4e1804]:
+                  - text: "- You can optionally use a"
+                  - link [ref=f4e1805] [cursor=pointer]:
+                    - /url: /docs/app/api-reference/file-conventions/src-folder
+                    - code [ref=f4e1806]: src
+                    - text: folder
+                  - text: in the root of your project to separate your application's code from configuration files.
+            - heading [level=3] [ref=f4e1807]:
+              - text: Create the
+              - code [ref=f4e1808]: public
+              - text: folder (optional)
+              - link "Link to this section":
+                - /url: "#create-the-public-folder-optional"
+            - paragraph [ref=f4e1809]:
+              - text: Create a
+              - link [ref=f4e1810] [cursor=pointer]:
+                - /url: /docs/app/api-reference/file-conventions/public-folder
+                - code [ref=f4e1811]: public
+                - text: folder
+              - text: at the root of your project to store static assets such as images, fonts, etc. Files inside
+              - code [ref=f4e1812]: public
+              - text: can then be referenced by your code starting from the base URL (
+              - code [ref=f4e1813]: /
+              - text: ).
+            - paragraph [ref=f4e1814]:
+              - text: You can then reference these assets using the root path (
+              - code [ref=f4e1815]: /
+              - text: ). For example,
+              - code [ref=f4e1816]: public/profile.png
+              - text: can be referenced as
+              - code [ref=f4e1817]: /profile.png
+              - text: ":"
+            - generic [ref=f4e1818]:
+              - generic [ref=f4e1819]:
+                - generic [ref=f4e1820]: app/page.tsx
+                - generic [ref=f4e1827]:
+                  - generic [ref=f4e1828]:
+                    - generic [ref=f4e1830] [cursor=pointer]: TypeScript
+                    - combobox [ref=f4e1833] [cursor=pointer]:
+                      - option "JavaScript"
+                      - option "TypeScript" [selected]
+                  - button "Copy to clipboard" [ref=f4e1834] [cursor=pointer]
+              - code [ref=f4e1845]:
+                - generic [ref=f4e1846]: import Image from 'next/image'
+                - generic [ref=f4e1848]: "export default function Page() {"
+                - generic [ref=f4e1849]: "return <Image src=\"/profile.png\" alt=\"Profile\" width={100} height={100} />"
+                - generic [ref=f4e1850]: "}"
+            - heading "Run the development serverLink to this section" [level=2] [ref=f4e1851]:
+              - text: Run the development server
+              - link "Link to this section":
+                - /url: "#run-the-development-server"
+            - list [ref=f4e1852]:
+              - listitem [ref=f4e1853]:
+                - text: Run
+                - code [ref=f4e1854]: npm run dev
+                - text: to start the development server.
+              - listitem [ref=f4e1855]:
+                - text: Visit
+                - code [ref=f4e1856]: http://localhost:3000
+                - text: to view your application.
+              - listitem [ref=f4e1857]:
+                - text: Edit the
+                - code [ref=f4e1858]: app/page.tsx
+                - text: file and save it to see the updated result in your browser.
+            - heading "Set up TypeScriptLink to this section" [level=2] [ref=f4e1859]:
+              - text: Set up TypeScript
+              - link "Link to this section":
+                - /url: "#set-up-typescript"
+            - blockquote [ref=f4e1860]:
+              - paragraph [ref=f4e1861]:
+                - text: "Minimum TypeScript version:"
+                - code [ref=f4e1862]: v5.1.0
+            - paragraph [ref=f4e1863]:
+              - text: Next.js comes with built-in TypeScript support. To add TypeScript to your project, rename a file to
+              - code [ref=f4e1864]: .ts
+              - text: /
+              - code [ref=f4e1865]: .tsx
+              - text: and run
+              - code [ref=f4e1866]: next dev
+              - text: . Next.js will automatically install the necessary dependencies and add a
+              - code [ref=f4e1867]: tsconfig.json
+              - text: file with the recommended config options.
+            - heading "IDE PluginLink to this section" [level=3] [ref=f4e1868]:
+              - text: IDE Plugin
+              - link "Link to this section":
+                - /url: "#ide-plugin"
+            - paragraph [ref=f4e1869]: Next.js includes a custom TypeScript plugin and type checker, which VSCode and other code editors can use for advanced type-checking and auto-completion.
+            - paragraph [ref=f4e1870]: "You can enable the plugin in VS Code by:"
+            - list [ref=f4e1871]:
+              - listitem [ref=f4e1872]:
+                - text: Opening the command palette (
+                - code [ref=f4e1873]: Ctrl/⌘
+                - text: +
+                - code [ref=f4e1874]: Shift
+                - text: +
+                - code [ref=f4e1875]: P
+                - text: )
+              - listitem [ref=f4e1876]: "Searching for \"TypeScript: Select TypeScript Version\""
+              - listitem [ref=f4e1877]: Selecting "Use Workspace Version"
+            - figure [ref=f4e1878]:
+              - img "TypeScript Command Palette" [ref=f4e1879]
+            - paragraph [ref=f4e1880]:
+              - text: See the
+              - link "TypeScript reference" [ref=f4e1881] [cursor=pointer]:
+                - /url: /docs/app/api-reference/config/typescript
+              - text: page for more information.
+            - heading "Set up your editorLink to this section" [level=2] [ref=f4e1882]:
+              - text: Set up your editor
+              - link "Link to this section":
+                - /url: "#set-up-your-editor"
+            - paragraph [ref=f4e1883]:
+              - text: The App Router names files by convention, like
+              - code [ref=f4e1884]: page.tsx
+              - text: ","
+              - code [ref=f4e1885]: layout.tsx
+              - text: ", and"
+              - code [ref=f4e1886]: route.ts
+              - text: ", so your editor quickly fills with same-named tabs. Label each tab with its enclosing folders, like"
+              - code [ref=f4e1887]: blog/[id]
+              - text: ", so you can tell them apart."
+            - paragraph [ref=f4e1888]:
+              - text: In VS Code 1.88+ or Cursor, add
+              - link [ref=f4e1889] [cursor=pointer]:
+                - /url: https://code.visualstudio.com/updates/v1_88#_customize-editor-labels
+              - text: to
+              - code [ref=f4e1893]: .vscode/settings.json
+              - text: . Labeling two folders deep keeps dynamic routes like
+              - code [ref=f4e1894]: blog/[id]/page.tsx
+              - text: from all collapsing to the same
+              - code [ref=f4e1895]: "[id]"
+              - text: "label:"
+            - generic [ref=f4e1896]:
+              - generic [ref=f4e1897]:
+                - generic [ref=f4e1898]: .vscode/settings.json
+                - button "Copy to clipboard" [ref=f4e1904] [cursor=pointer]
+              - code [ref=f4e1915]:
+                - generic [ref=f4e1916]: "{"
+                - generic [ref=f4e1917]: "\"workbench.editor.customLabels.patterns\": {"
+                - generic [ref=f4e1918]: "\"**/app/**/page.tsx\": \"${dirname(1)}/${dirname} - page.tsx\","
+                - generic [ref=f4e1919]: "\"**/app/**/layout.tsx\": \"${dirname(1)}/${dirname} - layout.tsx\","
+                - generic [ref=f4e1920]: "\"**/app/**/loading.tsx\": \"${dirname(1)}/${dirname} - loading.tsx\","
+                - generic [ref=f4e1921]: "\"**/app/**/error.tsx\": \"${dirname(1)}/${dirname} - error.tsx\","
+                - generic [ref=f4e1922]: "\"**/app/**/not-found.tsx\": \"${dirname(1)}/${dirname} - not-found.tsx\","
+                - generic [ref=f4e1923]: "\"**/app/**/template.tsx\": \"${dirname(1)}/${dirname} - template.tsx\","
+                - generic [ref=f4e1924]: "\"**/app/**/default.tsx\": \"${dirname(1)}/${dirname} - default.tsx\","
+                - generic [ref=f4e1925]: "\"**/app/**/route.ts\": \"${dirname(1)}/${dirname} - route.ts\""
+                - generic [ref=f4e1926]: "}"
+                - generic [ref=f4e1927]: "}"
+            - paragraph [ref=f4e1928]: "Or copy this prompt to have your coding agent set it up:"
+            - figure "Prompt Copy prompt" [ref=f4e1929]:
+              - generic [ref=f4e1930]:
+                - generic [ref=f4e1931]: Prompt
+                - button "Copy prompt" [ref=f4e1932] [cursor=pointer]
+              - generic [ref=f4e1941]: Set up custom editor labels so my Next.js App Router files are easy to tell apart. Read https://nextjs.org/docs/app/getting-started/installation#set-up-your-editor and add the workbench.editor.customLabels.patterns config shown there to my .vscode/settings.json, creating the file if it doesn't exist. Adjust the labels to taste. If I use a different editor, apply the equivalent setting or tell me it's automatic, and leave my other settings untouched.
+            - blockquote [ref=f4e1943]:
+              - paragraph [ref=f4e1944]:
+                - strong [ref=f4e1945]: "Good to know:"
+                - text: JetBrains IDEs (WebStorm, IntelliJ) show the folder for same-named files automatically, so no setup is needed.
+            - heading "Set up lintingLink to this section" [level=2] [ref=f4e1946]:
+              - text: Set up linting
+              - link "Link to this section":
+                - /url: "#set-up-linting"
+            - paragraph [ref=f4e1947]:
+              - text: Next.js supports linting with either ESLint or Biome. Choose a linter and run it directly via
+              - code [ref=f4e1948]: package.json
+              - text: scripts.
+            - list [ref=f4e1949]:
+              - listitem [ref=f4e1950]:
+                - text: "- Use"
+                - strong [ref=f4e1951]: ESLint
+                - text: "(comprehensive rules):"
+            - generic [ref=f4e1952]:
+              - generic [ref=f4e1953]:
+                - generic [ref=f4e1954]: package.json
+                - button "Copy to clipboard" [ref=f4e1960] [cursor=pointer]
+              - code [ref=f4e1971]:
+                - generic [ref=f4e1972]: "{"
+                - generic [ref=f4e1973]: "\"scripts\": {"
+                - generic [ref=f4e1974]: "\"lint\": \"eslint\","
+                - generic [ref=f4e1975]: "\"lint:fix\": \"eslint --fix\""
+                - generic [ref=f4e1976]: "}"
+                - generic [ref=f4e1977]: "}"
+            - list [ref=f4e1978]:
+              - listitem [ref=f4e1979]:
+                - text: "- Or use"
+                - strong [ref=f4e1980]: Biome
+                - text: "(fast linter + formatter):"
+            - generic [ref=f4e1981]:
+              - generic [ref=f4e1982]:
+                - generic [ref=f4e1983]: package.json
+                - button "Copy to clipboard" [ref=f4e1989] [cursor=pointer]
+              - code [ref=f4e2000]:
+                - generic [ref=f4e2001]: "{"
+                - generic [ref=f4e2002]: "\"scripts\": {"
+                - generic [ref=f4e2003]: "\"lint\": \"biome check\","
+                - generic [ref=f4e2004]: "\"format\": \"biome format --write\""
+                - generic [ref=f4e2005]: "}"
+                - generic [ref=f4e2006]: "}"
+            - paragraph [ref=f4e2007]:
+              - text: If your project previously used
+              - code [ref=f4e2008]: next lint
+              - text: ", migrate your scripts to the ESLint CLI with the codemod:"
+            - generic [ref=f4e2009]:
+              - generic [ref=f4e2010]:
+                - generic [ref=f4e2011]: Terminal
+                - button "Copy to clipboard" [ref=f4e2017] [cursor=pointer]
+              - code [ref=f4e2028]:
+                - generic [ref=f4e2029]: npx @next/codemod@canary next-lint-to-eslint-cli .
+            - paragraph [ref=f4e2030]:
+              - text: If you use ESLint, create an explicit config (recommended
+              - code [ref=f4e2031]: eslint.config.mjs
+              - text: ). ESLint supports both
+              - link [ref=f4e2032] [cursor=pointer]:
+                - /url: https://eslint.org/docs/latest/use/configure/configuration-files#configuring-eslint
+                - text: the legacy
+                - code [ref=f4e2033]: .eslintrc.*
+                - text: and the newer
+                - code [ref=f4e2034]: eslint.config.mjs
+                - text: formats
+              - text: . See the
+              - link "ESLint API reference" [ref=f4e2038] [cursor=pointer]:
+                - /url: /docs/app/api-reference/config/eslint#with-core-web-vitals
+              - text: for a recommended setup.
+            - blockquote [ref=f4e2039]:
+              - paragraph [ref=f4e2040]:
+                - strong [ref=f4e2041]: Good to know
+                - text: ": Starting with Next.js 16,"
+                - code [ref=f4e2042]: next build
+                - text: no longer runs the linter automatically. Instead, you can run your linter through NPM scripts.
+            - paragraph [ref=f4e2043]:
+              - text: See the
+              - link "ESLint Plugin" [ref=f4e2044] [cursor=pointer]:
+                - /url: /docs/app/api-reference/config/eslint
+              - text: page for more information.
+            - heading "Set up Absolute Imports and Module Path AliasesLink to this section" [level=2] [ref=f4e2045]:
+              - text: Set up Absolute Imports and Module Path Aliases
+              - link "Link to this section":
+                - /url: "#set-up-absolute-imports-and-module-path-aliases"
+            - paragraph [ref=f4e2046]:
+              - text: Next.js has in-built support for the
+              - code [ref=f4e2047]: "\"paths\""
+              - text: and
+              - code [ref=f4e2048]: "\"baseUrl\""
+              - text: options of
+              - code [ref=f4e2049]: tsconfig.json
+              - text: and
+              - code [ref=f4e2050]: jsconfig.json
+              - text: files.
+            - paragraph [ref=f4e2051]: "These options allow you to alias project directories to absolute paths, making it easier and cleaner to import modules. For example:"
+            - generic [ref=f4e2052]:
+              - button "Copy to clipboard" [ref=f4e2053] [cursor=pointer]
+              - code [ref=f4e2064]:
+                - generic [ref=f4e2065]: // Before
+                - generic [ref=f4e2066]: "import { Button } from '../../../components/button'"
+                - generic [ref=f4e2068]: // After
+                - generic [ref=f4e2069]: "import { Button } from '@/components/button'"
+            - paragraph [ref=f4e2070]:
+              - text: To configure absolute imports, add the
+              - code [ref=f4e2071]: baseUrl
+              - text: configuration option to your
+              - code [ref=f4e2072]: tsconfig.json
+              - text: or
+              - code [ref=f4e2073]: jsconfig.json
+              - text: "file. For example:"
+            - generic [ref=f4e2074]:
+              - generic [ref=f4e2075]:
+                - generic [ref=f4e2076]: tsconfig.json or jsconfig.json
+                - button "Copy to clipboard" [ref=f4e2082] [cursor=pointer]
+              - code [ref=f4e2093]:
+                - generic [ref=f4e2094]: "{"
+                - generic [ref=f4e2095]: "\"compilerOptions\": {"
+                - generic [ref=f4e2096]: "\"baseUrl\": \"src/\""
+                - generic [ref=f4e2097]: "}"
+                - generic [ref=f4e2098]: "}"
+            - paragraph [ref=f4e2099]:
+              - text: In addition to configuring the
+              - code [ref=f4e2100]: baseUrl
+              - text: path, you can use the
+              - code [ref=f4e2101]: "\"paths\""
+              - text: option to
+              - code [ref=f4e2102]: "\"alias\""
+              - text: module paths.
+            - paragraph [ref=f4e2103]:
+              - text: For example, the following configuration maps
+              - code [ref=f4e2104]: "@/components/*"
+              - text: to
+              - code [ref=f4e2105]: components/*
+              - text: ":"
+            - generic [ref=f4e2106]:
+              - generic [ref=f4e2107]:
+                - generic [ref=f4e2108]: tsconfig.json or jsconfig.json
+                - button "Copy to clipboard" [ref=f4e2114] [cursor=pointer]
+              - code [ref=f4e2125]:
+                - generic [ref=f4e2126]: "{"
+                - generic [ref=f4e2127]: "\"compilerOptions\": {"
+                - generic [ref=f4e2128]: "\"baseUrl\": \"src/\","
+                - generic [ref=f4e2129]: "\"paths\": {"
+                - generic [ref=f4e2130]: "\"@/styles/*\": [\"styles/*\"],"
+                - generic [ref=f4e2131]: "\"@/components/*\": [\"components/*\"]"
+                - generic [ref=f4e2132]: "}"
+                - generic [ref=f4e2133]: "}"
+                - generic [ref=f4e2134]: "}"
+            - paragraph [ref=f4e2135]:
+              - text: Each of the
+              - code [ref=f4e2136]: "\"paths\""
+              - text: are relative to the
+              - code [ref=f4e2137]: baseUrl
+              - text: location.
+            - heading "Upgrade your Next.js appLink to this section" [level=2] [ref=f4e2138]:
+              - text: Upgrade your Next.js app
+              - link "Link to this section":
+                - /url: "#upgrade-your-nextjs-app"
+            - paragraph [ref=f4e2139]:
+              - text: Keep your Next.js version up to date. Each release ships security patches, bug fixes, and performance optimizations alongside new features, and staying current keeps every individual upgrade small. Run the
+              - code [ref=f4e2140]: upgrade
+              - text: "command:"
+            - generic [ref=f4e2141]:
+              - tablist [ref=f4e2143]:
+                - tab "pnpm" [selected] [ref=f4e2144] [cursor=pointer]
+                - tab "npm" [ref=f4e2145] [cursor=pointer]
+                - tab "yarn" [ref=f4e2146] [cursor=pointer]
+                - tab "bun" [ref=f4e2147] [cursor=pointer]
+              - generic [ref=f4e2148]:
+                - generic [ref=f4e2149]: Terminal
+                - button "Copy to clipboard" [ref=f4e2155] [cursor=pointer]
+              - code [ref=f4e2166]:
+                - generic [ref=f4e2167]: pnpm next upgrade
+            - paragraph [ref=f4e2168]:
+              - text: Upgrading also updates the documentation bundled inside the
+              - code [ref=f4e2169]: next
+              - text: package at
+              - code [ref=f4e2170]: node_modules/next/dist/docs/
+              - text: . New features arrive with their docs, and existing pages pick up new guidance and pitfalls discovered along the way.
+              - link "AI coding agents" [ref=f4e2171] [cursor=pointer]:
+                - /url: /docs/app/guides/ai-agents
+              - text: in your project then work from the version you have installed rather than their training data.
+            - paragraph [ref=f4e2172]:
+              - text: To have a coding agent perform and verify the upgrade, run
+              - code [ref=f4e2173]: npx next@canary upgrade --agent=latest
+              - text: . See
+              - link "Upgrade with a coding agent" [ref=f4e2174] [cursor=pointer]:
+                - /url: /docs/app/guides/upgrading/agent-upgrade
+              - text: for other policies.
+            - paragraph [ref=f4e2175]:
+              - text: See
+              - link "Upgrading" [ref=f4e2176] [cursor=pointer]:
+                - /url: /docs/app/getting-started/upgrading
+              - text: for version guides and manual upgrade steps, or the
+              - link [ref=f4e2177] [cursor=pointer]:
+                - /url: https://preview.nextjs.org
+              - text: to explore features before they ship in a stable version.
+        - navigation "pagination" [ref=f4e2181]:
+          - 'link "Go to previous page: Getting Started" [ref=f4e2182] [cursor=pointer]':
+            - /url: /docs/app/getting-started
+            - text: Previous
+            - generic [ref=f4e2183]: Getting Started
+          - 'link "Go to next page: Project Structure" [ref=f4e2188] [cursor=pointer]':
+            - /url: /docs/app/getting-started/project-structure
+            - text: Next
+            - generic [ref=f4e2189]: Project Structure
+        - generic [ref=f4e2195]:
+          - generic [ref=f4e2196]:
+            - paragraph [ref=f4e2197]: Was this helpful?
+            - generic [ref=f4e2198]:
+              - radio "Select Hate it emoji" [ref=f4e2199] [cursor=pointer]
+              - radio "Select Not great emoji" [ref=f4e2203] [cursor=pointer]
+              - radio "Select It's okay emoji" [ref=f4e2206] [cursor=pointer]
+              - radio "Select Love it! emoji" [ref=f4e2209] [cursor=pointer]
+          - generic [ref=f4e2214]:
+            - generic [ref=f4e2215]:
+              - textbox [ref=f4e2218]:
+                - /placeholder: Your feedback...
+              - generic [ref=f4e2219]: supported.
+            - button "Send" [ref=f4e2223] [cursor=pointer]
+  - contentinfo [ref=f4e2228]:
+    - generic [ref=f4e2229]:
+      - link "Vercel logo" [ref=f4e2231] [cursor=pointer]:
+        - /url: https://vercel.com/home?utm_source=next-site&utm_medium=footer&utm_campaign=next-website
+        - img "VercelLogotype" [ref=f4e2232]
+      - generic [ref=f4e2233]:
+        - heading "Resources" [level=4] [ref=f4e2234]
+        - link "Docs" [ref=f4e2235] [cursor=pointer]:
+          - /url: /docs
+        - link "Support Policy" [ref=f4e2236] [cursor=pointer]:
+          - /url: /support-policy
+        - link "Learn" [ref=f4e2237] [cursor=pointer]:
+          - /url: /learn
+        - link "Showcase" [ref=f4e2238] [cursor=pointer]:
+          - /url: /showcase
+        - link "Blog" [ref=f4e2239] [cursor=pointer]:
+          - /url: /blog
+        - link "Team" [ref=f4e2240] [cursor=pointer]:
+          - /url: /team
+        - link "Analytics" [ref=f4e2241] [cursor=pointer]:
+          - /url: https://vercel.com/analytics?utm_source=next-site&utm_medium=footer&utm_campaign=docs_app_getting-started_installation
+        - link "Next.js Conf" [ref=f4e2242] [cursor=pointer]:
+          - /url: /conf
+        - link "Previews" [ref=f4e2243] [cursor=pointer]:
+          - /url: https://vercel.com/products/previews?utm_source=next-site&utm_medium=footer&utm_campaign=docs_app_getting-started_installation
+        - link "Evals" [ref=f4e2244] [cursor=pointer]:
+          - /url: /evals
+      - generic [ref=f4e2245]:
+        - heading "More" [level=4] [ref=f4e2246]
+        - link "Next.js Commerce" [ref=f4e2247] [cursor=pointer]:
+          - /url: https://vercel.com/templates/next.js/nextjs-commerce?utm_source=next-site&utm_medium=footer&utm_campaign=docs_app_getting-started_installation
+        - link "Contact Sales" [ref=f4e2248] [cursor=pointer]:
+          - /url: https://vercel.com/contact/sales?utm_source=next-site&utm_medium=footer&utm_campaign=docs_app_getting-started_installation
+        - link "Community" [ref=f4e2249] [cursor=pointer]:
+          - /url: https://community.vercel.com
+        - link "GitHub" [ref=f4e2250] [cursor=pointer]:
+          - /url: https://github.com/vercel/next.js
+        - link "Releases" [ref=f4e2251] [cursor=pointer]:
+          - /url: https://github.com/vercel/next.js/releases
+        - link "Telemetry" [ref=f4e2252] [cursor=pointer]:
+          - /url: /telemetry
+        - link "Governance" [ref=f4e2253] [cursor=pointer]:
+          - /url: /governance
+        - link "Ecosystem Working Group" [ref=f4e2254] [cursor=pointer]:
+          - /url: /ecosystem-working-group
+      - generic [ref=f4e2255]:
+        - heading "About Vercel" [level=4] [ref=f4e2256]
+        - link "Next.js + Vercel" [ref=f4e2257] [cursor=pointer]:
+          - /url: https://vercel.com/solutions/nextjs?utm_source=next-site&utm_medium=footer&utm_campaign=docs_app_getting-started_installation
+        - link "Open Source Software" [ref=f4e2258] [cursor=pointer]:
+          - /url: https://vercel.com/oss?utm_source=next-site&utm_medium=footer&utm_campaign=docs_app_getting-started_installation
+        - link "GitHub" [ref=f4e2259] [cursor=pointer]:
+          - /url: https://github.com/vercel
+        - link "Bluesky" [ref=f4e2260] [cursor=pointer]:
+          - /url: https://bsky.app/profile/vercel.com
+        - link "X" [ref=f4e2261] [cursor=pointer]:
+          - /url: https://x.com/vercel
+      - generic [ref=f4e2262]:
+        - heading "Legal" [level=4] [ref=f4e2263]
+        - link "Privacy Policy" [ref=f4e2264] [cursor=pointer]:
+          - /url: https://vercel.com/legal/privacy-policy
+        - button "Cookie Preferences"
+      - generic [ref=f4e2265]:
+        - heading "Subscribe to our newsletter" [level=4] [ref=f4e2266]
+        - paragraph [ref=f4e2267]: Stay updated on new releases and features, guides, and case studies.
+        - generic [ref=f4e2268]:
+          - textbox "Enter your email" [ref=f4e2269]:
+            - /placeholder: you@domain.com
+          - button "Subscribe" [ref=f4e2270] [cursor=pointer]
+    - generic [ref=f4e2272]:
+      - paragraph [ref=f4e2273]: © 2026 Vercel, Inc.
+      - generic [ref=f4e2274]:
+        - link "GitHub" [ref=f4e2275] [cursor=pointer]:
+          - /url: https://github.com/vercel/next.js
+        - separator [ref=f4e2277]
+        - link "Twitter" [ref=f4e2278] [cursor=pointer]:
+          - /url: https://x.com/nextjs
+        - separator [ref=f4e2280]
+        - link "Bluesky" [ref=f4e2281] [cursor=pointer]:
+          - /url: https://bsky.app/profile/nextjs.org
