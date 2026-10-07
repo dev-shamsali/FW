@@ -1,0 +1,9 @@
+[
+  { "section": "Getting started", "pages": ["introduction", "installation", "quick-start", "project-structure", "cli"] },
+  {
+    "section": "Building an API",
+    "pages": ["routing", "controllers", "services", "modules", "middleware", "validation", "configuration", "errors", "logging"]
+  },
+  { "section": "Production", "pages": ["security", "testing", "databases", "plugins", "docker", "deployment"] },
+  { "section": "Reference", "pages": ["api-reference", "migration-guides", "faq", "troubleshooting"] }
+]

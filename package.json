@@ -5,7 +5,8 @@
   "description": "Rhea.js monorepo. Made by Shams Ali Shaikh.",
   "type": "module",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "engines": {
     "node": ">=20"
