@@ -5,13 +5,26 @@
   "author": "Shams Ali Shaikh",
   "license": "MIT",
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
-  "files": ["dist", "README.md", "LICENSE"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "sideEffects": false,
-  "scripts": { "build": "tsc -p tsconfig.build.json" },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json"
+  },
   "dependencies": {
     "@types/express": "^5.0.6",
     "cors": "^2.8.6",
@@ -21,5 +34,7 @@
     "pino": "^10.4.0",
     "zod": "^4.6.5"
   },
-  "devDependencies": { "@types/cors": "^2.8.19" }
+  "devDependencies": {
+    "@types/cors": "^2.8.19"
+  }
 }

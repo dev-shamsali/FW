@@ -48,7 +48,18 @@ describe("create + generate", () => {
   it("scaffolds a project and generates a registered module", async () => {
     expect(await run(["create", "demo", "--core-spec=file:x", "--cli-spec=file:y"])).toBe(0);
     const p = join(dir, "demo");
-    for (const f of ["package.json", "src/app.ts", "src/server.ts", "src/config/env.ts", ".env", ".env.example", ".gitignore", "tsconfig.build.json", "tests/integration/health.test.ts"]) expect(existsSync(join(p, f)), f).toBe(true);
+    for (const f of [
+      "package.json",
+      "src/app.ts",
+      "src/server.ts",
+      "src/config/env.ts",
+      ".env",
+      ".env.example",
+      ".gitignore",
+      "tsconfig.build.json",
+      "tests/integration/health.test.ts",
+    ])
+      expect(existsSync(join(p, f)), f).toBe(true);
     expect(JSON.parse(readFileSync(join(p, "package.json"), "utf8")).dependencies["@rheajs/core"]).toBe("file:x");
     expect(await run(["create", "demo"])).toBe(1); // not empty
 
@@ -72,7 +83,10 @@ describe("security + doctor", () => {
     mkdirSync(join(dir, "src"));
     writeFileSync(join(dir, "package.json"), '{"type":"module"}');
     writeFileSync(join(dir, ".env"), "CORS_ORIGIN=*\n");
-    writeFileSync(join(dir, "src/a.ts"), 'const apiKey = "supersecretvalue123";\ncreateApp({ cors: { origin: ["*"] }, bodyLimit: "50mb", rateLimit: { enabled: false } });\n');
+    writeFileSync(
+      join(dir, "src/a.ts"),
+      'const apiKey = "supersecretvalue123";\ncreateApp({ cors: { origin: ["*"] }, bodyLimit: "50mb", rateLimit: { enabled: false } });\n',
+    );
     const f = scanProject(dir);
     const msgs = f.map((x) => x.message).join("|");
     expect(msgs).toMatch(/credential/);
@@ -84,5 +98,34 @@ describe("security + doctor", () => {
   });
   it("doctor reports errors for a non-project", () => {
     expect(runDoctorChecks(dir).some((c) => c.status === "error")).toBe(true);
+  });
+});
+
+describe("info, doctor, security commands", () => {
+  it("info prints and exits 0", async () => {
+    expect(await run(["info"])).toBe(0);
+  });
+  it("doctor exits 1 outside a project and 0-or-1 inside one by errors", async () => {
+    expect(await run(["doctor"])).toBe(1);
+    await run(["create", "p"]);
+    process.chdir(join(dir, "p"));
+    expect(await run(["doctor"])).toBe(1); // dependencies not installed
+  });
+  it("security exits 1 on high findings, 0 when clean, --strict fails on medium", async () => {
+    await run(["create", "q"]);
+    process.chdir(join(dir, "q"));
+    expect(await run(["security"])).toBe(0);
+    writeFileSync(join(dir, "q/src/x.ts"), 'createApp({ bodyLimit: "20mb" });\n');
+    expect(await run(["security"])).toBe(0);
+    expect(await run(["security", "--strict"])).toBe(1);
+    writeFileSync(join(dir, "q/src/y.ts"), 'const a = { origin: "*" };\n');
+    expect(await run(["security"])).toBe(1);
+  });
+  it("build/start/test/dev fail clearly without project or install", async () => {
+    for (const c of ["build", "start", "test", "dev"]) expect(await run([c]), c).toBe(1);
+    await run(["create", "r"]);
+    process.chdir(join(dir, "r"));
+    expect(await run(["start"])).toBe(1);
+    expect(await run(["build"])).toBe(1);
   });
 });

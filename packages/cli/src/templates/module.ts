@@ -152,12 +152,18 @@ export const moduleFiles = (n: Names): Files => ({
 
 export const singleFile = (kind: string, n: Names): Files => {
   switch (kind) {
-    case "controller": return { [`src/modules/${n.kebab}/${n.kebab}.controller.ts`]: fill(T.controller, n) };
-    case "service": return { [`src/modules/${n.kebab}/${n.kebab}.service.ts`]: fill(T.service, n) };
-    case "route": return { [`src/modules/${n.kebab}/${n.kebab}.routes.ts`]: fill(T.routes, n) };
-    case "middleware": return { [`src/middleware/${n.kebab}.ts`]: fill(T.middleware, n) };
-    case "validator": return { [`src/modules/${n.kebab}/${n.kebab}.schema.ts`]: fill(T.validator, n) };
-    default: return {};
+    case "controller":
+      return { [`src/modules/${n.kebab}/${n.kebab}.controller.ts`]: fill(T.controller, n) };
+    case "service":
+      return { [`src/modules/${n.kebab}/${n.kebab}.service.ts`]: fill(T.service, n) };
+    case "route":
+      return { [`src/modules/${n.kebab}/${n.kebab}.routes.ts`]: fill(T.routes, n) };
+    case "middleware":
+      return { [`src/middleware/${n.kebab}.ts`]: fill(T.middleware, n) };
+    case "validator":
+      return { [`src/modules/${n.kebab}/${n.kebab}.schema.ts`]: fill(T.validator, n) };
+    default:
+      return {};
   }
 };
 

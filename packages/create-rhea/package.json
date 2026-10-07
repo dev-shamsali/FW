@@ -5,9 +5,21 @@
   "author": "Shams Ali Shaikh",
   "license": "MIT",
   "type": "module",
-  "engines": { "node": ">=20" },
-  "bin": { "create-rhea": "./dist/bin.js" },
-  "files": ["dist", "README.md", "LICENSE"],
-  "scripts": { "build": "tsc -p tsconfig.build.json && node -e \"require('fs').chmodSync('dist/bin.js',0o755)\"" },
-  "dependencies": { "@rheajs/cli": "0.1.0-alpha.0" }
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "create-rhea": "./dist/bin.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node -e \"require('fs').chmodSync('dist/bin.js',0o755)\""
+  },
+  "dependencies": {
+    "@rheajs/cli": "0.1.0-alpha.0"
+  }
 }

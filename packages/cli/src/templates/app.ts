@@ -43,19 +43,36 @@ export function appFiles({ name, coreSpec, cliSpec }: AppTemplateOptions): Files
   };
   return {
     "package.json": JSON.stringify(pkg, null, 2) + "\n",
-    "tsconfig.json": JSON.stringify(
-      {
-        compilerOptions: { target: "ES2022", module: "NodeNext", moduleResolution: "NodeNext", strict: true, noUncheckedIndexedAccess: true, skipLibCheck: true, isolatedModules: true, esModuleInterop: true, noEmit: true, types: ["node"] },
-        include: ["src", "tests", "vitest.config.ts"],
-      },
-      null,
-      2,
-    ) + "\n",
-    "tsconfig.build.json": JSON.stringify(
-      { extends: "./tsconfig.json", compilerOptions: { noEmit: false, outDir: "dist", rootDir: "src", noEmitOnError: true, sourceMap: true }, include: ["src"] },
-      null,
-      2,
-    ) + "\n",
+    "tsconfig.json":
+      JSON.stringify(
+        {
+          compilerOptions: {
+            target: "ES2022",
+            module: "NodeNext",
+            moduleResolution: "NodeNext",
+            strict: true,
+            noUncheckedIndexedAccess: true,
+            skipLibCheck: true,
+            isolatedModules: true,
+            esModuleInterop: true,
+            noEmit: true,
+            types: ["node"],
+          },
+          include: ["src", "tests", "vitest.config.ts"],
+        },
+        null,
+        2,
+      ) + "\n",
+    "tsconfig.build.json":
+      JSON.stringify(
+        {
+          extends: "./tsconfig.json",
+          compilerOptions: { noEmit: false, outDir: "dist", rootDir: "src", noEmitOnError: true, sourceMap: true },
+          include: ["src"],
+        },
+        null,
+        2,
+      ) + "\n",
     "vitest.config.ts": `import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -74,7 +91,8 @@ export default tseslint.config(
     "prettier.config.js": `export default { printWidth: 100, singleQuote: false, trailingComma: "all" };
 `,
     ".env": "NODE_ENV=development\nPORT=5000\nCORS_ORIGIN=\n",
-    ".env.example": "# Copy to .env. Never commit real secrets.\nNODE_ENV=development\nPORT=5000\n# Comma-separated list of allowed origins. Empty disables CORS. Never use * in production.\nCORS_ORIGIN=\n# LOG_LEVEL=info\n",
+    ".env.example":
+      "# Copy to .env. Never commit real secrets.\nNODE_ENV=development\nPORT=5000\n# Comma-separated list of allowed origins. Empty disables CORS. Never use * in production.\nCORS_ORIGIN=\n# LOG_LEVEL=info\n",
     ".gitignore": "node_modules\ndist\ncoverage\n.env\n.env.*\n!.env.example\n*.tsbuildinfo\n",
     "README.md": `# ${name}
 

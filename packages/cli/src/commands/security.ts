@@ -44,7 +44,8 @@ export function scanProject(cwd: string): Finding[] {
       const bl = /bodyLimit\s*:\s*["']([^"']+)["']/.exec(line);
       if (bl && bytes(bl[1]!) > 1024 ** 2) f.push({ severity: "medium", message: `Large body limit (${bl[1]})`, where });
       if (/secure\s*:\s*false/.test(line) || /httpOnly\s*:\s*false/.test(line)) f.push({ severity: "medium", message: "Insecure cookie option", where });
-      if (/\bhelmet\b.*disable|contentSecurityPolicy\s*:\s*false/.test(line)) f.push({ severity: "medium", message: "Security header protection disabled", where });
+      if (/\bhelmet\b.*disable|contentSecurityPolicy\s*:\s*false/.test(line))
+        f.push({ severity: "medium", message: "Security header protection disabled", where });
       if (/x-powered-by["']?\s*[,)]\s*["']?(true|enable)/i.test(line)) f.push({ severity: "low", message: "x-powered-by enabled", where });
     });
   });
@@ -58,7 +59,8 @@ export function scanProject(cwd: string): Finding[] {
     if (existsSync(p) && /^CORS_ORIGIN=.*\*/m.test(readFileSync(p, "utf8"))) f.push({ severity: "high", message: "CORS_ORIGIN contains *", where: envf });
   }
   const gi = join(cwd, ".gitignore");
-  if (existsSync(join(cwd, ".env")) && !(existsSync(gi) && /^\.env\b/m.test(readFileSync(gi, "utf8")))) f.push({ severity: "high", message: ".env is not in .gitignore", where: ".gitignore" });
+  if (existsSync(join(cwd, ".env")) && !(existsSync(gi) && /^\.env\b/m.test(readFileSync(gi, "utf8"))))
+    f.push({ severity: "high", message: ".env is not in .gitignore", where: ".gitignore" });
   if (existsSync(join(cwd, ".git"))) {
     const g = spawnSync("git", ["ls-files", "--error-unmatch", ".env"], { cwd, stdio: "ignore" });
     if (g.status === 0) f.push({ severity: "high", message: ".env is tracked by git", where: ".env" });
@@ -73,7 +75,8 @@ function audit(cwd: string): Finding[] {
     const v = j.metadata?.vulnerabilities;
     if (!v) return [{ severity: "low", message: "npm audit could not run (offline or no lockfile)" }];
     const out: Finding[] = [];
-    if ((v["critical"] ?? 0) + (v["high"] ?? 0) > 0) out.push({ severity: "high", message: `Dependencies: ${v["critical"] ?? 0} critical, ${v["high"] ?? 0} high vulnerabilities` });
+    if ((v["critical"] ?? 0) + (v["high"] ?? 0) > 0)
+      out.push({ severity: "high", message: `Dependencies: ${v["critical"] ?? 0} critical, ${v["high"] ?? 0} high vulnerabilities` });
     if ((v["moderate"] ?? 0) > 0) out.push({ severity: "medium", message: `Dependencies: ${v["moderate"]} moderate vulnerabilities` });
     if ((v["low"] ?? 0) > 0) out.push({ severity: "low", message: `Dependencies: ${v["low"]} low vulnerabilities` });
     return out;

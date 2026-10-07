@@ -46,7 +46,15 @@ function prettyStream(): DestinationStream {
   return {
     write(line: string) {
       try {
-        const { level, time, msg, pid: _p, hostname: _h, name: _n, ...rest } = JSON.parse(line) as Record<string, unknown> & { level: number; time: number; msg?: string };
+        const {
+          level,
+          time,
+          msg,
+          pid: _p,
+          hostname: _h,
+          name: _n,
+          ...rest
+        } = JSON.parse(line) as Record<string, unknown> & { level: number; time: number; msg?: string };
         const [label, color] = COLORS[level] ?? ["LOG  ", ""];
         const t = new Date(time).toISOString().slice(11, 23);
         const extra = Object.keys(rest).length ? ` \x1b[90m${JSON.stringify(rest)}\x1b[0m` : "";
@@ -88,7 +96,10 @@ export function requestLogger(logger: Logger): RequestHandler {
       const q = url.indexOf("?");
       const status = res.statusCode;
       const level = status >= 500 ? "error" : status >= 400 ? "warn" : "info";
-      logger[level]({ requestId: req.id, method: req.method, path: q === -1 ? url : url.slice(0, q), status, durationMs: Math.round(ms * 100) / 100 }, "request");
+      logger[level](
+        { requestId: req.id, method: req.method, path: q === -1 ? url : url.slice(0, q), status, durationMs: Math.round(ms * 100) / 100 },
+        "request",
+      );
     });
     next();
   };

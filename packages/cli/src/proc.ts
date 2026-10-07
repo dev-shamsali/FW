@@ -21,8 +21,16 @@ export function resolveBin(cwd: string, pkg: string, bin = pkg): string {
 export function runNode(args: string[], opts: { cwd: string; env?: NodeJS.ProcessEnv }): Promise<number> {
   return new Promise((resolve) => {
     const child = spawn(process.execPath, args, { cwd: opts.cwd, stdio: "inherit", env: { ...process.env, ...opts.env } });
-    child.on("error", () => resolve(1));
-    child.on("close", (code, signal) => resolve(code ?? (signal ? 1 : 0)));
+    // Forward termination signals so the child can shut down gracefully instead of being orphaned.
+    const forward = (sig: NodeJS.Signals) => () => void child.kill(sig);
+    const handlers = (["SIGINT", "SIGTERM", "SIGHUP"] as const).map((sig) => [sig, forward(sig)] as const);
+    for (const [sig, h] of handlers) process.on(sig, h);
+    const done = (code: number) => {
+      for (const [sig, h] of handlers) process.off(sig, h);
+      resolve(code);
+    };
+    child.on("error", () => done(1));
+    child.on("close", (code, signal) => done(code ?? (signal ? 1 : 0)));
   });
 }
 

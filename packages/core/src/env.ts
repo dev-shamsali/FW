@@ -26,7 +26,14 @@ export const baseEnvShape = {
   CORS_ORIGIN: z
     .string()
     .optional()
-    .transform((v) => (v ? v.split(",").map((s) => s.trim()).filter(Boolean) : [])),
+    .transform((v) =>
+      v
+        ? v
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean)
+        : [],
+    ),
 };
 
 /** Parse and validate environment. Throws EnvValidationError listing every problem. */

@@ -4,7 +4,6 @@ import type { RequestHandler } from "express";
 const SAFE_ID = /^[A-Za-z0-9._-]{1,128}$/;
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       id: string;

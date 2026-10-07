@@ -1,7 +1,19 @@
 import request from "supertest";
 import { describe, expect, it, vi } from "vitest";
 import { Router } from "express";
-import { createApp, validate, z, NotFoundError, ConflictError, parseEnv, baseEnvShape, EnvValidationError, sendSuccess, createLogger, ConfigError } from "../src/index.js";
+import {
+  createApp,
+  validate,
+  z,
+  NotFoundError,
+  ConflictError,
+  parseEnv,
+  baseEnvShape,
+  EnvValidationError,
+  sendSuccess,
+  createLogger,
+  ConfigError,
+} from "../src/index.js";
 
 const silent = { level: "silent" as const };
 const build = (o: Parameters<typeof createApp>[0] = {}) => createApp({ logger: silent, handleSignals: false, env: "test", ...o });
@@ -11,8 +23,12 @@ describe("responses and errors", () => {
     const app = build();
     const r = Router();
     r.get("/ok", (_q, res) => sendSuccess(res, { a: 1 }));
-    r.get("/nf", () => { throw new NotFoundError("User not found", { code: "USER_NOT_FOUND" }); });
-    r.get("/async", async () => { throw new ConflictError("dup"); });
+    r.get("/nf", () => {
+      throw new NotFoundError("User not found", { code: "USER_NOT_FOUND" });
+    });
+    r.get("/async", async () => {
+      throw new ConflictError("dup");
+    });
     app.mount("/", r);
     await app.ready();
     expect((await request(app.express).get("/ok")).body).toEqual({ success: true, data: { a: 1 }, message: "Success" });
@@ -24,10 +40,15 @@ describe("responses and errors", () => {
   });
 
   it("hides internals in production, shows them in development", async () => {
-    for (const [env, leaks] of [["production", false], ["development", true]] as const) {
+    for (const [env, leaks] of [
+      ["production", false],
+      ["development", true],
+    ] as const) {
       const app = build({ env });
       const r = Router();
-      r.get("/boom", () => { throw new Error("db password=hunter2 failed"); });
+      r.get("/boom", () => {
+        throw new Error("db password=hunter2 failed");
+      });
       app.mount("/", r);
       await app.ready();
       const res = await request(app.express).get("/boom");
@@ -39,19 +60,27 @@ describe("responses and errors", () => {
 
   it("maps malformed and oversized JSON to safe 4xx", async () => {
     const app = build({ bodyLimit: "50b" });
-    app.mount("/", Router().post("/x", (_q, res) => void res.json({})));
+    app.mount(
+      "/",
+      Router().post("/x", (_q, res) => void res.json({})),
+    );
     await app.ready();
     const bad = await request(app.express).post("/x").set("content-type", "application/json").send("{oops");
     expect(bad.status).toBe(400);
     expect(bad.body.error.code).toBe("INVALID_JSON");
-    const big = await request(app.express).post("/x").send({ a: "x".repeat(200) });
+    const big = await request(app.express)
+      .post("/x")
+      .send({ a: "x".repeat(200) });
     expect(big.status).toBe(413);
     expect(big.body.error.code).toBe("PAYLOAD_TOO_LARGE");
   });
 
   it("rejects prototype pollution keys", async () => {
     const app = build();
-    app.mount("/", Router().post("/x", (_q, res) => void res.json({})));
+    app.mount(
+      "/",
+      Router().post("/x", (_q, res) => void res.json({})),
+    );
     await app.ready();
     const res = await request(app.express).post("/x").set("content-type", "application/json").send('{"a":{"__proto__":{"admin":true}}}');
     expect(res.status).toBe(400);
@@ -62,8 +91,12 @@ describe("validation", () => {
   it("validates, strips unknown keys, and reports consistent errors", async () => {
     const app = build();
     const schema = z.object({ email: z.email(), age: z.number().int() });
-    app.mount("/", Router().post("/u", validate(schema), (q, res) => sendSuccess(res, q.body, "ok", 201))
-      .get("/q", validate({ query: z.object({ n: z.coerce.number() }) }), (q, res) => sendSuccess(res, q.query)));
+    app.mount(
+      "/",
+      Router()
+        .post("/u", validate(schema), (q, res) => sendSuccess(res, q.body, "ok", 201))
+        .get("/q", validate({ query: z.object({ n: z.coerce.number() }) }), (q, res) => sendSuccess(res, q.query)),
+    );
     await app.ready();
     const ok = await request(app.express).post("/u").send({ email: "a@b.co", age: 3, extra: 1 });
     expect(ok.status).toBe(201);
@@ -134,7 +167,10 @@ describe("security", () => {
 
   it("times out slow handlers", async () => {
     const app = build({ requestTimeoutMs: 30 });
-    app.mount("/", Router().get("/slow", () => undefined));
+    app.mount(
+      "/",
+      Router().get("/slow", () => undefined),
+    );
     await app.ready();
     expect((await request(app.express).get("/slow")).status).toBe(503);
   });
@@ -155,8 +191,18 @@ describe("lifecycle and plugins", () => {
   it("runs hooks in order and plugins get a narrow context", async () => {
     const order: string[] = [];
     const app = build();
-    for (const h of ["beforeInit", "init", "afterInit", "beforeStart", "afterStart", "beforeShutdown", "afterShutdown"] as const) app.hook(h, () => void order.push(h));
-    app.use({ name: "demo", setup: (ctx) => { ctx.mount("/p", Router().get("/", (_q, res) => void res.json({ p: 1 }))); ctx.onHook("init", () => void order.push("plugin-init")); } });
+    for (const h of ["beforeInit", "init", "afterInit", "beforeStart", "afterStart", "beforeShutdown", "afterShutdown"] as const)
+      app.hook(h, () => void order.push(h));
+    app.use({
+      name: "demo",
+      setup: (ctx) => {
+        ctx.mount(
+          "/p",
+          Router().get("/", (_q, res) => void res.json({ p: 1 })),
+        );
+        ctx.onHook("init", () => void order.push("plugin-init"));
+      },
+    });
     const srv = await app.start(0);
     const port = (srv.address() as { port: number }).port;
     expect((await fetch(`http://127.0.0.1:${port}/p`)).status).toBe(200);
@@ -168,7 +214,11 @@ describe("lifecycle and plugins", () => {
   it("keeps running shutdown hooks when one throws", async () => {
     const app = build();
     const after = vi.fn();
-    app.hook("beforeShutdown", () => { throw new Error("x"); }).hook("afterShutdown", after);
+    app
+      .hook("beforeShutdown", () => {
+        throw new Error("x");
+      })
+      .hook("afterShutdown", after);
     await app.start(0);
     await app.stop();
     expect(after).toHaveBeenCalled();

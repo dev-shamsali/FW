@@ -10,11 +10,11 @@ Express is the HTTP engine. Rhea.js is the application architecture and develope
 
 npm workspaces monorepo. Start with three packages only. Split later when a boundary proves real.
 
-| Package | Purpose | Why separate |
-|---|---|---|
-| `packages/core` | App factory, config, errors, responses, validation, logger, request ID, security middleware, lifecycle, plugin API | Runtime dependency of generated apps |
-| `packages/cli` | `rhea` binary, generators, doctor, security scan | Dev-time tool; must not ship in production dependency tree |
-| `packages/create-rhea` | `npx create-rhea` thin wrapper over CLI scaffolder | npm `create-*` convention |
+| Package                | Purpose                                                                                                            | Why separate                                               |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| `packages/core`        | App factory, config, errors, responses, validation, logger, request ID, security middleware, lifecycle, plugin API | Runtime dependency of generated apps                       |
+| `packages/cli`         | `rhea` binary, generators, doctor, security scan                                                                   | Dev-time tool; must not ship in production dependency tree |
+| `packages/create-rhea` | `npx create-rhea` thin wrapper over CLI scaffolder                                                                 | npm `create-*` convention                                  |
 
 Deferred (not created yet): `config`, `security`, `testing`, `auth`, DB adapters. Security and config live inside `core` for v0.x. They become packages only when a consumer needs them alone.
 
@@ -42,15 +42,15 @@ Templates live in `packages/cli/templates/`, not a top-level package, so they sh
 
 Each runtime dependency needs a documented reason.
 
-| Dependency | Reason |
-|---|---|
-| express@5 | HTTP foundation |
-| zod | Env and request validation |
-| helmet | Security headers |
-| cors | CORS |
-| express-rate-limit | Rate limiting |
-| pino | Structured logging with redaction |
-| commander (cli) | Argument parsing |
+| Dependency         | Reason                            |
+| ------------------ | --------------------------------- |
+| express@5          | HTTP foundation                   |
+| zod                | Env and request validation        |
+| helmet             | Security headers                  |
+| cors               | CORS                              |
+| express-rate-limit | Rate limiting                     |
+| pino               | Structured logging with redaction |
+| commander (cli)    | Argument parsing                  |
 
 Versions verified on 2026-10-07 via `npm view`: express 5.2.1, zod 4.6.5, helmet 8.3.0, cors 2.8.6, express-rate-limit 8.7.1, pino 10.4.0, commander 15.0.0, vitest 5.0.3, supertest 7.3.1, typescript 7.0.2. Re-check compatibility before pinning (TypeScript 7 toolchain support in ESLint/Vitest unverified).
 

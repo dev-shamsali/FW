@@ -3,7 +3,8 @@ import { join } from "node:path";
 import { CliError } from "./ui.js";
 
 export function requireProject(cwd: string): void {
-  if (!existsSync(join(cwd, "package.json"))) throw new CliError('No package.json here. Run this inside a Rhea.js project (create one with "rhea create <name>").');
+  if (!existsSync(join(cwd, "package.json")))
+    throw new CliError('No package.json here. Run this inside a Rhea.js project (create one with "rhea create <name>").');
 }
 
 /** Recursively list files under dir, skipping heavy/generated dirs and large files. */

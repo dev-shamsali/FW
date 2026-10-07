@@ -23,7 +23,11 @@ function singular(s: string): string {
   if (s.endsWith("s") && s.length > 1) return s.slice(0, -1);
   return s;
 }
-const pascal = (k: string) => k.split("-").map((p) => p[0]!.toUpperCase() + p.slice(1)).join("");
+const pascal = (k: string) =>
+  k
+    .split("-")
+    .map((p) => p[0]!.toUpperCase() + p.slice(1))
+    .join("");
 const camel = (k: string) => {
   const p = pascal(k);
   return p[0]!.toLowerCase() + p.slice(1);
@@ -35,5 +39,12 @@ export function parseName(raw: string | undefined): Names {
   const kebab = raw.toLowerCase();
   if (!VALID.test(kebab)) throw new CliError(`Invalid name "${raw}". Use lowercase letters, digits and hyphens, starting with a letter.`, 2);
   const s = singular(kebab);
-  return { kebab, pascal: pascal(kebab), camel: camel(kebab), singularPascal: pascal(s), singularCamel: camel(s), singularUpper: s.toUpperCase().replaceAll("-", "_") };
+  return {
+    kebab,
+    pascal: pascal(kebab),
+    camel: camel(kebab),
+    singularPascal: pascal(s),
+    singularCamel: camel(s),
+    singularUpper: s.toUpperCase().replaceAll("-", "_"),
+  };
 }

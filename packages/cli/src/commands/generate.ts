@@ -29,7 +29,10 @@ export async function generate(argv: string[]): Promise<number> {
     if (existsSync(indexPath)) {
       const src = readFileSync(indexPath, "utf8");
       if (src.includes("// rhea:imports") && src.includes("// rhea:modules") && !src.includes(reg.importLine)) {
-        writeFileSync(indexPath, src.replace("// rhea:imports", `${reg.importLine}\n// rhea:imports`).replace("  // rhea:modules", `${reg.entryLine}\n  // rhea:modules`));
+        writeFileSync(
+          indexPath,
+          src.replace("// rhea:imports", `${reg.importLine}\n// rhea:imports`).replace("  // rhea:modules", `${reg.entryLine}\n  // rhea:modules`),
+        );
         ok("registered in src/modules/index.ts");
         done = true;
       } else if (src.includes(reg.importLine)) done = true;

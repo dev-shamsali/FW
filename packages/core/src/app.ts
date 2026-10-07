@@ -75,7 +75,11 @@ export function createApp(options: RheaOptions = {}): RheaApp {
   const logger: Logger =
     given && "info" in given && typeof given.info === "function"
       ? (given as Logger)
-      : createLogger({ pretty: !production, ...(given as LoggerConfig | undefined), level: (given as LoggerConfig | undefined)?.level ?? (env === "test" ? "silent" : undefined) });
+      : createLogger({
+          pretty: !production,
+          ...(given as LoggerConfig | undefined),
+          level: (given as LoggerConfig | undefined)?.level ?? (env === "test" ? "silent" : undefined),
+        });
   const hooks = new Hooks();
   const queue: Array<() => void | Promise<void>> = [];
   const app = express();

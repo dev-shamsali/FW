@@ -8,7 +8,10 @@ Made by Shams Ali Shaikh. MIT licensed. Alpha: not production-ready.
 import { createApp, Router, sendSuccess } from "@rheajs/core";
 
 const app = createApp({ cors: { origin: ["https://example.com"] } });
-app.mount("/hello", Router().get("/", (_req, res) => sendSuccess(res, { hi: "rhea" })));
+app.mount(
+  "/hello",
+  Router().get("/", (_req, res) => sendSuccess(res, { hi: "rhea" })),
+);
 await app.start(5000);
 ```
 

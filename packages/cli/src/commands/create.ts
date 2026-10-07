@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 import { appFiles } from "../templates/app.js";
 import { parseArgs } from "../args.js";
 import { npm } from "../proc.js";
