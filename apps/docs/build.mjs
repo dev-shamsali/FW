@@ -40,8 +40,8 @@ const marked = new Marked({
 });
 
 const css = `
-:root{--bg:#fffaf3;--fg:#241a12;--muted:#6b5a4b;--line:#eadcc9;--accent:#c2410c;--code:#2a1f17;--codefg:#f6e9d7;--side:#fff3e2}
-@media (prefers-color-scheme:dark){:root{--bg:#17110c;--fg:#f3e7d6;--muted:#b8a58f;--line:#3a2c20;--accent:#fb923c;--code:#0e0a07;--codefg:#f6e9d7;--side:#1e1610}}
+:root{--bg:#e8edf0;--fg:#0d1b2a;--muted:#3a4b5c;--line:#c3cfd7;--accent:#8a5a00;--code:#0d1b2a;--codefg:#e6edf2;--side:#f5f8f9}
+@media (prefers-color-scheme:dark){:root{--bg:#0a131c;--fg:#e6edf2;--muted:#a9b8c5;--line:#243546;--accent:#f0b83a;--code:#060d14;--codefg:#e6edf2;--side:#101d2a}}
 *{box-sizing:border-box}html{scroll-padding-top:5rem}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
 a{color:var(--accent)}a:focus-visible,button:focus-visible,input:focus-visible,pre:focus-visible{outline:2px solid var(--accent);outline-offset:2px}

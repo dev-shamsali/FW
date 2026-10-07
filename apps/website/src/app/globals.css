@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #e8edf0;
+  --panel: #f5f8f9;
+  --ink: #0d1b2a;
+  --slate: #3a4b5c;
+  --line: #c3cfd7;
+  --gold: #e8a91c;
+  --block: #b8362a;
+  --pass: #17766a;
+  --code: #0d1b2a;
+  --code-ink: #e6edf2;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0a131c;
+    --panel: #101d2a;
+    --ink: #e6edf2;
+    --slate: #a9b8c5;
+    --line: #243546;
+    --gold: #f0b83a;
+    --block: #ef7b6c;
+    --pass: #4fc3b2;
+    --code: #060d14;
+    --code-ink: #e6edf2;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-slate: var(--slate);
+  --color-line: var(--line);
+  --color-gold: var(--gold);
+  --color-block: var(--block);
+  --color-pass: var(--pass);
+  --color-code: var(--code);
+  --color-code-ink: var(--code-ink);
+  --font-sans: var(--font-familjen), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-martian), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html {
+  scroll-padding-top: 4.5rem;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a:focus-visible,
+button:focus-visible,
+pre:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+pre,
+code {
+  font-family: var(--font-mono);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+:not(pre) > code {
+  font-size: 0.82em;
+}

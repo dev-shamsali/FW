@@ -2,3 +2,6 @@ dist
 coverage
 node_modules
 package-lock.json
+apps/website/.next
+apps/website/out
+apps/website/public/docs

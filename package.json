@@ -13,14 +13,15 @@
   },
   "scripts": {
     "build": "npm run build -w @rheajs/core -w @rheajs/cli -w create-rhea",
-    "typecheck": "tsc -p packages/core --noEmit && tsc -p packages/cli --noEmit",
+    "typecheck": "tsc -p packages/core --noEmit && tsc -p packages/cli --noEmit && tsc -p apps/website --noEmit",
     "test": "vitest run",
     "lint": "eslint .",
     "test:e2e": "vitest run -c vitest.e2e.config.ts",
     "test:coverage": "vitest run --coverage",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "verify": "npm run lint && npm run typecheck && npm test && npm run build"
+    "verify": "npm run lint && npm run typecheck && npm test && npm run build",
+    "build:website": "npm run build -w @rheajs/website"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -2,10 +2,10 @@ import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["**/dist", "**/coverage", "**/node_modules"] },
+  { ignores: ["**/dist", "**/coverage", "**/node_modules", "**/.next", "**/out", "**/public/docs", "**/next-env.d.ts"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
-  { files: ["**/*.mjs"], languageOptions: { globals: { console: "readonly", process: "readonly" } } },
+  { files: ["**/*.mjs"], languageOptions: { globals: { console: "readonly", process: "readonly", fetch: "readonly" } } },
   {
     rules: {
       "@typescript-eslint/no-namespace": "off",

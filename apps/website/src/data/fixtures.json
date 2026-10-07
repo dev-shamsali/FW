@@ -1,0 +1,195 @@
+{
+  "generatedAt": "2026-10-07T10:12:39.973Z",
+  "node": "26.10.0",
+  "platform": "linux",
+  "versions": {
+    "core": "0.1.0-alpha.0",
+    "cli": "0.1.0-alpha.0"
+  },
+  "scenarios": [
+    {
+      "id": "ok",
+      "label": "Valid request",
+      "layer": 10,
+      "request": "GET /health",
+      "note": "Passes every layer and reaches your handler.",
+      "response": {
+        "status": 200,
+        "acao": null,
+        "body": {
+          "success": true,
+          "data": {
+            "status": "ok"
+          },
+          "message": "Success"
+        }
+      }
+    },
+    {
+      "id": "cors",
+      "label": "Unlisted browser origin",
+      "layer": 4,
+      "request": "GET /health  Origin: https://evil.example",
+      "note": "The server still answers, but sends no CORS header, so browsers will not let that page read the response.",
+      "response": {
+        "status": 200,
+        "acao": null,
+        "body": {
+          "success": true,
+          "data": {
+            "status": "ok"
+          },
+          "message": "Success"
+        }
+      }
+    },
+    {
+      "id": "flood",
+      "label": "Too many requests",
+      "layer": 5,
+      "request": "GET /health  (3rd request, limit set to 2)",
+      "note": "Limit shown is 2 per minute so the demo is short. The default is 100 per minute.",
+      "response": {
+        "status": 429,
+        "acao": null,
+        "body": {
+          "success": false,
+          "error": {
+            "code": "RATE_LIMITED",
+            "message": "Too many requests",
+            "requestId": "0691fd8b-cab2-4c87-aab8-a0f3991c323a"
+          }
+        }
+      }
+    },
+    {
+      "id": "slow",
+      "label": "Handler never responds",
+      "layer": 6,
+      "request": "GET /slow  (timeout set to 50 ms)",
+      "note": "Timeout shown is 50 ms for the demo. The default is 30 seconds.",
+      "response": {
+        "status": 503,
+        "acao": null,
+        "body": {
+          "success": false,
+          "error": {
+            "code": "REQUEST_TIMEOUT",
+            "message": "Request timed out",
+            "requestId": "5303a940-138c-453d-9f35-c6621a1c5000"
+          }
+        }
+      }
+    },
+    {
+      "id": "big",
+      "label": "Oversized body",
+      "layer": 7,
+      "request": "POST /users  5 kB body (limit set to 1 kB)",
+      "note": "Limit shown is 1 kB for the demo. The default is 100 kb.",
+      "response": {
+        "status": 413,
+        "acao": null,
+        "body": {
+          "success": false,
+          "error": {
+            "code": "PAYLOAD_TOO_LARGE",
+            "message": "Request body too large",
+            "requestId": "22f284fb-f131-4344-a3e2-e0a8c7f7986c"
+          }
+        }
+      }
+    },
+    {
+      "id": "proto",
+      "label": "Prototype pollution payload",
+      "layer": 8,
+      "request": "POST /users  {\"a\":{\"__proto__\":{\"admin\":true}}}",
+      "note": "Bodies with __proto__, constructor or prototype keys are rejected before your code sees them.",
+      "response": {
+        "status": 400,
+        "acao": null,
+        "body": {
+          "success": false,
+          "error": {
+            "code": "INVALID_BODY",
+            "message": "Invalid request body",
+            "requestId": "b6c66981-1c39-4378-86f3-36a2314afd5b"
+          }
+        }
+      }
+    },
+    {
+      "id": "invalid",
+      "label": "Invalid input",
+      "layer": 9,
+      "request": "POST /users  {\"email\":\"nope\"}",
+      "note": "validate(schema) on the route returns every problem in one response.",
+      "response": {
+        "status": 422,
+        "acao": null,
+        "body": {
+          "success": false,
+          "error": {
+            "code": "VALIDATION_ERROR",
+            "message": "Invalid request",
+            "details": [
+              {
+                "in": "body",
+                "path": "email",
+                "message": "Invalid email address"
+              }
+            ],
+            "requestId": "66cf1ef7-1ff5-4535-8d2b-a398f3e0d5ad"
+          }
+        }
+      }
+    },
+    {
+      "id": "crash",
+      "label": "Unhandled exception",
+      "layer": 11,
+      "request": "GET /crash  (handler throws with a database password in the message)",
+      "note": "In production the message is replaced. The full error goes to the log, not the client.",
+      "response": {
+        "status": 500,
+        "acao": null,
+        "body": {
+          "success": false,
+          "error": {
+            "code": "INTERNAL_ERROR",
+            "message": "Internal server error",
+            "requestId": "36973a4a-b120-4ad7-a33a-7752eaf0e07e"
+          }
+        }
+      }
+    }
+  ],
+  "cli": [
+    {
+      "cmd": "npx create-rhea my-api",
+      "output": "✓ Created my-api (22 files)\n\nNext steps:\n  cd my-api\n  npm install\n  npm run dev",
+      "exit": 0
+    },
+    {
+      "cmd": "npx rhea generate module users",
+      "output": "✓ created src/modules/users/users.types.ts\n✓ created src/modules/users/users.schema.ts\n✓ created src/modules/users/users.repository.ts\n✓ created src/modules/users/users.service.ts\n✓ created src/modules/users/users.controller.ts\n✓ created src/modules/users/users.routes.ts\n✓ created tests/integration/users.test.ts\n✓ registered in src/modules/index.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npx rhea build",
+      "output": "Type checking + compiling (tsc, single pass, no output on type errors)...\n✓ Built to dist/ in 3.3s",
+      "exit": 0
+    },
+    {
+      "cmd": "npx rhea doctor",
+      "output": "Rhea.js Doctor\n\n✓ Node.js 26.10.0\n✓ npm 12.1.0\n✓ ES modules\n✓ TypeScript installed\n✓ @rheajs/core (security middleware, error handling, rate limiting)\n✓ Build configuration\n✓ .env present\n✓ .env.example present\n✓ Rate limiting\n✓ App built with createApp\n✓ CORS configuration\n\n0 errors, 0 warnings",
+      "exit": 0
+    },
+    {
+      "cmd": "npx rhea security",
+      "output": "Rhea.js Security Scan\n\n✓ No issues found by the static checks\n\nDependency audit skipped. Run with --audit (needs network).\n\nThis is a basic static check, not a penetration test or a security audit. A clean result does not guarantee security.",
+      "exit": 0
+    }
+  ]
+}

@@ -34,25 +34,26 @@ Templates live in `packages/cli/templates/`, not a top-level package, so they sh
 - Env: Zod schema, fail-fast with the specified message. Production never continues on invalid config.
 - Logger: small own wrapper over `pino` (JSON in prod, `pino-pretty` only in dev, optional). Redaction list for passwords, tokens, authorization headers, cookies.
 - Lifecycle hooks: `beforeInit, init, afterInit, beforeStart, afterStart, beforeShutdown, afterShutdown`. SIGTERM/SIGINT close server, then run shutdown hooks with a timeout.
-- Plugin API: `plugin = { name, setup(ctx) }`. `ctx` exposes a narrow surface (`addMiddleware`, `addRoutes`, `onHook`, `config`, `logger`), not raw internals.
-- DB: adapter interface `{ name, connect(), disconnect(), health() }`. Core has zero DB dependency.
+- Plugin API: `plugin = { name, setup(ctx) }`. `ctx` exposes a narrow surface (`addMiddleware`, `mount`, `onHook`, `logger`, `production`), not raw internals.
+- DB: core has zero DB dependency. An adapter interface (`{ name, connect(), disconnect(), health() }`) is planned, not implemented; use lifecycle hooks today.
 - Auth: out of core. Future plugin.
 
 ## Dependency policy
 
 Each runtime dependency needs a documented reason.
 
-| Dependency         | Reason                            |
-| ------------------ | --------------------------------- |
-| express@5          | HTTP foundation                   |
-| zod                | Env and request validation        |
-| helmet             | Security headers                  |
-| cors               | CORS                              |
-| express-rate-limit | Rate limiting                     |
-| pino               | Structured logging with redaction |
-| commander (cli)    | Argument parsing                  |
+| Dependency                         | Reason                                  |
+| ---------------------------------- | --------------------------------------- |
+| express@5                          | HTTP foundation                         |
+| zod                                | Env and request validation              |
+| helmet                             | Security headers                        |
+| cors                               | CORS                                    |
+| express-rate-limit                 | Rate limiting                           |
+| pino                               | Structured logging with redaction       |
+| marked (docs site)                 | Markdown rendering, dev-only            |
+| next, react, tailwindcss (website) | Marketing site, dev-only, static export |
 
-Versions verified on 2026-10-07 via `npm view`: express 5.2.1, zod 4.6.5, helmet 8.3.0, cors 2.8.6, express-rate-limit 8.7.1, pino 10.4.0, commander 15.0.0, vitest 5.0.3, supertest 7.3.1, typescript 7.0.2. Re-check compatibility before pinning (TypeScript 7 toolchain support in ESLint/Vitest unverified).
+Versions checked on 2026-10-07 via `npm view`. The CLI has no runtime dependencies: it uses a small own argument parser for fast startup. TypeScript is pinned to 5.9.x because TypeScript 7 toolchain support was not verified.
 
 ## Naming status
 
