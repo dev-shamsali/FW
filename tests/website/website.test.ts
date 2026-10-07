@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -42,7 +42,7 @@ describe("site content stays honest", () => {
   it("has no external repo/npm links or invented metrics in source", () => {
     expect(src).not.toMatch(/https?:\/\/(www\.)?(github\.com|npmjs\.com)/);
     expect(src).not.toMatch(/\b\d[\d,.]*\s*(stars|downloads|users|contributors|companies)\b/i);
-    expect(src).toContain("Shams Ali Shaikh");
+    expect(readFileSync(join(root, "site.config.json"), "utf8")).toContain("Shams Ali Shaikh");
   });
   it("built output (when present) carries the required headline and no dead external links", () => {
     const out = join(root, "apps/website/out/index.html");
@@ -51,5 +51,43 @@ describe("site content stays honest", () => {
     expect(html).toContain("The secure, convention-driven backend framework for Node.js.");
     expect(html).toContain("Get started");
     expect(html).not.toMatch(/href="https?:\/\/(www\.)?(github\.com|npmjs\.com)/);
+  });
+});
+
+describe("privacy claims match the built site", () => {
+  const out = join(root, "apps/website/out");
+  const built = existsSync(join(out, "index.html"));
+  const html = (p: string) => readFileSync(join(out, p), "utf8");
+
+  it("privacy page exists and names the one storage key the site really uses", () => {
+    const privacy = readFileSync(join(root, "apps/website/src/app/privacy/page.tsx"), "utf8");
+    const toggle = readFileSync(join(root, "apps/website/src/components/ThemeToggle.tsx"), "utf8");
+    const docsJs = readFileSync(join(root, "apps/docs/assets/docs.js"), "utf8");
+    expect(privacy).toContain("rhea-theme");
+    expect(toggle).toContain('"rhea-theme"');
+    expect(docsJs).toContain('"rhea-theme"');
+    // no other storage keys anywhere
+    for (const f of [toggle, docsJs]) expect([...f.matchAll(/(?:get|set|remove)Item\("([^"]+)"/g)].every((m) => m[1] === "rhea-theme")).toBe(true);
+  });
+
+  it.skipIf(!built)("no page loads scripts, styles, fonts or images from another origin", () => {
+    const pages = ["index.html", "privacy/index.html", "docs/introduction/index.html", "docs/configuration/index.html"];
+    for (const p of pages) {
+      const h = html(p);
+      const external = [...h.matchAll(/<(?:script|img|iframe|source)[^>]+src="(https?:[^"]+)"/g), ...h.matchAll(/<link[^>]+href="(https?:[^"]+)"[^>]*>/g)]
+        .filter((m) => !/rel="canonical"|property="og:/.test(m[0]))
+        .map((m) => m[1]);
+      expect(external, p).toEqual([]);
+    }
+    expect(html("docs/assets/" + readdirSync(join(out, "docs/assets")).find((f) => f.endsWith(".css"))!)).not.toMatch(/url\(\s*["']?https?:/);
+  });
+
+  it.skipIf(!built)("has canonical URLs, sitemap entries for every docs page, robots and a privacy link in the footer", () => {
+    const nav = JSON.parse(readFileSync(join(root, "docs/nav.json"), "utf8")) as { pages: string[] }[];
+    const sitemap = html("sitemap.xml");
+    for (const page of nav.flatMap((s) => s.pages)) expect(sitemap, page).toContain(`/docs/${page}/`);
+    expect(html("robots.txt")).toContain("Sitemap: https://rhea.devcodehub.cloud/sitemap.xml");
+    expect(html("index.html")).toContain('href="/privacy/"');
+    expect(html("docs/security/index.html")).toContain('rel="canonical" href="https://rhea.devcodehub.cloud/docs/security/"');
   });
 });

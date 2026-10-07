@@ -21,7 +21,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "verify": "npm run lint && npm run typecheck && npm test && npm run build",
-    "build:website": "npm run build -w @rheajs/website"
+    "build:website": "npm run build -w @rheajs/website",
+    "release:check": "node scripts/check-release.mjs",
+    "set-repo": "node scripts/set-repo.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",

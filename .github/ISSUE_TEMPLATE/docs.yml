@@ -1,0 +1,12 @@
+name: Documentation problem
+description: Something in the docs is wrong, missing or unclear
+labels: [documentation]
+body:
+  - type: input
+    id: page
+    attributes: { label: Page or URL }
+    validations: { required: true }
+  - type: textarea
+    id: what
+    attributes: { label: What is wrong or missing }
+    validations: { required: true }

@@ -30,6 +30,9 @@ Rate limiting is off in the `test` environment unless you pass `rateLimit` expli
 **npm warns that `esbuild` install scripts were skipped (npm 11+).**
 `tsx` depends on esbuild, which ships its binary through platform packages, so `rhea dev` and tests still worked when this was checked on Linux. If esbuild fails to run, approve its script with the command npm prints.
 
+**`npm install` fails with `Cannot read properties of null (reading 'edgesOut')`.**
+Reproduced on npm 10.8 and 10.9 when the project uses `vitest` 4.1.x. Generated projects pin `vitest` and `@vitest/coverage-v8` to `~4.0.18`, which installs cleanly. If you upgraded Vitest and hit this, pin it back or upgrade npm.
+
 **`rhea build` fails with type errors.**
 `rhea build` emits nothing on type errors by design. Fix them, or run `npm run typecheck` to see them with tests included.
 

@@ -2,6 +2,7 @@ import { CopyCommand } from "../components/CopyCommand";
 import { Pipeline } from "../components/Pipeline";
 import { Code, Section } from "../components/Section";
 import { Terminal, capturedWith } from "../components/Terminal";
+import { Footer, Header } from "../components/SiteChrome";
 import { site } from "../site";
 
 const features: [string, string][] = [
@@ -28,36 +29,7 @@ const roadmap: [string, string][] = [
 export default function Home() {
   return (
     <>
-      <a
-        href="#main"
-        className="absolute -left-[999px] focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-gold focus:px-3 focus:py-2 focus:text-[#0d1b2a]"
-      >
-        Skip to content
-      </a>
-      <header className="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center gap-5 px-4 py-3 md:px-6">
-          <a href="#main" className="text-lg font-semibold tracking-tight">
-            {site.name}
-          </a>
-          <nav aria-label="Primary" className="ml-auto flex gap-4 text-sm text-slate">
-            <a href="#why" className="hidden hover:text-ink sm:inline">
-              Why
-            </a>
-            <a href="#cli" className="hidden hover:text-ink sm:inline">
-              CLI
-            </a>
-            <a href="#security" className="hidden hover:text-ink sm:inline">
-              Security
-            </a>
-            <a href="#roadmap" className="hidden hover:text-ink sm:inline">
-              Roadmap
-            </a>
-            <a href="docs/introduction.html" className="font-medium text-ink">
-              Docs
-            </a>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       <main id="main">
         <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-10 px-4 pt-12 pb-16 md:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12 lg:pt-20">
@@ -68,7 +40,7 @@ export default function Home() {
             <h1 className="text-[2.6rem] leading-[1.04] font-semibold tracking-tight sm:text-5xl lg:text-[3.4rem]">{site.headline}</h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate">{site.statement}</p>
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <a href="docs/quick-start.html" className="rounded-md bg-gold px-5 py-2.5 font-semibold text-[#0d1b2a] hover:brightness-95">
+              <a href="/docs/quick-start/" className="rounded-md bg-gold px-5 py-2.5 font-semibold text-[#0d1b2a] hover:brightness-95">
                 Get started
               </a>
               {site.repoUrl ? (
@@ -193,8 +165,7 @@ await app.start(5000);`}</Code>
             </div>
           </div>
           <p>
-            <code>rhea security</code> runs static checks on your project. It is not a penetration test. Read the{" "}
-            <a href="docs/security.html">security guide</a>.
+            <code>rhea security</code> runs static checks on your project. It is not a penetration test. Read the <a href="/docs/security/">security guide</a>.
           </p>
         </Section>
 
@@ -248,14 +219,14 @@ expect(res.status).toBe(200);`}</Code>
           <p>
             <code>rhea docker</code> writes a multi-stage Dockerfile that installs production dependencies only and runs as a non-root user. It was built and
             run once on Linux: the image served requests and exited cleanly on <code>docker stop</code>. Other platforms are untested. The{" "}
-            <a href="docs/deployment.html">deployment guide</a> has the full checklist, including proxy settings that affect rate limiting.
+            <a href="/docs/deployment/">deployment guide</a> has the full checklist, including proxy settings that affect rate limiting.
           </p>
         </Section>
 
         <Section id="documentation" title="Documentation">
           <p>
             24 pages covering installation, every part of the framework, security, Docker and troubleshooting. Code examples in the docs are type-checked
-            against the real build by the test suite. <a href="docs/introduction.html">Read the docs</a>.
+            against the real build by the test suite. <a href="/docs/introduction/">Read the docs</a>.
           </p>
         </Section>
 
@@ -288,11 +259,7 @@ expect(res.status).toBe(200);`}</Code>
         </Section>
       </main>
 
-      <footer className="border-t border-line">
-        <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-slate md:px-6">
-          {site.name} {site.version}. Made by {site.author}. MIT licensed. Alpha software.
-        </div>
-      </footer>
+      <Footer />
 
       <script
         type="application/ld+json"

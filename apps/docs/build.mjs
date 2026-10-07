@@ -1,13 +1,23 @@
-// Static docs generator: ../../docs/*.md -> dist/*.html. Only dependency: marked.
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+// Static docs generator: ../../docs/*.md -> dist/<page>/index.html (pretty URLs).
+// Dependencies: marked (markdown), shiki (build-time syntax highlighting), fontsource (self-hosted fonts).
+import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Marked } from "marked";
+import { createHighlighter } from "shiki";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const docsDir = join(here, "../../docs");
+const repo = join(here, "../..");
+const docsDir = join(repo, "docs");
 const out = join(here, "dist");
+const cfg = JSON.parse(readFileSync(join(repo, "site.config.json"), "utf8"));
+const BASE = process.env.DOCS_BASE ?? "/docs/";
+const SITE = (process.env.SITE_URL ?? cfg.siteUrl ?? "").replace(/\/$/, "");
 const nav = JSON.parse(readFileSync(join(docsDir, "nav.json"), "utf8"));
+const require = createRequire(import.meta.url);
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const slug = (s) =>
@@ -16,118 +26,245 @@ const slug = (s) =>
     .replace(/<[^>]+>/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+const strip = (s) =>
+  s
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/[`*_>#|]/g, "")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
 
+const lastUpdated = (name) => {
+  const r = spawnSync("git", ["log", "-1", "--format=%cs", "--", `docs/${name}.md`], { cwd: repo, encoding: "utf8" });
+  return r.status === 0 && r.stdout.trim() ? r.stdout.trim() : new Date().toISOString().slice(0, 10);
+};
+
+const sectionOf = {};
 const pages = nav
-  .flatMap((s) => s.pages)
-  .map((name) => {
+  .flatMap((s) => s.pages.map((name) => ({ name, section: s.section })))
+  .map(({ name, section }) => {
+    sectionOf[name] = section;
     const md = readFileSync(join(docsDir, `${name}.md`), "utf8");
     const title = /^# (.+)$/m.exec(md)?.[1] ?? name;
-    return { name, md, title };
+    const body = md.replace(/^# .+\n+/, "");
+    const lede = /^(?!#|>|```|\||[-*] |\d+\. )(.+)$/m.exec(body)?.[1] ?? "";
+    return { name, section, md, body, title, lede, updated: lastUpdated(name) };
   });
 
+const hashOf = (file) =>
+  createHash("sha1")
+    .update(readFileSync(join(here, "assets", file)))
+    .digest("hex")
+    .slice(0, 8);
+const CSS = `docs.${hashOf("docs.css")}.css`;
+const JS = `docs.${hashOf("docs.js")}.js`;
+
+const url = (name, hash = "") => `${BASE}${name}/${hash}`;
+
+/* ---------- syntax highlighting ---------- */
+const LANGS = {
+  ts: "typescript",
+  typescript: "typescript",
+  tsx: "tsx",
+  js: "javascript",
+  json: "json",
+  bash: "bash",
+  sh: "bash",
+  shell: "bash",
+  yaml: "yaml",
+  yml: "yaml",
+  dockerfile: "docker",
+  docker: "docker",
+  text: "text",
+  md: "markdown",
+  markdown: "markdown",
+  env: "bash",
+};
+const highlighter = await createHighlighter({
+  themes: ["github-light", "github-dark"],
+  langs: ["typescript", "tsx", "javascript", "json", "bash", "yaml", "docker", "markdown"],
+});
+const ICON = {
+  term: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2.5 4.5 6 8l-3.5 3.5M8 12h5.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  file: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 1.75h5l3 3v9.5H4z" stroke-linejoin="round"/></svg>',
+  copy: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" width="14" height="14"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/><path d="M10.5 3.5v-1h-8v8h1"/></svg>',
+};
+const LABEL = {
+  bash: "Terminal",
+  typescript: "TypeScript",
+  tsx: "TSX",
+  javascript: "JavaScript",
+  json: "JSON",
+  yaml: "YAML",
+  docker: "Dockerfile",
+  markdown: "Markdown",
+  text: "Output",
+};
+
+function codeBlock(text, info) {
+  const [rawLang = "", ...meta] = (info ?? "").split(/\s+/);
+  const lang = LANGS[rawLang.toLowerCase()] ?? "text";
+  const verified = meta.includes("verify");
+  const body = text.replace(/\n$/, "");
+  const html =
+    lang === "text"
+      ? `<pre class="shiki" tabindex="0"><code>${esc(body)}</code></pre>`
+      : highlighter.codeToHtml(body, { lang, themes: { light: "github-light", dark: "github-dark" }, defaultColor: false });
+  const label = LABEL[lang] ?? lang;
+  const icon = lang === "bash" ? ICON.term : ICON.file;
+  const badge = verified
+    ? '<span class="badge" title="This example is type-checked against the real @rheajs/core build by the test suite.">Type-checked</span>'
+    : "";
+  return `<figure class="code"><figcaption>${icon}<span>${esc(label)}</span>${badge}<button class="copy" type="button">${ICON.copy}<span>Copy</span><span class="sr" hidden> code</span></button></figcaption>${html}</figure>`;
+}
+
+/* ---------- markdown ---------- */
+const stash = [];
 const marked = new Marked({
   renderer: {
     heading({ tokens, depth }) {
       const text = this.parser.parseInline(tokens);
       const id = slug(text);
-      return `<h${depth} id="${id}">${text}${depth > 1 ? ` <a class="anchor" href="#${id}" aria-label="Link to this section">#</a>` : ""}</h${depth}>\n`;
+      const anchor = depth > 1 ? `<a class="anchor" href="#${id}" aria-label="Link to this section">#</a>` : "";
+      return `<h${depth} id="${id}">${text}${anchor}</h${depth}>\n`;
     },
     code({ text, lang }) {
-      const l = (lang ?? "").split(/\s+/)[0];
-      return `<pre tabindex="0"><code${l ? ` class="language-${esc(l)}"` : ""}>${esc(text)}</code></pre>\n`;
+      stash.push(codeBlock(text, lang));
+      return `<!--CODE:${stash.length - 1}-->`;
+    },
+    link({ href, title, tokens }) {
+      const text = this.parser.parseInline(tokens);
+      const m = /^([a-z-]+)\.html(#.+)?$/.exec(href);
+      const target = m ? url(m[1], m[2] ?? "") : href;
+      const ext = /^https?:/.test(target) ? ' rel="noopener noreferrer"' : "";
+      return `<a href="${esc(target)}"${title ? ` title="${esc(title)}"` : ""}${ext}>${text}</a>`;
+    },
+    blockquote({ tokens }) {
+      return `<aside class="callout">${this.parser.parse(tokens)}</aside>\n`;
     },
   },
 });
+const render = (md) => {
+  stash.length = 0;
+  let html = marked.parse(md);
+  html = html.replace(/<table>/g, '<div class="table-wrap"><table>').replace(/<\/table>/g, "</table></div>");
+  return html.replace(/<!--CODE:(\d+)-->/g, (_, i) => stash[Number(i)]);
+};
 
-const css = `
-:root{--bg:#e8edf0;--fg:#0d1b2a;--muted:#3a4b5c;--line:#c3cfd7;--accent:#8a5a00;--code:#0d1b2a;--codefg:#e6edf2;--side:#f5f8f9}
-@media (prefers-color-scheme:dark){:root{--bg:#0a131c;--fg:#e6edf2;--muted:#a9b8c5;--line:#243546;--accent:#f0b83a;--code:#060d14;--codefg:#e6edf2;--side:#101d2a}}
-*{box-sizing:border-box}html{scroll-padding-top:5rem}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
-a{color:var(--accent)}a:focus-visible,button:focus-visible,input:focus-visible,pre:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--bg);padding:.5rem;z-index:10}
-header{position:sticky;top:0;z-index:5;display:flex;gap:1rem;align-items:center;padding:.6rem 1rem;background:var(--bg);border-bottom:1px solid var(--line)}
-header .brand{font-weight:700;text-decoration:none;color:var(--fg)}header .brand span{color:var(--accent)}
-#q{margin-left:auto;min-width:0;width:16rem;max-width:50vw;padding:.4rem .6rem;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg)}
-#results{position:absolute;right:1rem;top:3.4rem;width:20rem;max-width:calc(100vw - 2rem);background:var(--side);border:1px solid var(--line);border-radius:8px;list-style:none;margin:0;padding:.25rem;display:none}
-#results a{display:block;padding:.4rem .6rem;text-decoration:none;color:var(--fg)}#results a:hover{background:var(--line)}
-.layout{display:grid;grid-template-columns:16rem minmax(0,1fr);max-width:72rem;margin:0 auto}
-nav.side{padding:1.25rem 1rem;border-right:1px solid var(--line);background:var(--side);min-height:calc(100vh - 3.2rem)}
-nav.side h2{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1.2rem 0 .3rem}
-nav.side ul{list-style:none;margin:0;padding:0}nav.side a{display:block;padding:.2rem .5rem;border-radius:6px;text-decoration:none;color:var(--fg)}
-nav.side a[aria-current=page]{background:var(--line);font-weight:600}
-main{padding:2rem 1.5rem 4rem;min-width:0}main h1{margin-top:0}
-main h2{margin-top:2.2rem;border-bottom:1px solid var(--line);padding-bottom:.3rem}
-.anchor{opacity:0;text-decoration:none;font-size:.8em}h2:hover .anchor,h3:hover .anchor,.anchor:focus{opacity:1}
-pre{background:var(--code);color:var(--codefg);padding:1rem;border-radius:8px;overflow:auto;font-size:.875rem;line-height:1.5}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em}
-:not(pre)>code{background:var(--line);padding:.1em .35em;border-radius:4px}
-table{border-collapse:collapse;display:block;overflow:auto;max-width:100%}th,td{border:1px solid var(--line);padding:.4rem .7rem;text-align:left;vertical-align:top}
-blockquote{margin:1rem 0;padding:.5rem 1rem;border-left:4px solid var(--accent);background:var(--side)}
-.pager{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;border-top:1px solid var(--line);padding-top:1rem}
-footer{max-width:72rem;margin:0 auto;padding:1rem 1.5rem 2rem;color:var(--muted);font-size:.85rem}
-@media (max-width:760px){.layout{grid-template-columns:1fr}nav.side{border-right:0;border-bottom:1px solid var(--line);min-height:0}}
-@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-`;
+/* ---------- search index (per heading) ---------- */
+const searchIndex = [];
+for (const p of pages) {
+  let heading = "",
+    anchor = "",
+    text = [];
+  const flush = () => {
+    if (heading) searchIndex.push({ t: p.title, h: heading, u: url(p.name, anchor), x: text.join(" ").slice(0, 1500) });
+    text = [];
+  };
+  for (const tok of marked.lexer(p.body)) {
+    if (tok.type === "heading" && tok.depth <= 3) {
+      flush();
+      heading = strip(tok.text);
+      anchor = `#${slug(tok.text)}`;
+    } else if (tok.type !== "space" && tok.type !== "code") text.push(strip(tok.raw));
+  }
+  flush();
+  searchIndex.push({ t: p.title, h: "", u: url(p.name), x: strip(p.body).slice(0, 1200) });
+}
 
-const sideNav = (current) =>
+/* ---------- page template ---------- */
+const ICONS = {
+  logo: '<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#0d1b2a"/><circle cx="16" cy="16" r="7" fill="#e8edf0"/><path d="M3 20c8 5 18 3 26-9" fill="none" stroke="#e8a91c" stroke-width="2.4" stroke-linecap="round"/></svg>',
+  theme:
+    '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="3.6"/><path d="M10 1.8v2M10 16.2v2M1.8 10h2M16.2 10h2M4.2 4.2l1.4 1.4M14.4 14.4l1.4 1.4M4.2 15.8l1.4-1.4M14.4 5.6l1.4-1.4" stroke-linecap="round"/></svg>',
+  menu: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" stroke-linecap="round"/></svg>',
+  search:
+    '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" width="16" height="16" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4" stroke-linecap="round"/></svg>',
+};
+
+const sideNav = (cur) =>
   nav
     .map(
       (s) =>
-        `<h2>${esc(s.section)}</h2><ul>${s.pages.map((n) => `<li><a href="${n}.html"${n === current ? ' aria-current="page"' : ""}>${esc(pages.find((p) => p.name === n).title)}</a></li>`).join("")}</ul>`,
+        `<h2>${esc(s.section)}</h2><ul>${s.pages.map((n) => `<li><a href="${url(n)}"${n === cur ? ' aria-current="page"' : ""}>${esc(pages.find((p) => p.name === n).title)}</a></li>`).join("")}</ul>`,
     )
     .join("");
 
-const script = `
-fetch("search.json").then(r=>r.json()).then(idx=>{
-  const q=document.getElementById("q"),res=document.getElementById("results");
-  q.addEventListener("input",()=>{
-    const t=q.value.trim().toLowerCase();res.replaceChildren();
-    if(t.length<2){res.style.display="none";return}
-    const hits=idx.filter(p=>p.text.includes(t)||p.title.toLowerCase().includes(t)).slice(0,8);
-    for(const h of hits){const li=document.createElement("li"),a=document.createElement("a");a.href=h.url;a.textContent=h.title;li.append(a);res.append(li)}
-    res.style.display=hits.length?"block":"none";
-  });
-  document.addEventListener("keydown",e=>{if(e.key==="Escape")res.style.display="none"});
-}).catch(()=>{});
-`;
-
-const render = (p, i) => {
-  const prev = pages[i - 1],
-    next = pages[i + 1];
-  return `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${esc(p.title)} · Rhea.js docs</title>
-<meta name="description" content="Rhea.js documentation: ${esc(p.title)}">
-<style>${css}</style></head>
-<body><a class="skip" href="#content">Skip to content</a>
-<header><a class="brand" href="introduction.html">Rhea<span>.js</span></a>
-<input id="q" type="search" placeholder="Search docs" aria-label="Search docs" autocomplete="off"><ul id="results" aria-label="Search results"></ul></header>
-<div class="layout"><nav class="side" aria-label="Documentation">${sideNav(p.name)}</nav>
-<main id="content">${marked.parse(p.md)}
-<div class="pager">${prev ? `<a href="${prev.name}.html" rel="prev">← ${esc(prev.title)}</a>` : "<span></span>"}${next ? `<a href="${next.name}.html" rel="next">${esc(next.title)} →</a>` : "<span></span>"}</div></main></div>
-<footer>Rhea.js is alpha software. Made by Shams Ali Shaikh. MIT licensed.</footer>
-<script>${script}</script></body></html>`;
+const toc = (p) => {
+  const items = marked.lexer(p.body).filter((t) => t.type === "heading" && (t.depth === 2 || t.depth === 3));
+  if (!items.length) return "";
+  return `<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul>${items.map((t) => `<li><a class="l${t.depth}" href="#${slug(t.text)}">${esc(strip(t.text))}</a></li>`).join("")}</ul>${cfg.repoUrl ? `<a class="edit" href="${cfg.repoUrl}/edit/main/docs/${p.name}.md" rel="noopener noreferrer">Edit this page on GitHub</a>` : ""}</nav>`;
 };
 
+const desc = (p) => esc(p.lede.replace(/[`*_]/g, "").slice(0, 160) || `Rhea.js documentation: ${p.title}`);
+
+const page = (p, i) => {
+  const prev = pages[i - 1],
+    next = pages[i + 1];
+  const canonical = SITE ? `<link rel="canonical" href="${SITE}${url(p.name)}">` : "";
+  const og = `<meta property="og:type" content="article"><meta property="og:site_name" content="Rhea.js"><meta property="og:title" content="${esc(p.title)} | Rhea.js docs"><meta property="og:description" content="${desc(p)}">${SITE ? `<meta property="og:url" content="${SITE}${url(p.name)}">` : ""}<meta name="twitter:card" content="summary">`;
+  const ld = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: p.title,
+    description: p.lede.replace(/[`*_]/g, ""),
+    author: { "@type": "Person", name: cfg.author },
+    dateModified: p.updated,
+    inLanguage: "en",
+  });
+  return `<!doctype html>
+<html lang="en" data-base="${BASE}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(p.title)} | Rhea.js docs</title><meta name="description" content="${desc(p)}">${canonical}${og}
+<link rel="icon" href="${BASE}assets/icon.svg" type="image/svg+xml">
+<link rel="preload" href="${BASE}assets/fonts/familjen-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script>try{var t=localStorage.getItem("rhea-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="${BASE}assets/${CSS}"><script type="application/ld+json">${ld}</script></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="top">
+<button id="menu" class="icon-btn menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar">${ICONS.menu}</button>
+<a class="brand" href="/">${ICONS.logo}Rhea.js</a>
+<nav class="topnav" aria-label="Primary"><a href="${url("introduction")}" aria-current="page">Docs</a><a href="/">Home</a>${cfg.repoUrl ? `<a href="${cfg.repoUrl}" rel="noopener noreferrer">GitHub</a>` : ""}</nav>
+<span class="grow"></span>
+<button class="search-btn" type="button" data-open-search aria-label="Search documentation">${ICONS.search}<span>Search docs</span><kbd>Ctrl K</kbd></button>
+<button id="theme" class="icon-btn" type="button" aria-label="Change theme">${ICONS.theme}</button>
+</header>
+<div class="shell">
+<nav id="sidebar" class="side" aria-label="Documentation">${sideNav(p.name)}</nav>
+<main id="content"><article>
+<div class="crumbs"><a href="${url("introduction")}">Docs</a><span aria-hidden="true">/</span><span>${esc(p.section)}</span><span aria-hidden="true">/</span><span class="here" aria-current="page">${esc(p.title)}</span></div>
+<h1>${esc(p.title)}</h1>
+<p class="updated">Last updated ${p.updated}</p>
+${render(p.body)}
+<div class="pager">${prev ? `<a class="prev" href="${url(prev.name)}" rel="prev"><small>Previous</small>${esc(prev.title)}</a>` : "<span></span>"}${next ? `<a class="next" href="${url(next.name)}" rel="next"><small>Next</small>${esc(next.title)}</a>` : ""}</div>
+</article></main>
+${toc(p)}
+</div>
+<footer class="site"><span>Rhea.js ${esc(cfg.version)} is alpha software. Made by ${esc(cfg.author)}. MIT licensed.</span><a href="/">Home</a><a href="/privacy/">Privacy policy</a></footer>
+<dialog id="search" class="search" aria-label="Search documentation"><input id="q" type="search" placeholder="Search the docs" autocomplete="off" aria-label="Search the docs"><ul id="hits" aria-live="polite"></ul></dialog>
+<script src="${BASE}assets/${JS}" defer></script>
+</body></html>`;
+};
+
+/* ---------- write ---------- */
 rmSync(out, { recursive: true, force: true });
-mkdirSync(out, { recursive: true });
-pages.forEach((p, i) => writeFileSync(join(out, `${p.name}.html`), render(p, i)));
+mkdirSync(join(out, "assets/fonts"), { recursive: true });
+cpSync(join(here, "assets/docs.css"), join(out, "assets", CSS));
+cpSync(join(here, "assets/docs.js"), join(out, "assets", JS));
+writeFileSync(join(out, "assets/icon.svg"), ICONS.logo.replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" '));
+for (const [pkg, file] of [
+  ["@fontsource-variable/familjen-grotesk", "familjen-grotesk-latin-wght-normal.woff2"],
+  ["@fontsource-variable/martian-mono", "martian-mono-latin-wght-normal.woff2"],
+]) {
+  cpSync(join(dirname(require.resolve(`${pkg}/package.json`)), "files", file), join(out, "assets/fonts", file));
+}
+pages.forEach((p, i) => {
+  mkdirSync(join(out, p.name), { recursive: true });
+  writeFileSync(join(out, p.name, "index.html"), page(p, i));
+});
 writeFileSync(
   join(out, "index.html"),
-  `<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=introduction.html"><link rel="canonical" href="introduction.html"><a href="introduction.html">Rhea.js docs</a>`,
+  `<!doctype html><html lang="en"><meta charset="utf-8"><title>Rhea.js docs</title><meta http-equiv="refresh" content="0;url=${url("introduction")}"><link rel="canonical" href="${SITE}${url("introduction")}"><a href="${url("introduction")}">Rhea.js docs</a></html>`,
 );
-writeFileSync(
-  join(out, "search.json"),
-  JSON.stringify(
-    pages.map((p) => ({
-      title: p.title,
-      url: `${p.name}.html`,
-      text: p.md
-        .toLowerCase()
-        .replace(/```[\s\S]*?```/g, " ")
-        .slice(0, 6000),
-    })),
-  ),
-);
-console.log(`Built ${pages.length} pages to apps/docs/dist`);
+writeFileSync(join(out, "search.json"), JSON.stringify(searchIndex));
+writeFileSync(join(out, "pages.json"), JSON.stringify(pages.map((p) => ({ name: p.name, title: p.title, updated: p.updated }))));
+console.log(`Built ${pages.length} pages, ${searchIndex.length} search entries to apps/docs/dist (base ${BASE})`);

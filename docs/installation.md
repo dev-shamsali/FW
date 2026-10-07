@@ -1,6 +1,6 @@
 # Installation
 
-Requirements: Node.js 20 or newer, npm.
+Requirements: Node.js 20.19 or newer (the generated project's tooling needs it) and npm 10 or newer. The runtime packages `@rheajs/core` and `@rheajs/cli` declare `node >=20`.
 
 ```bash
 npx create-rhea my-api

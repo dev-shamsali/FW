@@ -24,7 +24,7 @@ Made by Shams Ali Shaikh. MIT licensed.
 ## Known limitations
 
 - Rate limiting uses an in-memory store, so limits are per process, not shared across instances.
-- Tested on Linux only so far. macOS and Windows are covered by the CI matrix but unverified at the time of writing.
+- Verified on Linux with Node.js 20, 22 and 26 (npm 10 and 12). macOS and Windows are covered by the CI matrix but were not verified when this was written.
 - `validate()` is synchronous: Zod schemas with async refinements are not supported.
 
 ## How the docs are verified

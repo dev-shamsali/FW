@@ -1,0 +1,50 @@
+name: Release
+
+# Publishes to npm. Runs ONLY when a maintainer pushes a version tag (v*) or starts it by hand.
+# It never runs on pull requests. The publish job needs approval from the "npm-publish" environment.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm run build:website
+      - run: npm test
+      - run: npm run test:e2e
+      - run: node scripts/check-release.mjs --strict ${{ github.ref_type == 'tag' && format('--tag {0}', github.ref_name) || '' }}
+
+  publish:
+    needs: verify
+    if: github.repository_owner != '' && github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm publish -w @rheajs/core -w @rheajs/cli -w create-rhea --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

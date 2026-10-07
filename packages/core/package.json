@@ -2,6 +2,20 @@
   "name": "@rheajs/core",
   "version": "0.1.0-alpha.0",
   "description": "Secure, convention-driven backend framework core for Node.js and Express. Made by Shams Ali Shaikh.",
+  "keywords": [
+    "rhea",
+    "rheajs",
+    "express",
+    "express5",
+    "nodejs",
+    "backend",
+    "framework",
+    "typescript",
+    "security",
+    "api",
+    "rest"
+  ],
+  "homepage": "https://rhea.devcodehub.cloud",
   "author": "Shams Ali Shaikh",
   "license": "MIT",
   "type": "module",
@@ -18,12 +32,18 @@
   },
   "files": [
     "dist",
+    "!dist/**/*.tsbuildinfo",
+    "!dist/.tsbuildinfo",
     "README.md",
     "LICENSE"
   ],
   "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@types/express": "^5.0.6",

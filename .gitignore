@@ -5,3 +5,5 @@ dist
 coverage
 .docs-verify
 apps/docs/dist
+.playwright-mcp
+*.png.tmp

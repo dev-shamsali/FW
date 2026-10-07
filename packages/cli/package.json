@@ -2,6 +2,17 @@
   "name": "@rheajs/cli",
   "version": "0.1.0-alpha.0",
   "description": "Rhea.js command line interface. Made by Shams Ali Shaikh.",
+  "keywords": [
+    "rhea",
+    "rheajs",
+    "cli",
+    "generator",
+    "scaffold",
+    "express",
+    "typescript",
+    "nodejs"
+  ],
+  "homepage": "https://rhea.devcodehub.cloud",
   "author": "Shams Ali Shaikh",
   "license": "MIT",
   "type": "module",
@@ -21,10 +32,16 @@
   },
   "files": [
     "dist",
+    "!dist/**/*.tsbuildinfo",
+    "!dist/.tsbuildinfo",
     "README.md",
     "LICENSE"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && node -e \"require('fs').chmodSync('dist/bin.js',0o755)\""
+    "build": "tsc -p tsconfig.build.json && node -e \"require('fs').chmodSync('dist/bin.js',0o755)\"",
+    "prepublishOnly": "npm run build"
   }
 }
