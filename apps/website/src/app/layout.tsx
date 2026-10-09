@@ -24,14 +24,20 @@ export const metadata: Metadata = {
     "Express CLI",
     "Node.js project generator",
   ],
-  openGraph: { type: "website", siteName: site.name, title, description: site.description },
-  twitter: { card: "summary", title, description: site.description },
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    title,
+    description: site.description,
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: `${site.name} logo` }],
+  },
+  twitter: { card: "summary_large_image", title, description: site.description, images: ["/og.png"] },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#e8edf0" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a131c" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
 };
 

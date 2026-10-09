@@ -22,7 +22,7 @@ export function Section({
           {lead && <p className={`mt-4 text-lg leading-relaxed ${inverse ? "text-code-ink/75" : "text-slate"}`}>{lead}</p>}
         </div>
         <div
-          className={`min-w-0 space-y-5 [&_a]:underline [&_a]:decoration-gold [&_a]:decoration-2 [&_a]:underline-offset-4 [&_p]:max-w-3xl [&_p]:text-[1.0625rem] [&_p]:leading-[1.7] ${inverse ? "[&_code]:text-gold" : ""}`}
+          className={`min-w-0 space-y-5 [&_a]:underline [&_a]:decoration-gold [&_a]:decoration-2 [&_a]:underline-offset-4 [&_p]:max-w-3xl [&_p]:text-[1.0625rem] [&_p]:leading-[1.7]`}
         >
           {children}
         </div>

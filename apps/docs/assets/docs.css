@@ -11,50 +11,50 @@
   font-display: swap;
 }
 :root {
-  --bg: #f6f8f9;
+  --bg: #ffffff;
   --panel: #ffffff;
-  --soft: #eaeff2;
-  --fg: #0d1b2a;
-  --muted: #4a5b6b;
-  --line: #d3dce2;
-  --gold: #e8a91c;
-  --link: #0b5cad;
-  --accent: #7a4f00;
-  --pass: #17766a;
-  --codebg: #f0f4f6;
-  --hover: #e3eaee;
+  --soft: #f5f5f5;
+  --fg: #0a0a0a;
+  --muted: #525252;
+  --line: #e5e5e5;
+  --gold: #0a0a0a;
+  --link: #0a0a0a;
+  --accent: #0a0a0a;
+  --pass: #0f7a52;
+  --codebg: #f5f5f5;
+  --hover: #efefef;
   --sans: "Familjen Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "Martian Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0a131c;
-    --panel: #0f1b27;
-    --soft: #14212e;
-    --fg: #e6edf2;
-    --muted: #a3b3c1;
-    --line: #243546;
-    --gold: #f0b83a;
-    --link: #7ab8f5;
-    --accent: #f0b83a;
-    --pass: #4fc3b2;
-    --codebg: #0d1823;
-    --hover: #162636;
+    --bg: #000000;
+    --panel: #0a0a0a;
+    --soft: #111111;
+    --fg: #ededed;
+    --muted: #a1a1a1;
+    --line: #262626;
+    --gold: #ededed;
+    --link: #ededed;
+    --accent: #ededed;
+    --pass: #3ddc97;
+    --codebg: #0f0f0f;
+    --hover: #171717;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0a131c;
-  --panel: #0f1b27;
-  --soft: #14212e;
-  --fg: #e6edf2;
-  --muted: #a3b3c1;
-  --line: #243546;
-  --gold: #f0b83a;
-  --link: #7ab8f5;
-  --accent: #f0b83a;
-  --pass: #4fc3b2;
-  --codebg: #0d1823;
-  --hover: #162636;
+  --bg: #000000;
+  --panel: #0a0a0a;
+  --soft: #111111;
+  --fg: #ededed;
+  --muted: #a1a1a1;
+  --line: #262626;
+  --gold: #ededed;
+  --link: #ededed;
+  --accent: #ededed;
+  --pass: #3ddc97;
+  --codebg: #0f0f0f;
+  --hover: #171717;
 }
 * {
   box-sizing: border-box;
@@ -78,6 +78,8 @@ body {
 }
 a {
   color: var(--link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 a:focus-visible,
 button:focus-visible,
@@ -95,8 +97,8 @@ summary:focus-visible {
 .skip:focus {
   left: 8px;
   top: 8px;
-  background: var(--gold);
-  color: #0d1b2a;
+  background: var(--fg);
+  color: var(--bg);
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
   z-index: 100;

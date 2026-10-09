@@ -1,43 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #e8edf0;
-  --panel: #f5f8f9;
-  --ink: #0d1b2a;
-  --slate: #3a4b5c;
-  --line: #c3cfd7;
-  --gold: #e8a91c;
-  --block: #b8362a;
-  --pass: #17766a;
-  --code: #0d1b2a;
-  --code-ink: #e6edf2;
+  --bg: #ffffff;
+  --panel: #fafafa;
+  --ink: #0a0a0a;
+  --slate: #525252;
+  --line: #e5e5e5;
+  --gold: #0a0a0a;
+  --block: #c2261b;
+  --pass: #0f7a52;
+  --code: #0a0a0a;
+  --code-ink: #ededed;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0a131c;
-    --panel: #101d2a;
-    --ink: #e6edf2;
-    --slate: #a9b8c5;
-    --line: #243546;
-    --gold: #f0b83a;
-    --block: #ef7b6c;
-    --pass: #4fc3b2;
-    --code: #060d14;
-    --code-ink: #e6edf2;
+    --bg: #000000;
+    --panel: #0a0a0a;
+    --ink: #ededed;
+    --slate: #a1a1a1;
+    --line: #262626;
+    --gold: #ededed;
+    --block: #ff6b5e;
+    --pass: #3ddc97;
+    --code: #0f0f0f;
+    --code-ink: #ededed;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #0a131c;
-  --panel: #101d2a;
-  --ink: #e6edf2;
-  --slate: #a9b8c5;
-  --line: #243546;
-  --gold: #f0b83a;
-  --block: #ef7b6c;
-  --pass: #4fc3b2;
-  --code: #060d14;
-  --code-ink: #e6edf2;
+  --bg: #000000;
+  --panel: #0a0a0a;
+  --ink: #ededed;
+  --slate: #a1a1a1;
+  --line: #262626;
+  --gold: #ededed;
+  --block: #ff6b5e;
+  --pass: #3ddc97;
+  --code: #0f0f0f;
+  --code-ink: #ededed;
 }
 
 @theme inline {
@@ -89,4 +89,15 @@ code {
 }
 :not(pre) > code {
   font-size: 0.82em;
+}
+
+.grid-bg {
+  background-image: linear-gradient(to right, var(--line) 1px, transparent 1px), linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 70% 0%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 80% at 70% 0%, #000 0%, transparent 75%);
+}
+::selection {
+  background: var(--ink);
+  color: var(--bg);
 }

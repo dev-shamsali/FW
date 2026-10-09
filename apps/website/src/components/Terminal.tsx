@@ -4,11 +4,16 @@ import fixtures from "../data/fixtures.json";
 export function Terminal({ only }: { only?: string[] }) {
   const steps = fixtures.cli.filter((s) => !only || only.some((o) => s.cmd.includes(o)));
   return (
-    <div role="region" aria-label="Captured CLI output" tabIndex={0} className="overflow-x-auto rounded-lg bg-code p-4 text-xs leading-relaxed text-code-ink">
+    <div
+      role="region"
+      aria-label="Captured CLI output"
+      tabIndex={0}
+      className="overflow-x-auto rounded-xl border border-white/10 bg-code p-4 text-xs leading-relaxed text-code-ink"
+    >
       {steps.map((s) => (
         <div key={s.cmd} className="mb-4 last:mb-0">
           <div>
-            <span aria-hidden="true" className="select-none text-gold">
+            <span aria-hidden="true" className="select-none opacity-50">
               ${" "}
             </span>
             {s.cmd}

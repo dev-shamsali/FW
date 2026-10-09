@@ -1,8 +1,8 @@
+import fixtures from "../data/fixtures.json";
 import { CopyCommand } from "../components/CopyCommand";
 import { Pipeline } from "../components/Pipeline";
 import { Code, Section } from "../components/Section";
 import { Terminal, capturedWith } from "../components/Terminal";
-import { Rings } from "../components/Logo";
 import { Footer, Header } from "../components/SiteChrome";
 import { site } from "../site";
 
@@ -59,39 +59,59 @@ export default function Home() {
       <Header />
 
       <main id="main">
-        <div className="relative overflow-hidden">
-          <Rings />
-          <div className="relative mx-auto max-w-6xl px-4 pt-14 pb-10 md:px-6 md:pt-24">
-            <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-panel px-3 py-1 text-sm text-slate">
-              <span className="h-2 w-2 rounded-full bg-gold" aria-hidden="true" />
-              Alpha {site.version}. Not production-ready yet.
-            </p>
-            <h1 className="max-w-4xl text-[clamp(2.4rem,7vw,4.9rem)] leading-[1.02] font-bold tracking-[-0.03em] text-balance">{site.headline}</h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate md:text-xl">{site.statement}</p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a href="/docs/quick-start/" className="rounded-lg bg-gold px-6 py-3 font-semibold text-[#0d1b2a] shadow-sm hover:brightness-95">
-                Get started
-              </a>
-              {site.repoUrl ? (
-                <a href={site.repoUrl} className="rounded-lg border border-ink px-6 py-3 font-semibold hover:bg-ink hover:text-bg">
-                  View GitHub
+        <div className="relative overflow-hidden border-b border-line">
+          <div className="grid-bg absolute inset-0" aria-hidden="true" />
+          <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 pt-14 pb-16 md:px-6 md:pt-20 md:pb-24 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-10">
+            <div>
+              <p className="mb-6 inline-block rounded-full border border-line bg-bg px-3.5 py-1 text-sm text-slate">
+                Alpha {site.version}. Not production-ready yet.
+              </p>
+              <h1 className="text-[clamp(2.2rem,5vw,3.7rem)] leading-[1.03] font-bold tracking-[-0.035em] text-balance">{site.headline}</h1>
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate">{site.statement}</p>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <a href="/docs/quick-start/" className="rounded-lg bg-ink px-6 py-3 font-semibold text-bg hover:opacity-85">
+                  Get started
                 </a>
-              ) : (
-                <span aria-disabled="true" className="rounded-lg border border-dashed border-line px-6 py-3 text-slate">
-                  GitHub: not public yet
-                </span>
-              )}
-              <CopyCommand command={site.installCommand} />
+                {site.repoUrl ? (
+                  <a href={site.repoUrl} className="rounded-lg border border-line bg-bg px-6 py-3 font-semibold hover:border-ink">
+                    View GitHub
+                  </a>
+                ) : (
+                  <span aria-disabled="true" className="rounded-lg border border-dashed border-line px-6 py-3 text-slate">
+                    GitHub: not public yet
+                  </span>
+                )}
+              </div>
+              <p className="mt-8 text-sm text-slate">Built on</p>
+              <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-[0.95rem] font-semibold">
+                {["Express 5", "TypeScript", "Zod", "Helmet", "pino"].map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+              </ul>
             </div>
-            <p className="mt-3 text-sm text-slate">Published to npm as an alpha: the API can change between releases. Made by {site.author}.</p>
-          </div>
-          <div className="relative mx-auto max-w-6xl px-4 pb-16 md:px-6 md:pb-24">
-            <p className="mb-3 max-w-2xl text-sm text-slate">
-              Pick a request. Watch it travel the pipeline. The responses come from a real Rhea.js server running in production mode.
-            </p>
-            <Pipeline />
+
+            <div className="min-w-0 rounded-2xl border border-line bg-code shadow-[0_30px_80px_-30px_rgba(0,0,0,0.45)]">
+              <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5 text-xs text-code-ink/60">
+                <span>Terminal</span>
+                <span>{site.version}</span>
+              </div>
+              <div className="border-b border-white/10 p-4">
+                <CopyCommand command={site.installCommand} />
+              </div>
+              <pre className="overflow-x-auto p-5 text-[13px] leading-relaxed whitespace-pre-wrap text-code-ink/85">{fixtures.cli[0]!.output}</pre>
+            </div>
           </div>
         </div>
+
+        <section id="demo" aria-labelledby="demo-h" className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-24">
+          <div className="mb-8 max-w-3xl">
+            <h2 id="demo-h" className="text-[clamp(1.85rem,4.4vw,3rem)] leading-[1.08] font-bold tracking-tight text-balance">
+              Watch a request go through the pipeline
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-slate">Pick a request. The responses come from a real Rhea.js server running in production mode.</p>
+          </div>
+          <Pipeline />
+        </section>
 
         <Section id="why" title="Why Rhea.js">
           <p>

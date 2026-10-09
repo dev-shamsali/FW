@@ -13,10 +13,7 @@ const links: [string, string][] = [
 export function Header() {
   return (
     <>
-      <a
-        href="#main"
-        className="absolute -left-[999px] focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-gold focus:px-3 focus:py-2 focus:text-[#0d1b2a]"
-      >
+      <a href="#main" className="absolute -left-[999px] focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-ink focus:px-3 focus:py-2 focus:text-bg">
         Skip to content
       </a>
       <header className="sticky top-0 z-40 border-b border-line bg-bg/85 backdrop-blur-md">

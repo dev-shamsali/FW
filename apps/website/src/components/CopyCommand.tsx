@@ -5,7 +5,7 @@ import { useState } from "react";
 export function CopyCommand({ command }: { command: string }) {
   const [copied, setCopied] = useState(false);
   return (
-    <div className="flex max-w-full items-stretch overflow-hidden rounded-md border border-line bg-code text-code-ink">
+    <div className="flex max-w-full items-stretch overflow-hidden rounded-lg border border-white/15 bg-black/40 text-code-ink">
       <code className="overflow-x-auto px-4 py-2.5 text-sm whitespace-nowrap">
         <span aria-hidden="true" className="select-none opacity-50">
           ${" "}
