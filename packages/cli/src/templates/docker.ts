@@ -50,7 +50,7 @@ CMD ["node", "src/server.js"]
   const appEnv = (url: string) => `      NODE_ENV: production
       PORT: "5000"
       CORS_ORIGIN: \${CORS_ORIGIN:-}
-      TRUST_PROXY: \${TRUST_PROXY:-0}${url ? `\n      DATABASE_URL: ${url}` : ""}`;
+      TRUST_PROXY: \${TRUST_PROXY:-0}${url ? `\n      DATABASE_URL: ${url}` : ""}${o.auth ? `\n      JWT_SECRET: \${JWT_SECRET:?set JWT_SECRET in .env}` : ""}`;
 
   let compose: string;
   if (o.database === "mongodb") {

@@ -25,14 +25,14 @@ const show = (r: SpawnSyncReturns<string>) => `${r.stdout}\n${r.stderr}`;
 beforeAll(() => {
   mkdirSync(tgz);
   expect(npm(["run", "build"], root).status).toBe(0);
-  for (const w of ["@rheajs/core", "@rheajs/cli"]) expect(npm(["pack", "-w", w, "--pack-destination", tgz], root).status).toBe(0);
+  for (const w of ["@rheajs/core", "@rheajs/auth", "@rheajs/cli"]) expect(npm(["pack", "-w", w, "--pack-destination", tgz], root).status).toBe(0);
   const f = (p: string) =>
     "file:" +
     join(
       tgz,
       readdirSync(tgz).find((x) => x.startsWith(p))!,
     );
-  env = { RHEA_CORE_SPEC: f("rheajs-core"), RHEA_CLI_SPEC: f("rheajs-cli") };
+  env = { RHEA_CORE_SPEC: f("rheajs-core"), RHEA_AUTH_SPEC: f("rheajs-auth"), RHEA_CLI_SPEC: f("rheajs-cli") };
 }, 300_000);
 afterAll(() => rmSync(work, { recursive: true, force: true }));
 
@@ -40,6 +40,8 @@ const variants = [
   { name: "ts-cjs-mongodb", flags: ["--ts", "--cjs", "--db", "mongodb"], ts: true, db: "mongodb" },
   { name: "js-cjs-mysql", flags: ["--js", "--cjs", "--db", "mysql"], ts: false, db: "mysql" },
   { name: "js-esm-none", flags: ["--js", "--esm", "--db", "none"], ts: false, db: "none" },
+  { name: "ts-esm-mysql-auth", flags: ["--ts", "--esm", "--db", "mysql", "--auth"], ts: true, db: "mysql" },
+  { name: "js-cjs-mongodb-auth", flags: ["--js", "--cjs", "--db", "mongodb", "--auth"], ts: false, db: "mongodb" },
 ] as const;
 
 describe.each(variants)("$name", (v) => {
@@ -74,7 +76,16 @@ describe.each(variants)("$name", (v) => {
     }
     const entry = v.ts ? "dist/server.js" : "src/server.js";
     const dbDown = v.db === "mongodb" ? "mongodb://127.0.0.1:1/x" : v.db === "mysql" ? "mysql://root:x@127.0.0.1:1/x" : "";
-    const child = spawn(node, [entry], { cwd: app, env: { ...process.env, NODE_ENV: "production", PORT: "0", ...(dbDown ? { DATABASE_URL: dbDown } : {}) } });
+    const child = spawn(node, [entry], {
+      cwd: app,
+      env: {
+        ...process.env,
+        NODE_ENV: "production",
+        PORT: "0",
+        ...(dbDown ? { DATABASE_URL: dbDown } : {}),
+        ...(v.name.endsWith("-auth") ? { JWT_SECRET: "e2e-secret-e2e-secret-e2e-secret-e2e" } : {}),
+      },
+    });
     let log = "";
     child.stdout.on("data", (d) => (log += d));
     child.stderr.on("data", (d) => (log += d));
@@ -113,6 +124,6 @@ describe.each(variants)("$name", (v) => {
 
   it("keeps the configuration the user chose", () => {
     const cfg = JSON.parse(readFileSync(join(app, "rhea.config.json"), "utf8"));
-    expect(cfg).toEqual({ language: v.ts ? "ts" : "js", module: v.name.includes("cjs") ? "cjs" : "esm", database: v.db });
+    expect(cfg).toEqual({ language: v.ts ? "ts" : "js", module: v.name.includes("cjs") ? "cjs" : "esm", database: v.db, auth: v.name.endsWith("-auth") });
   });
 });

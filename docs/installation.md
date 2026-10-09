@@ -29,13 +29,14 @@ Open `http://localhost:5000/api/rhea`.
 
 Every question has a flag, so scripts and CI never block:
 
-| Flag                         | Meaning                                             |
-| ---------------------------- | --------------------------------------------------- |
-| `--ts` / `--js`              | TypeScript or JavaScript (default TypeScript)       |
-| `--esm` / `--cjs`            | ES Modules or CommonJS (default ES Modules)         |
-| `--db none\|mongodb\|mysql`  | Database (default none)                             |
-| `--install` / `--no-install` | Run `npm install` after creating                    |
-| `--yes`, `-y`                | Accept defaults for anything not given, ask nothing |
+| Flag                         | Meaning                                               |
+| ---------------------------- | ----------------------------------------------------- |
+| `--ts` / `--js`              | TypeScript or JavaScript (default TypeScript)         |
+| `--esm` / `--cjs`            | ES Modules or CommonJS (default ES Modules)           |
+| `--db none\|mongodb\|mysql`  | Database (default none)                               |
+| `--auth` / `--no-auth`       | Add register, login and JWT routes (needs a database) |
+| `--install` / `--no-install` | Run `npm install` after creating                      |
+| `--yes`, `-y`                | Accept defaults for anything not given, ask nothing   |
 
 ```bash
 npx create-rhea my-api --js --cjs --db mongodb --install

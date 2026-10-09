@@ -49,7 +49,7 @@ function fromFlags(flags: Record<string, string | boolean>): Partial<ProjectOpti
 export async function create(argv: string[]): Promise<number> {
   const { positionals, flags } = parseArgs(
     argv.filter((a) => a !== "-y"),
-    ["core-spec", "cli-spec", "db"],
+    ["core-spec", "cli-spec", "auth-spec", "db"],
   );
   const yes = flags["yes"] === true || argv.includes("-y") || !interactive();
   const asked = fromFlags(flags);
@@ -89,16 +89,29 @@ export async function create(argv: string[]): Promise<number> {
           { value: "mongodb", label: "MongoDB" },
           { value: "mysql", label: "MySQL" },
         ]));
-  const options: ProjectOptions = { language, module, database };
+  if (flags["auth"] === true && flags["no-auth"] === true) throw new CliError("Choose either --auth or --no-auth, not both.", 2);
+  if (flags["auth"] === true && database === "none") throw new CliError("Authentication needs a database. Add --db mongodb or --db mysql.", 2);
+  const auth: boolean =
+    database === "none"
+      ? false
+      : flags["auth"] === true
+        ? true
+        : flags["no-auth"] === true
+          ? false
+          : yes
+            ? DEFAULT_OPTIONS.auth
+            : await confirm("Add authentication (register, login, JWT)?");
+  const options: ProjectOptions = { language, module, database, auth };
 
   const install = flags["install"] === true ? true : flags["no-install"] === true ? false : yes ? false : await confirm("Install dependencies now?");
 
   const coreSpec = String(flags["core-spec"] ?? process.env["RHEA_CORE_SPEC"] ?? "^0.1.0-alpha.1");
   const cliSpec = String(flags["cli-spec"] ?? process.env["RHEA_CLI_SPEC"] ?? "^0.1.0-alpha.1");
-  const files = projectFiles({ ...options, name, coreSpec, cliSpec });
+  const authSpec = String(flags["auth-spec"] ?? process.env["RHEA_AUTH_SPEC"] ?? "^0.1.0-alpha.1");
+  const files = projectFiles({ ...options, name, coreSpec, cliSpec, authSpec });
   writeFiles(dir, files);
   out(
-    `${c.green("✓")} Created ${c.bold(name)}: ${LABEL.language[language]}, ${LABEL.module[module]}, database ${LABEL.database[database]} (${Object.keys(files).length} files)`,
+    `${c.green("✓")} Created ${c.bold(name)}: ${LABEL.language[language]}, ${LABEL.module[module]}, database ${LABEL.database[database]}${auth ? ", authentication" : ""} (${Object.keys(files).length} files)`,
   );
 
   if (install) {
@@ -115,6 +128,7 @@ export async function create(argv: string[]): Promise<number> {
   if (database !== "none") out(`  ${DB_HINT[database](name)}   ${c.dim("# a local database matching .env, or edit DATABASE_URL")}`);
   out("  npm run dev");
   out("");
+  if (auth) out(`Authentication is on: ${c.cyan("POST /api/auth/register")} and ${c.cyan("POST /api/auth/login")}. Your JWT_SECRET is already in .env.\n`);
   out(`Then open ${c.cyan("http://localhost:5000/api/rhea")}`);
   return 0;
 }

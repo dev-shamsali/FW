@@ -6,6 +6,7 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 
 ### Added
 
+- `create` offers authentication when a database is chosen (`--auth`, `--no-auth`): users in MongoDB or MySQL, `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`, a generated `JWT_SECRET`, and a database-free test. `rhea doctor` checks the secret.
 - New package `@rheajs/auth`: scrypt password hashing (`hashPassword`, `verifyPassword`, `needsRehash`), HS256 JWT access tokens (`createJwt`), and route guards (`authenticate`, `optionalAuth`, `requireRole`).
 - `rateLimit` accepts `store`, `keyGenerator` and `skip`. `rateLimiter()` protects a single route. `redisRateLimitStore()` shares counters across instances.
 - `handleProcessErrors` (default on): an uncaught exception or unhandled rejection logs, shuts down gracefully and exits with code 1.

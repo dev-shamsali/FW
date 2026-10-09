@@ -6,7 +6,7 @@ rhea <command> [options]
 
 | Command                       | What it does                                                                                                                                                       |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `rhea create <name>`          | Scaffold a project. Asks for language, module system, database and install, unless flags are given: `--ts` `--js` `--esm` `--cjs` `--db none                       | mongodb | mysql` `--install` `--no-install` `--yes`. |
+| `rhea create <name>`          | Scaffold a project. Asks for language, module system, database and install, unless flags are given: `--ts` `--js` `--esm` `--cjs` `--db none                       | mongodb | mysql` `--auth` `--no-auth` `--install` `--no-install` `--yes`. |
 | `rhea dev`                    | Same as `npm run dev`: nodemon with the project's `nodemon.json` (tsx for TypeScript, node for JavaScript). Loads `.env`.                                          |
 | `rhea build`                  | TypeScript: type check and compile `src/` to `dist/` in one `tsc` pass, no output on type errors. JavaScript: nothing to build, says so and exits 0.               |
 | `rhea start`                  | Run `dist/server.js` (TypeScript) or `src/server.js` (JavaScript) with `NODE_ENV=production`. Does not load `.env` unless `--env-file <path>` is passed.           |

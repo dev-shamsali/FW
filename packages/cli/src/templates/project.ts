@@ -1,3 +1,5 @@
+import { randomBytes } from "node:crypto";
+import { authFiles } from "./auth.js";
 import { CONFIG_FILE, LABEL, configJson, type Database, type ProjectOptions } from "./options.js";
 import type { Files } from "./parts.js";
 import { syntax, tidy, type Syntax } from "./syntax.js";
@@ -6,6 +8,8 @@ export interface ProjectInput extends ProjectOptions {
   name: string;
   coreSpec: string;
   cliSpec: string;
+  /** Version range of @rheajs/auth. Used when auth is on. */
+  authSpec?: string;
 }
 
 /** Third-party versions written into generated projects. Chosen for Node 20.19+ support (see docs/troubleshooting). */
@@ -23,6 +27,9 @@ const V = {
   mysql2: "^3.24.5",
 };
 
+/** Placeholder the generated vitest config uses so tests can import the env module. Never a real secret. */
+const TEST_ONLY = "test-only-value-";
+
 const dbName = (name: string): string => name.replace(/[^A-Za-z0-9_]/g, "_");
 
 const localDatabaseUrl = (db: Database, name: string): string =>
@@ -32,6 +39,7 @@ const exampleDatabaseUrl = (db: Database): string =>
 
 function packageJson(i: ProjectInput, s: Syntax): string {
   const dependencies: Record<string, string> = { "@rheajs/core": i.coreSpec };
+  if (i.auth) dependencies["@rheajs/auth"] = i.authSpec ?? i.coreSpec;
   if (i.database === "mongodb") dependencies["mongodb"] = V.mongodb;
   if (i.database === "mysql") dependencies["mysql2"] = V.mysql2;
   const dev: Record<string, string> = {
@@ -154,7 +162,11 @@ export default [
 }
 
 function vitestConfig(i: ProjectInput): string {
-  const env = i.database === "none" ? "" : `\n    env: { DATABASE_URL: "${localDatabaseUrl(i.database, "test")}" },`;
+  const vars = [
+    i.database === "none" ? "" : `DATABASE_URL: "${localDatabaseUrl(i.database, "test")}"`,
+    i.auth ? `JWT_SECRET: "${TEST_ONLY.repeat(3)}"` : "",
+  ].filter(Boolean);
+  const env = vars.length ? `\n    env: { ${vars.join(", ")} },` : "";
   return `import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -167,6 +179,12 @@ export default defineConfig({
 }
 
 function envFiles(i: ProjectInput): { env: string; example: string } {
+  const authLocal = i.auth
+    ? `\n# Signs access tokens. Generated for you. Use a different long random value in production.\nJWT_SECRET=${randomBytes(48).toString("base64url")}\n# JWT_EXPIRES_IN=15m\n`
+    : "";
+  const authExample = i.auth
+    ? `\n# Signs access tokens. At least 32 characters. Generate one with: openssl rand -base64 48\nJWT_SECRET=\n# JWT_ISSUER=\n# JWT_AUDIENCE=\n# JWT_EXPIRES_IN=15m\n`
+    : "";
   const common = (url: string, extra: string): string => `NODE_ENV=development
 PORT=5000
 # Comma-separated list of allowed browser origins. Empty disables CORS. Never use * in production.
@@ -182,8 +200,8 @@ ${url}${extra}`;
   const extraLocal = i.database === "mysql" ? "MYSQL_ROOT_PASSWORD=password\n" : "";
   const extraExample = i.database === "mysql" ? "# Used by docker-compose.yml\nMYSQL_ROOT_PASSWORD=change-me\n" : "";
   return {
-    env: common(`DATABASE_URL=${localDatabaseUrl(i.database, i.name)}\n`, extraLocal),
-    example: `# Copy to .env. Never commit real secrets.\n${common(`DATABASE_URL=${exampleDatabaseUrl(i.database)}\n`, extraExample)}`,
+    env: common(`DATABASE_URL=${localDatabaseUrl(i.database, i.name)}\n`, extraLocal + authLocal),
+    example: `# Copy to .env. Never commit real secrets.\n${common(`DATABASE_URL=${exampleDatabaseUrl(i.database)}\n`, extraExample + authExample)}`,
   };
 }
 
@@ -230,6 +248,7 @@ ${s.ts ? "| `npm run build` | type check and compile to `dist/` |\n| `npm run ty
 - \`GET /health\`: liveness
 - \`GET /health/ready\`: readiness${i.database === "none" ? "" : " (checks the database)"}
 ${dbLine}
+${i.auth ? `\n## Authentication\n\nUsers live in your ${LABEL.database[i.database]} database (\`users\`, created on start). Passwords are hashed with scrypt. Access tokens are short-lived JWTs signed with \`JWT_SECRET\`.\n\n- \`POST /api/auth/register\` with \`{ "email", "password" }\` (12+ characters)\n- \`POST /api/auth/login\` returns \`{ accessToken }\`\n- \`GET /api/auth/me\` with \`Authorization: Bearer <token>\`\n\nProtect your own routes with \`authenticate(jwt)\` and \`requireRole("admin")\` from \`@rheajs/auth\`. New users get the role \`user\`; grant \`admin\` yourself in the database. Register and login are rate limited per process: use a shared store when you run several instances. Read the authentication guide: https://rhea.devcodehub.cloud/docs/authentication/\n` : ""}
 ## Production
 
 Set \`NODE_ENV=production\`, provide every variable from \`.env.example\` as a real environment variable, and run behind a reverse proxy with \`TRUST_PROXY=1\`. \`npx rhea docker\` writes a Dockerfile${i.database === "none" ? "" : " and a docker-compose.yml with a database"}.
@@ -391,6 +410,14 @@ const env = loadEnv({
       : i.database === "mysql"
         ? `\n  DATABASE_URL: z.string().regex(/^mysql:\\/\\//, "must start with mysql://"),`
         : ""
+  }${
+    i.auth
+      ? `
+  JWT_SECRET: z.string().min(32, "must be at least 32 characters. Generate one with: openssl rand -base64 48"),
+  JWT_ISSUER: z.string().min(1).default("${i.name}"),
+  JWT_AUDIENCE: z.string().min(1).default("${i.name}-clients"),
+  JWT_EXPIRES_IN: z.string().regex(/^\\d+[smhd]$/, "use a number and a unit, for example 15m or 1h").default("15m"),`
+      : ""
   }
 });
 
@@ -403,6 +430,7 @@ ${impType(["RheaApp"], "@rheajs/core")}
 ${imp(["env"], rel("./config/env"))}
 ${imp(["modules"], rel("./modules/index"))}
 ${db ? imp(["connectDatabase", "disconnectDatabase"], rel("./config/database")) : ""}
+${i.auth ? imp(["ensureUserStore"], rel("./modules/auth/auth.repository")) : ""}
 
 function buildApp()${t(": RheaApp")} {
   const app = createApp({
@@ -415,7 +443,9 @@ ${
   db
     ? `
   // Connect before listening (startup fails clearly if the database is down) and close after the server stops.
-  app.hook("beforeStart", () => connectDatabase(app.logger));
+  app.hook("beforeStart", async () => {
+    await connectDatabase(app.logger);${i.auth ? "\n    await ensureUserStore();" : ""}
+  });
   app.hook("afterShutdown", () => disconnectDatabase());
 `
     : ""
@@ -448,13 +478,14 @@ app.start(env.PORT).then(
     [`src/modules/index.${E}`]: preamble(`${impType(["Router"], "@rheajs/core")}
 ${imp(["healthRouter"], rel("./health/health.routes"))}
 ${imp(["rheaRouter", "welcomeRouter"], rel("./rhea/rhea.routes"))}
+${i.auth ? imp(["authRouter"], rel("./auth/auth.routes")) : ""}
 // rhea:imports
 
 ${s.ts ? "interface ModuleEntry {\n  path: string;\n  router: Router;\n}\n" : ""}
 const modules${t(": ModuleEntry[]")} = [
   { path: "/", router: welcomeRouter },
   { path: "/api/rhea", router: rheaRouter },
-  { path: "/health", router: healthRouter },
+  { path: "/health", router: healthRouter },${i.auth ? '\n  { path: "/api/auth", router: authRouter },' : ""}
   // rhea:modules
 ];
 
@@ -500,6 +531,8 @@ ${db ? `  if (!(await pingDatabase())) throw new AppError(503, "NOT_READY", "Dat
 
 ${exp(["healthRouter"])}
 `),
+
+    ...(i.auth ? authFiles(i) : {}),
 
     "src/middleware/.gitkeep": "",
     "src/utils/.gitkeep": "",

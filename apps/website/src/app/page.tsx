@@ -44,6 +44,7 @@ const stackChoices: [string, string, string[]][] = [
   ["Language", "--ts  --js", ["TypeScript", "JavaScript"]],
   ["Modules", "--esm  --cjs", ["ES Modules", "CommonJS"]],
   ["Database", "--db none|mongodb|mysql", ["None", "MongoDB", "MySQL"]],
+  ["Authentication", "--auth  (needs a database)", ["Register and login", "JWT tokens", "Role guards"]],
 ];
 
 const roadmap: [string, string][] = [
@@ -144,8 +145,8 @@ await app.start(5000);`}</Code>
           </dl>
         </Section>
 
-        <Section id="stack" title="Choose your stack" lead="npx create-rhea my-api asks three questions, then writes a project that matches your answers.">
-          <div className="grid gap-4 md:grid-cols-3">
+        <Section id="stack" title="Choose your stack" lead="npx create-rhea my-api asks a few questions, then writes a project that matches your answers.">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {stackChoices.map(([q, flags, opts]) => (
               <div key={q} className="rounded-2xl border border-line bg-panel p-6">
                 <h3 className="text-lg font-bold tracking-tight">{q}</h3>

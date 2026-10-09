@@ -59,6 +59,12 @@ export function runDoctorChecks(cwd: string): Check[] {
     else add("warn", "DATABASE_URL missing in .env", `Required for ${opts.database}. Set it, or export it before starting.`);
   }
 
+  if (opts.auth) {
+    const m = /^JWT_SECRET=(\S*)/m.exec(envLocal);
+    if (m && m[1] && m[1].length >= 32) add("ok", "JWT_SECRET set");
+    else add("error", "JWT_SECRET missing or shorter than 32 characters", "Generate one with: openssl rand -base64 48");
+  }
+
   const src = walk(join(cwd, "src"), [".ts", ".js", ".mjs"]).map(read).join("\n");
   if (/enabled:\s*false/.test(src) && /rateLimit/.test(src)) add("warn", "Rate limiting disabled in source", "Re-enable unless a gateway enforces limits.");
   else add("ok", "Rate limiting");

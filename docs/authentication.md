@@ -8,6 +8,19 @@ npm install @rheajs/auth
 
 It needs `@rheajs/core`, which your project already has.
 
+## Add it to a new project
+
+With a database chosen, `npx create-rhea my-api` asks "Add authentication?". Or pass `--db mysql --auth` (or `--db mongodb --auth`). You get:
+
+- `POST /api/auth/register`, `POST /api/auth/login` and `GET /api/auth/me`, in `src/modules/auth/`.
+- A `users` collection (MongoDB, unique email index) or table (MySQL), created on start.
+- `JWT_SECRET` generated into your `.env`. `.env.example` leaves it empty, and the app refuses to start without 32 or more characters. `rhea doctor` checks it.
+- Passwords of 12 to 128 characters. Emails are trimmed and lower-cased. Wrong password and unknown email give the same 401.
+- Register and login limited to 10 requests per 15 minutes per IP, per process. Pass a shared store when you run several instances.
+- An integration test that runs without a database.
+
+New users get the role `user`. Nobody can register as admin: grant roles yourself in the database. Existing projects can install `@rheajs/auth` and follow the rest of this page by hand.
+
 ## What it does and does not do
 
 Included:

@@ -20,7 +20,7 @@
     "test:coverage": "vitest run --coverage",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "verify": "npm run lint && npm run typecheck && npm test && npm run build",
+    "verify": "npm run build && npm run lint && npm run typecheck && npm test",
     "build:website": "npm run build -w @rheajs/website",
     "release:check": "node scripts/check-release.mjs",
     "set-repo": "node scripts/set-repo.mjs"

@@ -12,8 +12,44 @@ import { parseName } from "../src/names.js";
 const LANGS: Language[] = ["ts", "js"];
 const MODULES: ModuleSystem[] = ["esm", "cjs"];
 const DBS: Database[] = ["none", "mongodb", "mysql"];
-const combos = LANGS.flatMap((language) => MODULES.flatMap((module) => DBS.map((database) => ({ language, module, database }))));
+const combos = LANGS.flatMap((language) => MODULES.flatMap((module) => DBS.map((database) => ({ language, module, database, auth: false }))));
 const gen = (c: (typeof combos)[number]) => projectFiles({ ...c, name: "demo-api", coreSpec: "^0.1.0-alpha.1", cliSpec: "^0.1.0-alpha.1" });
+
+const authCombos = LANGS.flatMap((language) =>
+  MODULES.flatMap((module) => (["mongodb", "mysql"] as const).map((database) => ({ language, module, database, auth: true }))),
+);
+
+describe("project template with authentication (8 combinations)", () => {
+  it.each(authCombos)("%o adds the auth module, wiring and secrets", (c) => {
+    const f = gen(c);
+    const ext = c.language === "ts" ? "ts" : "js";
+    for (const p of ["config/auth", "modules/auth/auth.routes", "modules/auth/auth.service", "modules/auth/auth.schema", "modules/auth/auth.repository"])
+      expect(Object.keys(f), p).toContain(`src/${p}.${ext}`);
+    expect(Object.keys(f).some((p) => p.endsWith("auth.types.ts"))).toBe(c.language === "ts");
+    expect(JSON.parse(f["package.json"]!).dependencies["@rheajs/auth"]).toBe("^0.1.0-alpha.1");
+    expect(JSON.parse(f["rhea.config.json"]!).auth).toBe(true);
+    expect(f[`src/modules/index.${ext}`]).toContain("/api/auth");
+    expect(f[`src/app.${ext}`]).toContain("ensureUserStore");
+    // a real random secret locally, an empty one in the example file
+    expect(f[".env"]).toMatch(/^JWT_SECRET=[A-Za-z0-9_-]{32,}$/m);
+    expect(f[".env.example"]).toMatch(/^JWT_SECRET=$/m);
+    expect(f[`src/config/env.${ext}`]).toContain("JWT_SECRET");
+    expect(f[c.language === "ts" ? "vitest.config.ts" : "vitest.config.mjs"]).toContain("JWT_SECRET");
+    expect(Object.keys(f).some((p) => p.startsWith("tests/integration/auth.test."))).toBe(true);
+  });
+
+  it("two projects never share a secret", () => {
+    const a = gen(authCombos[0]!)[".env"]!;
+    const b = gen(authCombos[0]!)[".env"]!;
+    expect(a.match(/JWT_SECRET=(\S+)/)![1]).not.toBe(b.match(/JWT_SECRET=(\S+)/)![1]);
+  });
+
+  it("projects without auth carry no auth code or secret", () => {
+    const f = gen({ language: "ts", module: "esm", database: "mysql", auth: false });
+    expect(Object.keys(f).some((p) => p.includes("auth"))).toBe(false);
+    expect(JSON.stringify(f)).not.toContain("JWT_SECRET");
+  });
+});
 
 describe("project template matrix (12 combinations)", () => {
   it.each(combos)("%o has the expected shape", (c) => {
@@ -90,9 +126,9 @@ describe("project template matrix (12 combinations)", () => {
 
   it("module generator output differs by flavour (no types file in JavaScript)", () => {
     const n = parseName("orders");
-    const ts = moduleFiles(n, { language: "ts", module: "esm", database: "none" });
-    const esm = moduleFiles(n, { language: "js", module: "esm", database: "none" });
-    const cjs = moduleFiles(n, { language: "js", module: "cjs", database: "none" });
+    const ts = moduleFiles(n, { language: "ts", module: "esm", database: "none", auth: false });
+    const esm = moduleFiles(n, { language: "js", module: "esm", database: "none", auth: false });
+    const cjs = moduleFiles(n, { language: "js", module: "cjs", database: "none", auth: false });
     expect(Object.keys(ts)).toContain("src/modules/orders/orders.types.ts");
     expect(Object.keys(esm).some((p) => p.endsWith(".types.js"))).toBe(false);
     expect(Object.keys(cjs)).toContain("tests/integration/orders.test.mjs");
@@ -119,7 +155,7 @@ describe("generate and create for JavaScript projects", () => {
   it("flags choose the flavour and generators follow rhea.config.json", async () => {
     expect(await run(["create", "app", "--js", "--cjs", "--db", "mysql", "--yes"])).toBe(0);
     const p = join(dir, "app");
-    expect(JSON.parse(readFileSync(join(p, "rhea.config.json"), "utf8"))).toEqual({ language: "js", module: "cjs", database: "mysql" });
+    expect(JSON.parse(readFileSync(join(p, "rhea.config.json"), "utf8"))).toEqual({ language: "js", module: "cjs", database: "mysql", auth: false });
     expect(existsSync(join(p, "src/config/database.js"))).toBe(true);
     process.chdir(p);
     expect(await run(["generate", "module", "orders"])).toBe(0);
