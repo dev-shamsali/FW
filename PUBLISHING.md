@@ -4,13 +4,13 @@ Everything here is done by you, the owner. Claude and CI never hold your credent
 
 ## 0. Decide the names (do this first)
 
-| Thing                       | Plan                                                | Status when checked (2026-10-07)                                                                                                                                                            |
-| --------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| npm scope                   | `@rheajs` (packages `@rheajs/core`, `@rheajs/cli`)  | No packages exist under it. I could not tell whether someone already owns the scope itself, because npm's website blocks automated checks. You find out when you try to create it (step 2). |
-| npm unscoped                | `create-rhea`                                       | Free                                                                                                                                                                                        |
-| npm `rhea`                  | not usable                                          | Taken by an unrelated AMQP library                                                                                                                                                          |
-| GitHub account/org `rheajs` | not usable                                          | **Taken** by someone else                                                                                                                                                                   |
-| GitHub repository           | your account, for example `dev-shamsali/FW` | Pick any free name                                                                                                                                                                          |
+| Thing                       | Plan                                               | Status when checked (2026-10-07)                                                                                                                                                            |
+| --------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| npm scope                   | `@rheajs` (packages `@rheajs/core`, `@rheajs/cli`) | No packages exist under it. I could not tell whether someone already owns the scope itself, because npm's website blocks automated checks. You find out when you try to create it (step 2). |
+| npm unscoped                | `create-rhea`                                      | Free                                                                                                                                                                                        |
+| npm `rhea`                  | not usable                                         | Taken by an unrelated AMQP library                                                                                                                                                          |
+| GitHub account/org `rheajs` | not usable                                         | **Taken** by someone else                                                                                                                                                                   |
+| GitHub repository           | your account, for example `dev-shamsali/FW`        | Pick any free name                                                                                                                                                                          |
 
 If the `@rheajs` scope is not available to you on npm, tell Claude the scope you do own (your npm username scope, for example `@yourname`). It is a find-and-replace across packages, templates, docs and tests, and the test suite will verify it.
 
@@ -72,6 +72,10 @@ Pushing the tag starts **Release**. It re-runs every check, then waits for you t
 Then create the GitHub Release: _Releases → Draft a new release → choose tag `v0.1.0-alpha.0` → tick "Set as a pre-release" → paste `release-notes/v0.1.0-alpha.md`_.
 
 Manual alternative (not recommended, no provenance): `npm login` then `npm publish -w @rheajs/core -w @rheajs/cli -w create-rhea --access public`.
+
+### New npm scope: approve the staged packages
+
+On the first release into a new scope, npm may hold the packages as **staged**: the workflow log says `+ @rheajs/core@...` but the registry still shows a `0.0.0-stage` placeholder ("Temporary Holding Version"). Approve them on npmjs.com under _profile picture → Staged Packages_ (2FA required), or with `npm login`, `npm stage list`, `npm stage approve <id>`. Do not republish.
 
 ## 5. Verify the published packages
 

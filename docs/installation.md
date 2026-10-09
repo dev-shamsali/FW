@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-> The packages are not published to npm yet. Until the first alpha release, build from source: clone the repository, run `npm install && npm run build`, then pack the packages and point `RHEA_CORE_SPEC` and `RHEA_CLI_SPEC` at the tarballs before running `create`.
+> Rhea.js is published to npm as an alpha (`0.1.0-alpha.0`). The API can change between alpha releases.
 
 `create` does not install dependencies unless you pass `--install`. It refuses to write into a non-empty directory.
 

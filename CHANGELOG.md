@@ -6,7 +6,7 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 
 ## [0.1.0-alpha.0]
 
-First alpha. Not published until the maintainer runs the release.
+First alpha, published to npm on 2026-10-09 (`@rheajs/core`, `@rheajs/cli`, `create-rhea`) with signed provenance.
 
 ### Added
 

@@ -46,8 +46,8 @@ export default function Privacy() {
           </p>
           <p>
             <strong>Server logs.</strong> Like any web server, the server that hosts this site can record technical details of each request, such as your IP
-            address, the page requested, the time, and your browser&apos;s user agent. These logs exist for operating and securing the site. How long they are kept
-            depends on the hosting server&apos;s configuration.
+            address, the page requested, the time, and your browser&apos;s user agent. These logs exist for operating and securing the site. How long they are
+            kept depends on the hosting server&apos;s configuration.
           </p>
           <p>
             <strong>Stored in your browser.</strong> If you choose a light or dark theme, your choice is saved in your browser&apos;s local storage under the

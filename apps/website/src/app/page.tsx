@@ -55,9 +55,7 @@ export default function Home() {
             </div>
             <div className="mt-6">
               <CopyCommand command={site.installCommand} />
-              <p className="mt-2 max-w-md text-sm text-slate">
-                The packages are not on npm yet. Until the first alpha is published, build from source as described in the installation guide.
-              </p>
+              <p className="mt-2 max-w-md text-sm text-slate">Published to npm as an alpha: the API can change between releases.</p>
             </div>
           </div>
           <div className="min-w-0">
@@ -231,17 +229,24 @@ expect(res.status).toBe(200);`}</Code>
         </Section>
 
         <Section id="project" title="GitHub, npm and community">
-          <p>None of these exist yet, and this page will not link to anything that does not.</p>
+          <p>The project is public. Everything below is real and links to where it lives.</p>
           <ul className="list-disc space-y-1 pl-5 text-slate">
             <li>
-              <span className="text-ink">GitHub:</span>{" "}
-              {site.repoUrl ? <a href={site.repoUrl}>{site.repoUrl}</a> : "not public yet. The source is currently private."}
+              <span className="text-ink">GitHub:</span> {site.repoUrl ? <a href={site.repoUrl}>{site.repoUrl}</a> : "not public yet."}
             </li>
             <li>
               <span className="text-ink">npm:</span> {site.npmUrl ? <a href={site.npmUrl}>{site.npmUrl}</a> : "not published yet."}
             </li>
             <li>
-              <span className="text-ink">Community:</span> issues and discussions will open with the public repository. There is no chat server.
+              <span className="text-ink">Community:</span>{" "}
+              {site.repoUrl ? (
+                <>
+                  <a href={`${site.repoUrl}/issues`}>Issues</a> and <a href={`${site.repoUrl}/discussions`}>Discussions</a> on GitHub.
+                </>
+              ) : (
+                "not open yet."
+              )}{" "}
+              There is no chat server.
             </li>
           </ul>
         </Section>
