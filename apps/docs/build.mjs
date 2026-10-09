@@ -44,7 +44,7 @@ const pages = nav
   .flatMap((s) => s.pages.map((name) => ({ name, section: s.section })))
   .map(({ name, section }) => {
     sectionOf[name] = section;
-    const md = readFileSync(join(docsDir, `${name}.md`), "utf8");
+    const md = readFileSync(join(docsDir, `${name}.md`), "utf8").replace(/\r\n/g, "\n");
     const title = /^# (.+)$/m.exec(md)?.[1] ?? name;
     const body = md.replace(/^# .+\n+/, "");
     const lede = /^(?!#|>|```|\||[-*] |\d+\. )(.+)$/m.exec(body)?.[1] ?? "";

@@ -15,7 +15,7 @@ const warns = [];
 const fail = (m) => errors.push(m);
 const warn = (m) => warns.push(m);
 const win = process.platform === "win32";
-const run = (cmd, a, cwd) => spawnSync(cmd, a, { cwd, encoding: "utf8", shell: win, maxBuffer: 64 * 1024 * 1024 });
+const run = (cmd, a, cwd) => spawnSync(cmd, a, { cwd, encoding: "utf8", shell: win && cmd === "npm", maxBuffer: 64 * 1024 * 1024 });
 
 const dirs = ["core", "cli", "create-rhea"];
 const pkgs = dirs.map((d) => ({ dir: join(root, "packages", d), json: JSON.parse(readFileSync(join(root, "packages", d, "package.json"), "utf8")) }));

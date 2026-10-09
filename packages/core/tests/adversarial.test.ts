@@ -21,19 +21,25 @@ describe("HTTP edge cases", () => {
 
   it("handles HEAD, unknown methods and encoded paths without crashing", async () => {
     const app = build();
-    app.mount("/", Router().get("/ab", (_q, res) => sendSuccess(res, 1)));
+    app.mount(
+      "/",
+      Router().get("/ab", (_q, res) => sendSuccess(res, 1)),
+    );
     await app.ready();
     expect((await request(app.express).head("/ab")).status).toBe(200);
     expect([400, 404]).toContain((await request(app.express).get("/%E0%A4%A")).status); // malformed URI: no crash
     expect((await request(app.express).get("/nope%00")).status).toBe(404);
-    expect((await request(app.express).propfind?.("/") ?? { status: 404 }).status).toBe(404);
+    expect(((await request(app.express).propfind?.("/")) ?? { status: 404 }).status).toBe(404);
   });
 
   it("rejects non-object, array and wrong content-type bodies cleanly", async () => {
     const app = build();
-    app.mount("/", Router().post("/u", validate(z.object({ n: z.number() })), (q, res) => sendSuccess(res, q.body)));
+    app.mount(
+      "/",
+      Router().post("/u", validate(z.object({ n: z.number() })), (q, res) => sendSuccess(res, q.body)),
+    );
     await app.ready();
-    for (const body of ['"str"', "123", "null", "[]", "[{\"__proto__\":1}]"]) {
+    for (const body of ['"str"', "123", "null", "[]", '[{"__proto__":1}]']) {
       const r = await request(app.express).post("/u").set("content-type", "application/json").send(body);
       expect([400, 422], body).toContain(r.status);
     }
@@ -45,7 +51,10 @@ describe("HTTP edge cases", () => {
 
   it("rejects deeply nested pollution and constructor.prototype chains", async () => {
     const app = build();
-    app.mount("/", Router().post("/u", (_q, res) => void res.json({})));
+    app.mount(
+      "/",
+      Router().post("/u", (_q, res) => void res.json({})),
+    );
     await app.ready();
     const deep = '{"a":'.repeat(30) + '{"constructor":{"prototype":{"x":1}}}' + "}".repeat(30);
     expect((await request(app.express).post("/u").set("content-type", "application/json").send(deep)).status).toBe(400);
@@ -56,7 +65,9 @@ describe("HTTP edge cases", () => {
     const app = build();
     await app.ready();
     for (const id of ["a\r\nSet-Cookie: x=1", "<script>", "x".repeat(500), "ok id"]) {
-      const r = await request(app.express).get("/").set("X-Request-ID", id.replace(/[\r\n]/g, ""));
+      const r = await request(app.express)
+        .get("/")
+        .set("X-Request-ID", id.replace(/[\r\n]/g, ""));
       expect(r.headers["set-cookie"]).toBeUndefined();
       expect(r.headers["x-request-id"]).toMatch(/^[A-Za-z0-9._-]{1,128}$/);
     }
@@ -81,7 +92,13 @@ describe("error handling edge cases", () => {
   it("a handler responding after the timeout fired does not corrupt the response or crash", async () => {
     const lines: string[] = [];
     const app = build({ requestTimeoutMs: 20, logger: { level: "error", pretty: false, destination: { write: (l: string) => void lines.push(l) } } });
-    app.mount("/", Router().get("/late", async (_q, res) => { await new Promise((r) => setTimeout(r, 80)); sendSuccess(res, "late"); }));
+    app.mount(
+      "/",
+      Router().get("/late", async (_q, res) => {
+        await new Promise((r) => setTimeout(r, 80));
+        sendSuccess(res, "late");
+      }),
+    );
     await app.ready();
     const r = await request(app.express).get("/late");
     expect(r.status).toBe(503);
@@ -91,7 +108,16 @@ describe("error handling edge cases", () => {
 
   it("throwing non-Error values yields a safe 500", async () => {
     const app = build({ env: "production" });
-    app.mount("/", Router().get("/s", () => { throw "string secret"; }).get("/o", () => { throw { password: "x" }; }));
+    app.mount(
+      "/",
+      Router()
+        .get("/s", () => {
+          throw "string secret";
+        })
+        .get("/o", () => {
+          throw { password: "x" };
+        }),
+    );
     await app.ready();
     for (const p of ["/s", "/o"]) {
       const r = await request(app.express).get(p);
@@ -102,7 +128,12 @@ describe("error handling edge cases", () => {
 
   it("a 4xx error with status property from third-party code is not leaked verbatim", async () => {
     const app = build({ env: "production" });
-    app.mount("/", Router().get("/x", () => { throw Object.assign(new Error("db row 42 for user bob@x.com"), { status: 400 }); }));
+    app.mount(
+      "/",
+      Router().get("/x", () => {
+        throw Object.assign(new Error("db row 42 for user bob@x.com"), { status: 400 });
+      }),
+    );
     await app.ready();
     const r = await request(app.express).get("/x");
     expect(r.status).toBe(400);
@@ -111,9 +142,18 @@ describe("error handling edge cases", () => {
 
   it("an error thrown after headers were sent ends the response instead of hanging", async () => {
     const app = build();
-    app.mount("/", Router().get("/half", (_q, res) => { res.write("partial"); throw new Error("late"); }));
+    app.mount(
+      "/",
+      Router().get("/half", (_q, res) => {
+        res.write("partial");
+        throw new Error("late");
+      }),
+    );
     await app.ready();
-    const r = await request(app.express).get("/half").buffer(true).catch((e) => e);
+    const r = await request(app.express)
+      .get("/half")
+      .buffer(true)
+      .catch((e) => e);
     expect(r).toBeDefined();
   });
 });
@@ -121,7 +161,13 @@ describe("error handling edge cases", () => {
 describe("shutdown", () => {
   it("lets an in-flight request finish before closing", async () => {
     const app = build({ shutdownTimeoutMs: 2000 });
-    app.mount("/", Router().get("/work", async (_q, res) => { await new Promise((r) => setTimeout(r, 150)); sendSuccess(res, "done"); }));
+    app.mount(
+      "/",
+      Router().get("/work", async (_q, res) => {
+        await new Promise((r) => setTimeout(r, 150));
+        sendSuccess(res, "done");
+      }),
+    );
     const srv = await app.start(0, "127.0.0.1");
     const inflight = fetch(`http://127.0.0.1:${port(srv)}/work`).then((r) => r.json());
     await new Promise((r) => setTimeout(r, 30));
@@ -137,7 +183,10 @@ describe("shutdown", () => {
     await expect(
       new Promise((resolve, reject) => {
         const s = connect(p, "127.0.0.1");
-        s.on("connect", () => { s.destroy(); resolve("connected"); });
+        s.on("connect", () => {
+          s.destroy();
+          resolve("connected");
+        });
         s.on("error", reject);
       }),
     ).rejects.toThrow();
@@ -145,7 +194,9 @@ describe("shutdown", () => {
 
   it("startup hook failure aborts start and does not leave a listener", async () => {
     const app = build();
-    app.hook("beforeStart", () => { throw new Error("db down"); });
+    app.hook("beforeStart", () => {
+      throw new Error("db down");
+    });
     await expect(app.start(0)).rejects.toThrow("db down");
     await app.stop();
   });
@@ -154,10 +205,18 @@ describe("shutdown", () => {
 describe("concurrency", () => {
   it("serves many concurrent requests with unique request ids and no errors", async () => {
     const app = build({ rateLimit: { limit: 100_000, windowMs: 60_000 } });
-    app.mount("/", Router().get("/c", (_q, res) => sendSuccess(res, 1)));
+    app.mount(
+      "/",
+      Router().get("/c", (_q, res) => sendSuccess(res, 1)),
+    );
     const srv = await app.start(0, "127.0.0.1");
     const base = `http://127.0.0.1:${port(srv)}`;
-    const results = await Promise.all(Array.from({ length: 500 }, () => fetch(`${base}/c`).then((r) => [r.status, r.headers.get("x-request-id")] as const)));
+    // Batches of 50: 500 simultaneous connections exceed the default connection limits on Windows runners.
+    const results: (readonly [number, string | null])[] = [];
+    for (let i = 0; i < 10; i++)
+      results.push(
+        ...(await Promise.all(Array.from({ length: 50 }, () => fetch(`${base}/c`).then((r) => [r.status, r.headers.get("x-request-id")] as const)))),
+      );
     expect(results.every(([s]) => s === 200)).toBe(true);
     expect(new Set(results.map(([, id]) => id)).size).toBe(500);
     await app.stop();

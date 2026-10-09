@@ -7,7 +7,7 @@ const root = resolve(import.meta.dirname, "../..");
 const docsDir = join(root, "docs");
 const nav = JSON.parse(readFileSync(join(docsDir, "nav.json"), "utf8")) as { section: string; pages: string[] }[];
 const navPages = nav.flatMap((s) => s.pages);
-const md = Object.fromEntries(navPages.map((n) => [n, readFileSync(join(docsDir, `${n}.md`), "utf8")]));
+const md = Object.fromEntries(navPages.map((n) => [n, readFileSync(join(docsDir, `${n}.md`), "utf8").replace(/\r\n/g, "\n")]));
 const slug = (s: string) =>
   s
     .toLowerCase()

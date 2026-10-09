@@ -46,10 +46,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dev-shamsali/framework-rhea.js.git",
+    "url": "git+https://github.com/dev-shamsali/FW.git",
     "directory": "packages/cli"
   },
   "bugs": {
-    "url": "https://github.com/dev-shamsali/framework-rhea.js/issues"
+    "url": "https://github.com/dev-shamsali/FW/issues"
   }
 }

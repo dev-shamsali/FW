@@ -18,7 +18,7 @@ const node = process.execPath;
 let env: NodeJS.ProcessEnv;
 
 const sh = (cmd: string, args: string[], cwd: string, extra: NodeJS.ProcessEnv = {}): SpawnSyncReturns<string> =>
-  spawnSync(cmd, args, { cwd, encoding: "utf8", shell: win, env: { ...process.env, ...extra }, maxBuffer: 64 * 1024 * 1024 });
+  spawnSync(cmd, args, { cwd, encoding: "utf8", shell: win && cmd === "npm", env: { ...process.env, ...extra }, maxBuffer: 64 * 1024 * 1024 });
 const npm = (args: string[], cwd: string, extra?: NodeJS.ProcessEnv) => sh("npm", args, cwd, extra);
 const rhea = (args: string[], cwd = app) => sh(node, [join(root, "packages/cli/dist/bin.js"), ...args], cwd, env);
 const show = (r: SpawnSyncReturns<string>) => `${r.stdout}\n${r.stderr}`;
