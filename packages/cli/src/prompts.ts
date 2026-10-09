@@ -22,11 +22,12 @@ export async function select<T extends string>(message: string, choices: Choice<
       out.write(`\x1b[2K${on ? c.cyan("❯") : " "} ${on ? c.bold(ch.label) : ch.label}${ch.hint ? c.dim(`  ${ch.hint}`) : ""}\n`);
     }
   };
-  out.write(`${c.bold("?")} ${message} ${c.dim("(use arrow keys, Enter to select)")}\n`);
-  render(true);
+  // Raw mode first, prompt second: once the question is visible, keystrokes are already read key by key.
   emitKeypressEvents(process.stdin);
   process.stdin.setRawMode(true);
   process.stdin.resume();
+  out.write(`${c.bold("?")} ${message} ${c.dim("(use arrow keys, Enter to select)")}\n`);
+  render(true);
   return new Promise<T>((resolve) => {
     const done = (v: T) => {
       process.stdin.off("keypress", onKey);
@@ -44,7 +45,7 @@ export async function select<T extends string>(message: string, choices: Choice<
       if (key.name === "up" || key.name === "k") index = (index + choices.length - 1) % choices.length;
       else if (key.name === "down" || key.name === "j") index = (index + 1) % choices.length;
       else if (key.sequence && /^[1-9]$/.test(key.sequence) && Number(key.sequence) <= choices.length) index = Number(key.sequence) - 1;
-      else if (key.name === "return") return done(choices[index]!.value);
+      else if (key.name === "return" || key.name === "enter") return done(choices[index]!.value);
       else return;
       render(false);
     };
