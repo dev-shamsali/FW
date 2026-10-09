@@ -4,6 +4,6 @@
     "section": "Building an API",
     "pages": ["routing", "controllers", "services", "modules", "middleware", "validation", "configuration", "errors", "logging"]
   },
-  { "section": "Production", "pages": ["security", "testing", "databases", "plugins", "docker", "deployment"] },
+  { "section": "Production", "pages": ["security", "authentication", "testing", "databases", "plugins", "docker", "deployment"] },
   { "section": "Reference", "pages": ["api-reference", "migration-guides", "faq", "troubleshooting"] }
 ]

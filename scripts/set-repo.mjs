@@ -18,7 +18,7 @@ const edit = (file, fn) => {
   writeFileSync(p, JSON.stringify(j, null, 2) + "\n");
   console.log("updated", file);
 };
-for (const dir of ["core", "cli", "create-rhea"]) {
+for (const dir of ["core", "auth", "cli", "create-rhea"]) {
   edit(`packages/${dir}/package.json`, (j) => {
     j.repository = { type: "git", url: `git+${web}.git`, directory: `packages/${dir}` };
     j.bugs = { url: `${web}/issues` };

@@ -45,6 +45,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - run: npm publish -w @rheajs/core -w @rheajs/cli -w create-rhea --access public --provenance
+      - run: npm publish -w @rheajs/core -w @rheajs/auth -w @rheajs/cli -w create-rhea --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

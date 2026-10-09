@@ -17,7 +17,7 @@ const warn = (m) => warns.push(m);
 const win = process.platform === "win32";
 const run = (cmd, a, cwd) => spawnSync(cmd, a, { cwd, encoding: "utf8", shell: win && cmd === "npm", maxBuffer: 64 * 1024 * 1024 });
 
-const dirs = ["core", "cli", "create-rhea"];
+const dirs = ["core", "auth", "cli", "create-rhea"];
 const pkgs = dirs.map((d) => ({ dir: join(root, "packages", d), json: JSON.parse(readFileSync(join(root, "packages", d, "package.json"), "utf8")) }));
 
 // 1. metadata
@@ -32,7 +32,7 @@ for (const { json: j } of pkgs) {
   if (!j.repository?.url || !j.bugs?.url) (strict ? fail : warn)(`${j.name}: repository/bugs missing. Run: node scripts/set-repo.mjs <owner>/<repo>`);
   if (JSON.stringify(j).includes("PLACEHOLDER")) fail(`${j.name}: placeholder text in package.json`);
 }
-const cliDep = pkgs[2].json.dependencies?.["@rheajs/cli"];
+const cliDep = pkgs[3].json.dependencies?.["@rheajs/cli"];
 if (cliDep !== version) fail(`create-rhea depends on @rheajs/cli@${cliDep}, expected ${version}`);
 if (tag && tag !== `v${version}`) fail(`tag ${tag} does not match package version v${version}`);
 const changelog = readFileSync(join(root, "CHANGELOG.md"), "utf8");
@@ -88,7 +88,7 @@ if (!args.includes("--no-install") && errors.length === 0) {
       [
         "--input-type=module",
         "-e",
-        'const m = await import("@rheajs/core"); for (const k of ["createApp","validate","NotFoundError","loadEnv","sendSuccess"]) if (typeof m[k] === "undefined") throw new Error("missing export " + k); console.log("core exports ok")',
+        'const m = await import("@rheajs/core"); for (const k of ["createApp","validate","NotFoundError","loadEnv","sendSuccess"]) if (typeof m[k] === "undefined") throw new Error("missing export " + k); const a = await import("@rheajs/auth"); for (const k of ["hashPassword","verifyPassword","createJwt","authenticate","requireRole"]) if (typeof a[k] === "undefined") throw new Error("missing auth export " + k); console.log("core and auth exports ok")',
       ],
       proj,
     );

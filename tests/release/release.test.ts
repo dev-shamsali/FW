@@ -13,7 +13,7 @@ function sandbox(name: string) {
   const d = join(tmp, name);
   mkdirSync(join(d, "scripts"), { recursive: true });
   for (const f of ["set-repo.mjs", "check-release.mjs"]) cpSync(join(root, "scripts", f), join(d, "scripts", f));
-  for (const p of ["core", "cli", "create-rhea"]) {
+  for (const p of ["core", "auth", "cli", "create-rhea"]) {
     mkdirSync(join(d, "packages", p), { recursive: true });
     const pj = JSON.parse(readFileSync(join(root, "packages", p, "package.json"), "utf8"));
     delete pj.repository;
@@ -53,9 +53,9 @@ describe("check-release", () => {
   }, 120_000);
 
   it("the repository's real package metadata is consistent", () => {
-    const versions = ["core", "cli", "create-rhea"].map((p) => JSON.parse(readFileSync(join(root, "packages", p, "package.json"), "utf8")));
+    const versions = ["core", "auth", "cli", "create-rhea"].map((p) => JSON.parse(readFileSync(join(root, "packages", p, "package.json"), "utf8")));
     expect(new Set(versions.map((v) => v.version)).size).toBe(1);
-    expect(versions[2].dependencies["@rheajs/cli"]).toBe(versions[0].version);
+    expect(versions[3].dependencies["@rheajs/cli"]).toBe(versions[0].version);
     for (const v of versions) {
       expect(v.files).toContain("dist");
       expect(v.publishConfig).toEqual({ access: "public" });

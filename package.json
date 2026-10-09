@@ -12,8 +12,8 @@
     "node": ">=20.19.0"
   },
   "scripts": {
-    "build": "npm run build -w @rheajs/core -w @rheajs/cli -w create-rhea",
-    "typecheck": "tsc -p packages/core --noEmit && tsc -p packages/cli --noEmit && tsc -p apps/website --noEmit",
+    "build": "npm run build -w @rheajs/core -w @rheajs/auth -w @rheajs/cli -w create-rhea",
+    "typecheck": "tsc -p packages/core --noEmit && tsc -p packages/auth --noEmit && tsc -p packages/cli --noEmit && tsc -p apps/website --noEmit",
     "test": "vitest run",
     "lint": "eslint .",
     "test:e2e": "vitest run -c vitest.e2e.config.ts",

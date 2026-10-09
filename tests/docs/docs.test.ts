@@ -33,6 +33,7 @@ describe("docs structure", () => {
       "errors",
       "logging",
       "security",
+      "authentication",
       "testing",
       "databases",
       "plugins",

@@ -1,0 +1,61 @@
+{
+  "name": "@rheajs/auth",
+  "version": "0.1.0-alpha.1",
+  "description": "Authentication for Rhea.js: password hashing, JWT access tokens, and route guards. Made by Shams Ali Shaikh.",
+  "keywords": [
+    "rhea",
+    "rheajs",
+    "auth",
+    "authentication",
+    "jwt",
+    "password",
+    "scrypt",
+    "express",
+    "security"
+  ],
+  "homepage": "https://rhea.devcodehub.cloud",
+  "author": "Shams Ali Shaikh",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.tsbuildinfo",
+    "!dist/.tsbuildinfo",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "jose": "^6.2.0"
+  },
+  "peerDependencies": {
+    "@rheajs/core": ">=0.1.0-alpha.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-shamsali/FW.git",
+    "directory": "packages/auth"
+  },
+  "bugs": {
+    "url": "https://github.com/dev-shamsali/FW/issues"
+  }
+}
