@@ -4,6 +4,27 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 
 ## [Unreleased]
 
+## [0.1.0-alpha.1]
+
+### Added
+
+- `create` asks for language (TypeScript or JavaScript), module system (ES Modules or CommonJS), database (None, MongoDB, MySQL) and whether to install. Flags: `--ts --js --esm --cjs --db --install --no-install --yes`.
+- MongoDB (`mongodb` driver) and MySQL (`mysql2` pool) setup: connect before listening, close on shutdown, `GET /health/ready`, validated `DATABASE_URL`.
+- A working first API: `GET /` and `GET /api/rhea` ("developed by Shams Ali Shaikh") and a startup banner.
+- `npm run dev` uses nodemon (graceful restart); `npm start` uses plain node; `npm test` uses Vitest. JavaScript projects have no build step.
+- `rhea.config.json`: generators, `docker`, `build`, `start` and `doctor` follow the project's flavour. `rhea docker` adds a database service to compose.
+- Generated CI workflow and `.gitattributes`.
+
+### Changed
+
+- `@rheajs/core` can be loaded with `require()` (Node.js 20.19+ / 22.12+), which CommonJS projects need.
+- `rhea generate` for JavaScript has no types file.
+- `create` checks that `npm install` produced `node_modules` before declaring success.
+
+### Fixed
+
+- Generators write all files or none, refuse reserved words, and no longer duplicate module registrations.
+
 ## [0.1.0-alpha.0]
 
 First alpha, published to npm on 2026-10-09 (`@rheajs/core`, `@rheajs/cli`, `create-rhea`) with signed provenance.
@@ -22,4 +43,5 @@ First alpha, published to npm on 2026-10-09 (`@rheajs/core`, `@rheajs/cli`, `cre
 - Tested on Linux with Node.js 20, 22 and 26. macOS and Windows are covered only by the CI matrix once the repository is public.
 
 [Unreleased]: #
+[0.1.0-alpha.1]: #
 [0.1.0-alpha.0]: #

@@ -32,7 +32,7 @@ export function scanProject(cwd: string): Finding[] {
   const f: Finding[] = [];
   const rel = (p: string) => relative(cwd, p);
 
-  const files = walk(join(cwd, "src"), [".ts", ".js", ".json"]);
+  const files = walk(join(cwd, "src"), [".ts", ".js", ".mjs", ".json"]);
   const sources = files.map(read);
   files.forEach((file, fi) => {
     const lines = sources[fi]!.split("\n");

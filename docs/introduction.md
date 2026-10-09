@@ -8,7 +8,8 @@ Made by Shams Ali Shaikh. MIT licensed.
 
 ## What you get
 
-- A project generator and a `rhea` CLI (`create`, `dev`, `build`, `start`, `generate`, `test`, `doctor`, `security`, `docker`, `info`).
+- A project generator that asks for TypeScript or JavaScript, ES Modules or CommonJS, and MongoDB, MySQL or no database, and a `rhea` CLI (`create`, `dev`, `build`, `start`, `generate`, `test`, `doctor`, `security`, `docker`, `info`).
+- A working first API (`GET /api/rhea`) and a `dev` script with nodemon, so a new project runs and reloads on the first command.
 - Secure defaults: Helmet headers, CORS denied unless configured, rate limiting, body size limit, request timeout, prototype-pollution guard.
 - One error model and one response shape across the app.
 - Zod-based validation for body, query and params, and Zod-based environment validation that stops startup on bad config.
@@ -18,7 +19,7 @@ Made by Shams Ali Shaikh. MIT licensed.
 ## What it does not do (yet)
 
 - No built-in authentication. Plan: an optional plugin.
-- No database adapters. Core has no database dependency. See [Databases](databases.html).
+- No ORM or query layer. MongoDB and MySQL connections (pooling, readiness, clean shutdown) are generated for you, but you write your own queries. See [Databases](databases.html).
 - No benchmarks. Rhea.js makes no performance claims.
 
 ## Known limitations

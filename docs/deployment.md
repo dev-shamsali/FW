@@ -8,7 +8,7 @@ General checklist for any host:
 4. Set `CORS_ORIGIN` to explicit origins.
 5. Behind a load balancer or reverse proxy, set `trustProxy` (see [Security](security.html)).
 6. Route the platform's stop signal (SIGTERM) to the Node process. Avoid wrappers that swallow signals. Running `node dist/server.js` directly is safest.
-7. Use `/health` for liveness checks.
+7. Use `/health` for liveness checks and `/health/ready` for readiness (it also checks the database when you have one).
 8. Collect stdout: production logs are JSON, one object per line.
 9. Run `rhea doctor` and `rhea security` in CI.
 

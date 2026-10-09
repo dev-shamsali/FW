@@ -13,13 +13,13 @@ Website: https://rhea.devcodehub.cloud · Docs: https://rhea.devcodehub.cloud/do
 ## Quick start
 
 ```bash
-npx create-rhea my-api
+npx create-rhea my-api    # asks: TypeScript or JavaScript, ESM or CommonJS, MongoDB / MySQL / none
 cd my-api
 npm install
-npm run dev          # http://localhost:5000/health
+npm run dev               # nodemon, then open http://localhost:5000/api/rhea
 npx rhea generate module users
 npm test
-npx rhea build && npx rhea start
+npm run build && npm start
 ```
 
 Requires Node.js 20.19 or newer (generated projects use Vite 7 through Vitest).
@@ -29,6 +29,7 @@ Requires Node.js 20.19 or newer (generated projects use Vite 7 through Vitest).
 - `createApp()`: request IDs, request logging with secret redaction, Helmet, CORS (denied by default), rate limiting, body size limit, request timeout, prototype-pollution guard, standard error and response shapes, lifecycle hooks, graceful shutdown, plugin API.
 - Zod validation for body, query and params, and Zod environment validation that stops startup on bad config.
 - `rhea` CLI: `create`, `dev`, `build`, `start`, `generate`, `test`, `doctor`, `security`, `docker`, `info`.
+- Generated projects in TypeScript or JavaScript, ES Modules or CommonJS, with optional MongoDB or MySQL (pooled connection, readiness endpoint, clean shutdown), a working first API and nodemon for development.
 
 ## Packages
 
@@ -40,7 +41,7 @@ Requires Node.js 20.19 or newer (generated projects use Vite 7 through Vitest).
 
 ## Not included yet
 
-Authentication, database adapters, a shared rate-limit store. See the roadmap in [ROADMAP.md](ROADMAP.md).
+Authentication, an ORM or query layer, a shared rate-limit store. See the roadmap in [ROADMAP.md](ROADMAP.md).
 
 ## Develop
 

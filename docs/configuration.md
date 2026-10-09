@@ -28,13 +28,13 @@ Invalid:
 Application startup aborted.
 ```
 
-`baseEnvShape` provides `NODE_ENV` (`development | test | production`, default `development`), `PORT` (default 5000), `LOG_LEVEL` and `CORS_ORIGIN` (comma-separated, parsed to an array).
+`baseEnvShape` provides `NODE_ENV` (`development | test | production`, default `development`), `PORT` (default 5000), `LOG_LEVEL` and `CORS_ORIGIN` (comma-separated, parsed to an array). Generated projects add `TRUST_PROXY` (number of reverse proxies in front of the app, default 0) and, when you chose a database, a required `DATABASE_URL`.
 
 Use `parseEnv(shape, source)` instead of `loadEnv` when you want the error thrown (`EnvValidationError`) rather than the process exited, for example in tests.
 
 ## .env files
 
-`rhea dev` passes `.env` to Node with `--env-file`. `rhea start` does not load any file: provide real environment variables, or pass `--env-file <path>`. Keep `.env` out of git; the generated `.gitignore` already does.
+`npm run dev` (nodemon) passes `.env` to Node with `--env-file`. `npm start` does not load any file: provide real environment variables, as you would in production. For a local production-style run use `npm run start:env`, or `rhea start --env-file <path>`. Keep `.env` out of git; the generated `.gitignore` already does. `.env.example` lists every variable with placeholders and is safe to commit.
 
 ## createApp options
 

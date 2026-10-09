@@ -1,5 +1,8 @@
 # Troubleshooting
 
+**`rhea: command not found` or `nodemon: command not found` when running `npm run dev`.**
+Dependencies are not installed. Run `npm install` inside the project folder. `npx rhea doctor` reports "Dependencies are not installed" when `node_modules` is missing.
+
 **`Cannot find "tsx" in this project. Run "npm install" first.`**
 Dependencies are not installed. Run `npm install`. The same message appears for `typescript` and `vitest`.
 
@@ -32,6 +35,18 @@ Rate limiting is off in the `test` environment unless you pass `rateLimit` expli
 
 **`npm install` fails with `Cannot read properties of null (reading 'edgesOut')`.**
 Reproduced on npm 10.8 and 10.9 when the project uses `vitest` 4.1.x. Generated projects pin `vitest` and `@vitest/coverage-v8` to `~4.0.18`, which installs cleanly. If you upgraded Vitest and hit this, pin it back or upgrade npm.
+
+**Startup fails with `Could not connect to MongoDB` or `Could not connect to MySQL`.**
+The database is not reachable at `DATABASE_URL`. Start one (the `create` summary prints a `docker run` one-liner), or fix the URL. The app deliberately refuses to start without its database.
+
+**`Environment Validation Failed: DATABASE_URL must start with mongodb://`.**
+`DATABASE_URL` has the wrong scheme for the database you chose (`mongodb://`, `mongodb+srv://` or `mysql://`).
+
+**`/health/ready` returns 503.**
+The database ping failed. `/health` (liveness) is separate and stays 200.
+
+**CommonJS project fails with `ERR_REQUIRE_ESM` or `ERR_PACKAGE_PATH_NOT_EXPORTED`.**
+`@rheajs/core` is an ES module and CommonJS loads it with `require()`. That needs Node.js 20.19+ or 22.12+ (on by default there). Upgrade Node.
 
 **`rhea build` fails with type errors.**
 `rhea build` emits nothing on type errors by design. Fix them, or run `npm run typecheck` to see them with tests included.

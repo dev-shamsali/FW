@@ -1,6 +1,6 @@
 {
   "name": "create-rhea",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0-alpha.1",
   "description": "npx create-rhea my-api. Scaffolds a Rhea.js project. Made by Shams Ali Shaikh.",
   "keywords": [
     "rhea",
@@ -37,7 +37,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@rheajs/cli": "0.1.0-alpha.0"
+    "@rheajs/cli": "0.1.0-alpha.1"
   },
   "repository": {
     "type": "git",

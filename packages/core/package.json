@@ -1,6 +1,6 @@
 {
   "name": "@rheajs/core",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0-alpha.1",
   "description": "Secure, convention-driven backend framework core for Node.js and Express. Made by Shams Ali Shaikh.",
   "keywords": [
     "rhea",
@@ -27,7 +27,8 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     }
   },
   "files": [

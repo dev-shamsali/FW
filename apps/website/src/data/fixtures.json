@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-07T10:12:39.973Z",
+  "generatedAt": "2026-10-09T12:20:58.729Z",
   "node": "26.10.0",
   "platform": "linux",
   "versions": {
-    "core": "0.1.0-alpha.0",
-    "cli": "0.1.0-alpha.0"
+    "core": "0.1.0-alpha.1",
+    "cli": "0.1.0-alpha.1"
   },
   "scenarios": [
     {
@@ -57,7 +57,7 @@
           "error": {
             "code": "RATE_LIMITED",
             "message": "Too many requests",
-            "requestId": "0691fd8b-cab2-4c87-aab8-a0f3991c323a"
+            "requestId": "c727029e-b04b-4b4e-8962-06ac6b521484"
           }
         }
       }
@@ -76,7 +76,7 @@
           "error": {
             "code": "REQUEST_TIMEOUT",
             "message": "Request timed out",
-            "requestId": "5303a940-138c-453d-9f35-c6621a1c5000"
+            "requestId": "6e2e1b70-d390-46c4-9f7d-0c8e2bc6e843"
           }
         }
       }
@@ -95,7 +95,7 @@
           "error": {
             "code": "PAYLOAD_TOO_LARGE",
             "message": "Request body too large",
-            "requestId": "22f284fb-f131-4344-a3e2-e0a8c7f7986c"
+            "requestId": "e5ee5bee-598f-42a1-90a9-4b149da5b9d8"
           }
         }
       }
@@ -114,7 +114,7 @@
           "error": {
             "code": "INVALID_BODY",
             "message": "Invalid request body",
-            "requestId": "b6c66981-1c39-4378-86f3-36a2314afd5b"
+            "requestId": "311c0b45-dd85-4aa8-bd02-e486d0cc3541"
           }
         }
       }
@@ -140,7 +140,7 @@
                 "message": "Invalid email address"
               }
             ],
-            "requestId": "66cf1ef7-1ff5-4535-8d2b-a398f3e0d5ad"
+            "requestId": "f9db6a5f-f0b0-4db4-b71d-d7c971ff3440"
           }
         }
       }
@@ -159,7 +159,7 @@
           "error": {
             "code": "INTERNAL_ERROR",
             "message": "Internal server error",
-            "requestId": "36973a4a-b120-4ad7-a33a-7752eaf0e07e"
+            "requestId": "3abead29-7cb9-45a7-9c98-24cda9f103d4"
           }
         }
       }
@@ -168,7 +168,7 @@
   "cli": [
     {
       "cmd": "npx create-rhea my-api",
-      "output": "✓ Created my-api (22 files)\n\nNext steps:\n  cd my-api\n  npm install\n  npm run dev",
+      "output": "✓ Created my-api: TypeScript, ES Modules, database None (26 files)\n\nNext steps:\n  cd my-api\n  npm install\n  npm run dev\n\nThen open http://localhost:5000/api/rhea",
       "exit": 0
     },
     {
@@ -178,12 +178,12 @@
     },
     {
       "cmd": "npx rhea build",
-      "output": "Type checking + compiling (tsc, single pass, no output on type errors)...\n✓ Built to dist/ in 3.3s",
+      "output": "Type checking + compiling (tsc, single pass, no output on type errors)...\n✓ Built to dist/ in 4.3s",
       "exit": 0
     },
     {
       "cmd": "npx rhea doctor",
-      "output": "Rhea.js Doctor\n\n✓ Node.js 26.10.0\n✓ npm 12.1.0\n✓ ES modules\n✓ TypeScript installed\n✓ @rheajs/core (security middleware, error handling, rate limiting)\n✓ Build configuration\n✓ .env present\n✓ .env.example present\n✓ Rate limiting\n✓ App built with createApp\n✓ CORS configuration\n\n0 errors, 0 warnings",
+      "output": "Rhea.js Doctor\n\n✓ Node.js 26.10.0\n✓ npm 12.1.0\n✓ TypeScript, ES modules\n✓ TypeScript installed\n✓ @rheajs/core (security middleware, error handling, rate limiting)\n✓ Build configuration\n✓ .env present\n✓ .env.example present\n✓ Rate limiting\n✓ App built with createApp\n✓ CORS configuration\n\n0 errors, 0 warnings",
       "exit": 0
     },
     {
