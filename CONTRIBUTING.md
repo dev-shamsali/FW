@@ -51,8 +51,8 @@ tests/                e2e journey, docs checks, website checks
 
 Use [Conventional Commits](https://www.conventionalcommits.org): `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`, `security:`.
 
-1. Fork, then branch from `develop` (`feature/...` or `fix/...`).
-2. Open a pull request against `develop` and fill in the template.
+1. Fork, then branch from `main` (`feature/...` or `fix/...`).
+2. Open a pull request against `main` and fill in the template.
 3. CI must pass on Linux, macOS and Windows.
 
 ## Reporting issues

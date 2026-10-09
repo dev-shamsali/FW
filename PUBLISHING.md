@@ -25,7 +25,6 @@ If the `@rheajs` scope is not available to you on npm, tell Claude the scope you
    git branch -M main
    git remote add origin git@github.com:dev-shamsali/FW.git
    git push -u origin main
-   git checkout -b develop && git push -u origin develop
    ```
 3. Repository settings:
    - **Security** → enable _Private vulnerability reporting_ (SECURITY.md relies on it).
