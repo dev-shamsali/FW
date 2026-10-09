@@ -125,9 +125,12 @@ summary:focus-visible {
   align-items: center;
   gap: 0.5rem;
 }
-.brand svg {
-  width: 1.4rem;
-  height: 1.4rem;
+.brand .mark {
+  width: 1.65rem;
+  height: 1.55rem;
+  background: var(--fg);
+  -webkit-mask: url("rhea-mark.png") center / contain no-repeat;
+  mask: url("rhea-mark.png") center / contain no-repeat;
 }
 .topnav {
   display: flex;

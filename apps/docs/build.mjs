@@ -174,7 +174,6 @@ for (const p of pages) {
 
 /* ---------- page template ---------- */
 const ICONS = {
-  logo: '<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#0d1b2a"/><circle cx="16" cy="16" r="7" fill="#e8edf0"/><path d="M3 20c8 5 18 3 26-9" fill="none" stroke="#e8a91c" stroke-width="2.4" stroke-linecap="round"/></svg>',
   theme:
     '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="3.6"/><path d="M10 1.8v2M10 16.2v2M1.8 10h2M16.2 10h2M4.2 4.2l1.4 1.4M14.4 14.4l1.4 1.4M4.2 15.8l1.4-1.4M14.4 5.6l1.4-1.4" stroke-linecap="round"/></svg>',
   menu: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" stroke-linecap="round"/></svg>',
@@ -215,14 +214,14 @@ const page = (p, i) => {
   return `<!doctype html>
 <html lang="en" data-base="${BASE}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(p.title)} | Rhea.js docs</title><meta name="description" content="${desc(p)}">${canonical}${og}
-<link rel="icon" href="${BASE}assets/icon.svg" type="image/svg+xml">
+<link rel="icon" href="${BASE}assets/icon.png" type="image/png">
 <link rel="preload" href="${BASE}assets/fonts/familjen-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <script>try{var t=localStorage.getItem("rhea-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <link rel="stylesheet" href="${BASE}assets/${CSS}"><script type="application/ld+json">${ld}</script></head>
 <body><a class="skip" href="#content">Skip to content</a>
 <header class="top">
 <button id="menu" class="icon-btn menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar">${ICONS.menu}</button>
-<a class="brand" href="/">${ICONS.logo}Rhea.js</a>
+<a class="brand" href="/"><span class="mark" role="img" aria-label="Rhea.js logo"></span>Rhea.js</a>
 <nav class="topnav" aria-label="Primary"><a href="${url("introduction")}" aria-current="page">Docs</a><a href="/">Home</a>${cfg.repoUrl ? `<a href="${cfg.repoUrl}" rel="noopener noreferrer">GitHub</a>` : ""}</nav>
 <span class="grow"></span>
 <button class="search-btn" type="button" data-open-search aria-label="Search documentation">${ICONS.search}<span>Search docs</span><kbd>Ctrl K</kbd></button>
@@ -250,7 +249,7 @@ rmSync(out, { recursive: true, force: true });
 mkdirSync(join(out, "assets/fonts"), { recursive: true });
 cpSync(join(here, "assets/docs.css"), join(out, "assets", CSS));
 cpSync(join(here, "assets/docs.js"), join(out, "assets", JS));
-writeFileSync(join(out, "assets/icon.svg"), ICONS.logo.replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" '));
+for (const f of ["icon.png", "rhea-mark.png"]) cpSync(join(here, "assets", f), join(out, "assets", f));
 for (const [pkg, file] of [
   ["@fontsource-variable/familjen-grotesk", "familjen-grotesk-latin-wght-normal.woff2"],
   ["@fontsource-variable/martian-mono", "martian-mono-latin-wght-normal.woff2"],

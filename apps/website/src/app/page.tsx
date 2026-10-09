@@ -2,6 +2,7 @@ import { CopyCommand } from "../components/CopyCommand";
 import { Pipeline } from "../components/Pipeline";
 import { Code, Section } from "../components/Section";
 import { Terminal, capturedWith } from "../components/Terminal";
+import { Rings } from "../components/Logo";
 import { Footer, Header } from "../components/SiteChrome";
 import { site } from "../site";
 
@@ -23,6 +24,28 @@ const features: [string, string][] = [
   ["Narrow plugin API", "Plugins get a small, stable surface instead of the whole framework."],
 ];
 
+const onByDefault = [
+  "Helmet security headers",
+  "CORS off until you list origins; wildcard refused in production",
+  "Rate limit, body size limit, request timeout",
+  "Prototype-pollution payloads rejected",
+  "No stack traces or internal messages in production",
+  "Secrets redacted from logs",
+  "Startup aborts on invalid configuration",
+];
+const notIncluded = [
+  "Authentication and authorization",
+  "A shared rate-limit store: counters live in each process",
+  "Protection for routes where you skip validate()",
+  "An independent audit",
+];
+
+const stackChoices: [string, string, string[]][] = [
+  ["Language", "--ts  --js", ["TypeScript", "JavaScript"]],
+  ["Modules", "--esm  --cjs", ["ES Modules", "CommonJS"]],
+  ["Database", "--db none|mongodb|mysql", ["None", "MongoDB", "MySQL"]],
+];
+
 const roadmap: [string, string][] = [
   ["Done", "Core framework, CLI, project template, test suite with an end-to-end journey, documentation, this website"],
   ["Next", "Package publishing checks, repository and community files, first public alpha"],
@@ -36,34 +59,36 @@ export default function Home() {
       <Header />
 
       <main id="main">
-        <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-10 px-4 pt-12 pb-16 md:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12 lg:pt-20">
-          <div>
-            <p className="mb-4 inline-block rounded border border-line bg-panel px-2.5 py-1 text-sm text-slate">
+        <div className="relative overflow-hidden">
+          <Rings />
+          <div className="relative mx-auto max-w-6xl px-4 pt-14 pb-10 md:px-6 md:pt-24">
+            <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-panel px-3 py-1 text-sm text-slate">
+              <span className="h-2 w-2 rounded-full bg-gold" aria-hidden="true" />
               Alpha {site.version}. Not production-ready yet.
             </p>
-            <h1 className="text-[2.6rem] leading-[1.04] font-semibold tracking-tight sm:text-5xl lg:text-[3.4rem]">{site.headline}</h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate">{site.statement}</p>
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              <a href="/docs/quick-start/" className="rounded-md bg-gold px-5 py-2.5 font-semibold text-[#0d1b2a] hover:brightness-95">
+            <h1 className="max-w-4xl text-[clamp(2.4rem,7vw,4.9rem)] leading-[1.02] font-bold tracking-[-0.03em] text-balance">{site.headline}</h1>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate md:text-xl">{site.statement}</p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a href="/docs/quick-start/" className="rounded-lg bg-gold px-6 py-3 font-semibold text-[#0d1b2a] shadow-sm hover:brightness-95">
                 Get started
               </a>
               {site.repoUrl ? (
-                <a href={site.repoUrl} className="rounded-md border border-ink px-5 py-2.5 font-semibold hover:bg-ink hover:text-bg">
+                <a href={site.repoUrl} className="rounded-lg border border-ink px-6 py-3 font-semibold hover:bg-ink hover:text-bg">
                   View GitHub
                 </a>
               ) : (
-                <span aria-disabled="true" className="rounded-md border border-dashed border-line px-5 py-2.5 text-slate">
+                <span aria-disabled="true" className="rounded-lg border border-dashed border-line px-6 py-3 text-slate">
                   GitHub: not public yet
                 </span>
               )}
-            </div>
-            <div className="mt-6">
               <CopyCommand command={site.installCommand} />
-              <p className="mt-2 max-w-md text-sm text-slate">Published to npm as an alpha: the API can change between releases.</p>
             </div>
+            <p className="mt-3 text-sm text-slate">Published to npm as an alpha: the API can change between releases. Made by {site.author}.</p>
           </div>
-          <div className="min-w-0">
-            <p className="mb-2 text-sm text-slate">Pick a request. The responses below come from a real Rhea.js server running in production mode.</p>
+          <div className="relative mx-auto max-w-6xl px-4 pb-16 md:px-6 md:pb-24">
+            <p className="mb-3 max-w-2xl text-sm text-slate">
+              Pick a request. Watch it travel the pipeline. The responses come from a real Rhea.js server running in production mode.
+            </p>
             <Pipeline />
           </div>
         </div>
@@ -88,15 +113,37 @@ await app.start(5000);`}</Code>
           <p>That one call sets up everything in the pipeline above. Express can do all of it by hand. Rhea.js is about not having to.</p>
         </Section>
 
-        <Section id="features" title="What is included">
-          <dl className="space-y-5">
+        <Section id="features" title="What is included" lead="Everything a team ends up wiring by hand, decided once.">
+          <dl className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
             {features.map(([term, desc]) => (
-              <div key={term}>
-                <dt className="font-semibold">{term}</dt>
-                <dd className="text-slate">{desc}</dd>
+              <div key={term} className="bg-panel p-6">
+                <dt className="font-bold tracking-tight">{term}</dt>
+                <dd className="mt-2 text-[0.95rem] leading-relaxed text-slate">{desc}</dd>
               </div>
             ))}
           </dl>
+        </Section>
+
+        <Section id="stack" title="Choose your stack" lead="npx create-rhea my-api asks three questions, then writes a project that matches your answers.">
+          <div className="grid gap-4 md:grid-cols-3">
+            {stackChoices.map(([q, flags, opts]) => (
+              <div key={q} className="rounded-2xl border border-line bg-panel p-6">
+                <h3 className="text-lg font-bold tracking-tight">{q}</h3>
+                <p className="mt-1 font-mono text-xs text-slate">{flags}</p>
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {opts.map((o) => (
+                    <li key={o} className="rounded-full border border-line bg-bg px-3 py-1 text-sm">
+                      {o}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p className="text-slate">
+            Use the arrow keys and Enter, or pass flags to skip the questions. Your first API is already at <code>/api/rhea</code>, and <code>npm run dev</code>{" "}
+            restarts gracefully on every change through nodemon.
+          </p>
         </Section>
 
         <Section id="architecture" title="Architecture">
@@ -138,56 +185,42 @@ await app.start(5000);`}</Code>
           </ol>
         </Section>
 
-        <Section id="cli" title="Command line">
+        <Section id="cli" title="Command line" tone="inverse" lead="rhea creates, runs, builds, tests and checks your project.">
           <p>
-            <code>rhea</code> creates, runs, builds, tests and checks your project. Commands: <code>create</code>, <code>dev</code>, <code>build</code>,{" "}
-            <code>start</code>, <code>generate</code>, <code>test</code>, <code>doctor</code>, <code>security</code>, <code>docker</code>, <code>info</code>.
-          </p>
-          <p>
-            <code>npx create-rhea my-api</code> asks what you want to build with. Use the arrow keys and Enter, or pass flags to skip the questions.
-          </p>
-          <ul className="list-disc space-y-1 pl-5 text-slate">
-            <li>
-              Language: <span className="text-ink">TypeScript</span> or <span className="text-ink">JavaScript</span> (<code>--ts</code>, <code>--js</code>)
-            </li>
-            <li>
-              Modules: <span className="text-ink">ES Modules</span> or <span className="text-ink">CommonJS</span> (<code>--esm</code>, <code>--cjs</code>)
-            </li>
-            <li>
-              Database: <span className="text-ink">None</span>, <span className="text-ink">MongoDB</span> or <span className="text-ink">MySQL</span> (
-              <code>--db</code>)
-            </li>
-          </ul>
-          <p>
-            <code>npm run dev</code> runs nodemon and restarts gracefully on every change. <code>npm start</code> is plain node. Your first API is already at{" "}
-            <code>/api/rhea</code>.
+            Commands: <code>create</code>, <code>dev</code>, <code>build</code>, <code>start</code>, <code>generate</code>, <code>test</code>,{" "}
+            <code>doctor</code>, <code>security</code>, <code>docker</code>, <code>info</code>.
           </p>
           <Terminal />
-          <p className="text-sm text-slate">{capturedWith()} Captured with the default choices (TypeScript, ES Modules, no database).</p>
+          <p className="text-sm text-code-ink/60">{capturedWith()} Captured with the default choices (TypeScript, ES Modules, no database).</p>
         </Section>
 
         <Section id="security" title="Security">
           <p>Defaults aim to prevent common mistakes. They are not a guarantee, and Rhea.js has not had an independent security review.</p>
-          <div className="grid gap-6 sm:grid-cols-2">
-            <div>
-              <h3 className="mb-2 font-semibold">On by default</h3>
-              <ul className="list-disc space-y-1 pl-5 text-slate">
-                <li>Helmet security headers</li>
-                <li>CORS off until you list origins; wildcard refused in production</li>
-                <li>Rate limit, body size limit, request timeout</li>
-                <li>Prototype-pollution payloads rejected</li>
-                <li>No stack traces or internal messages in production</li>
-                <li>Secrets redacted from logs</li>
-                <li>Startup aborts on invalid configuration</li>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="rounded-2xl border border-line bg-panel p-6">
+              <h3 className="mb-4 text-lg font-bold tracking-tight text-pass">On by default</h3>
+              <ul className="space-y-2.5">
+                {onByDefault.map((t) => (
+                  <li key={t} className="flex gap-3">
+                    <span aria-hidden="true" className="mt-0.5 font-bold text-pass">
+                      +
+                    </span>
+                    {t}
+                  </li>
+                ))}
               </ul>
             </div>
-            <div>
-              <h3 className="mb-2 font-semibold">Not included</h3>
-              <ul className="list-disc space-y-1 pl-5 text-slate">
-                <li>Authentication and authorization</li>
-                <li>A shared rate-limit store: counters live in each process</li>
-                <li>Protection for routes where you skip validate()</li>
-                <li>An independent audit</li>
+            <div className="rounded-2xl border border-line bg-panel p-6">
+              <h3 className="mb-4 text-lg font-bold tracking-tight text-block">Not included</h3>
+              <ul className="space-y-2.5">
+                {notIncluded.map((t) => (
+                  <li key={t} className="flex gap-3">
+                    <span aria-hidden="true" className="mt-0.5 font-bold text-block">
+                      &minus;
+                    </span>
+                    {t}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -281,14 +314,14 @@ expect(res.status).toBe(200);`}</Code>
         </Section>
 
         <Section id="roadmap" title="Roadmap">
-          <dl className="space-y-5">
-            {roadmap.map(([term, desc]) => (
-              <div key={term}>
-                <dt className="font-semibold">{term}</dt>
-                <dd className="text-slate">{desc}</dd>
-              </div>
+          <ol className="grid gap-4 md:grid-cols-4">
+            {roadmap.map(([term, desc], i) => (
+              <li key={term} className={`rounded-2xl border p-6 ${i === 0 ? "border-pass/50 bg-pass/5" : "border-line bg-panel"}`}>
+                <h3 className="font-bold tracking-tight">{term}</h3>
+                <p className="mt-2 text-[0.95rem] leading-relaxed text-slate">{desc}</p>
+              </li>
             ))}
-          </dl>
+          </ol>
           <p className="text-sm text-slate">No dates are promised. Version 1.0 waits until the items above are true.</p>
         </Section>
       </main>
