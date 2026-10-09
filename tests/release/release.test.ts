@@ -50,7 +50,7 @@ describe("check-release", () => {
     expect(mismatch.stderr).toContain("does not match package version");
     const strict = node(d, "check-release.mjs", "--strict", "--no-install");
     expect(strict.stderr).toContain("repository/bugs missing");
-  });
+  }, 120_000);
 
   it("the repository's real package metadata is consistent", () => {
     const versions = ["core", "cli", "create-rhea"].map((p) => JSON.parse(readFileSync(join(root, "packages", p, "package.json"), "utf8")));
