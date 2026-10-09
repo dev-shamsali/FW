@@ -8,7 +8,5 @@
     "incremental": false,
     "composite": false
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

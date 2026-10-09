@@ -44,6 +44,12 @@ Returns a `RheaApp`. Options are listed in [Configuration](configuration.html#cr
 
 `requestId(header?)` middleware factory. Installed automatically by `createApp`.
 
+## Rate limiting
+
+`rateLimiter(config?)` returns middleware that applies its own limit to one route. It takes the same `limit`, `windowMs`, `store`, `keyGenerator` and `skip` as the `rateLimit` option and answers `429 RATE_LIMITED`.
+
+`redisRateLimitStore(client, prefix?)` returns a store that keeps counters in Redis so all instances share them. The `RedisLike` type lists the five commands it needs. See [Security](security.html).
+
 ## Types and re-exports
 
 `Plugin`, `PluginContext`, `HookName`, `HookFn`, `CorsConfig`, `RateLimitConfig`, `RheaApp`, `RheaOptions`, and from Express: `Router`, `Request`, `Response`, `NextFunction`, `RequestHandler`.

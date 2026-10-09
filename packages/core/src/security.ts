@@ -1,7 +1,7 @@
 import cors from "cors";
 import helmet from "helmet";
-import { rateLimit } from "express-rate-limit";
-import type { RequestHandler } from "express";
+import { rateLimit, type Store } from "express-rate-limit";
+import type { Request, RequestHandler } from "express";
 import { BadRequestError, AppError, ConfigError } from "./errors.js";
 
 export interface CorsConfig {
@@ -16,6 +16,15 @@ export interface RateLimitConfig {
   limit?: number;
   /** Set false to disable (not recommended). */
   enabled?: boolean;
+  /**
+   * Where hit counters live. The default is in process memory, so with several instances each keeps its own count.
+   * Use a shared store such as `redisRateLimitStore` to enforce one limit across all instances.
+   */
+  store?: Store;
+  /** Bucket key per request. Default is the client IP. Use it to limit per user or API key. */
+  keyGenerator?: (req: Request) => string;
+  /** Return true to exempt a request, for example health checks. */
+  skip?: (req: Request) => boolean;
 }
 
 export function corsMiddleware(c: CorsConfig, production: boolean): RequestHandler | null {
@@ -37,8 +46,19 @@ export function rateLimitMiddleware(c: RateLimitConfig = {}): RequestHandler | n
     limit: c.limit ?? 100,
     standardHeaders: "draft-7",
     legacyHeaders: false,
+    ...(c.store ? { store: c.store } : {}),
+    ...(c.keyGenerator ? { keyGenerator: c.keyGenerator } : {}),
+    ...(c.skip ? { skip: c.skip } : {}),
     handler: (_req, _res, next) => next(new AppError(429, "RATE_LIMITED", "Too many requests")),
   });
+}
+
+/**
+ * A stricter limiter for one route, for example login or password reset.
+ * Same 429 error shape as the global limiter. Always enabled; give it its own store when running several instances.
+ */
+export function rateLimiter(c: Omit<RateLimitConfig, "enabled"> = {}): RequestHandler {
+  return rateLimitMiddleware(c)!;
 }
 
 export const helmetMiddleware = (): RequestHandler => helmet();

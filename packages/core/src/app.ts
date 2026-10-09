@@ -36,6 +36,20 @@ export interface RheaOptions {
   shutdownTimeoutMs?: number;
   /** Install SIGTERM/SIGINT handlers on start(). Default true. */
   handleSignals?: boolean;
+  /**
+   * On an uncaught exception or unhandled rejection, log it, shut down and exit with code 1. Default true.
+   * The process state is unknown after such an error, so staying up is not safe. Let your supervisor restart it.
+   */
+  handleProcessErrors?: boolean;
+  /** Node HTTP server timeouts. Defaults suit a JSON API behind a load balancer with a 60 s idle timeout. */
+  server?: {
+    /** Default 65000. Keep above the load balancer idle timeout. */
+    keepAliveTimeoutMs?: number;
+    /** Time allowed to receive request headers. Default 30000. Must be above keepAliveTimeoutMs on older Node, so it is raised if needed. */
+    headersTimeoutMs?: number;
+    /** Time allowed to receive the whole request. Default 120000. */
+    requestTimeoutMs?: number;
+  };
 }
 
 export interface RheaApp {
@@ -141,6 +155,7 @@ export function createApp(options: RheaOptions = {}): RheaApp {
   let server: Server | undefined;
   let stopping: Promise<void> | undefined;
   const signalHandlers: Array<[NodeJS.Signals, () => void]> = [];
+  const processHandlers: Array<[string, (err: unknown) => void]> = [];
 
   const self: RheaApp = {
     express: app,
@@ -183,6 +198,10 @@ export function createApp(options: RheaOptions = {}): RheaApp {
       await self.ready();
       await hooks.run("beforeStart");
       const srv = createServer(app);
+      const t = options.server ?? {};
+      srv.keepAliveTimeout = t.keepAliveTimeoutMs ?? 65_000;
+      srv.headersTimeout = Math.max(t.headersTimeoutMs ?? 30_000, srv.keepAliveTimeout + 1_000);
+      srv.requestTimeout = t.requestTimeoutMs ?? 120_000;
       server = srv;
       await new Promise<void>((resolve, reject) => {
         srv.once("error", reject);
@@ -207,11 +226,28 @@ export function createApp(options: RheaOptions = {}): RheaApp {
           signalHandlers.push([sig, h]);
         }
       }
+      if (options.handleProcessErrors !== false) {
+        const fatal = (kind: string) => (err: unknown) => {
+          logger.fatal({ err, kind }, "fatal process error, shutting down");
+          // Never hang: exit even if a shutdown hook does not finish.
+          setTimeout(() => process.exit(1), options.shutdownTimeoutMs ?? 10_000).unref();
+          self.stop().then(
+            () => process.exit(1),
+            () => process.exit(1),
+          );
+        };
+        const onException = fatal("uncaughtException");
+        const onRejection = fatal("unhandledRejection");
+        process.once("uncaughtException", onException);
+        process.once("unhandledRejection", onRejection);
+        processHandlers.push(["uncaughtException", onException], ["unhandledRejection", onRejection]);
+      }
       return srv;
     },
     stop() {
       stopping ??= (async () => {
         for (const [sig, h] of signalHandlers.splice(0)) process.off(sig, h);
+        for (const [ev, h] of processHandlers.splice(0)) process.off(ev, h as never);
         const onError = (e: unknown) => logger.error({ err: e }, "shutdown hook failed");
         await hooks.run("beforeShutdown", { continueOnError: true, onError });
         const srv = server;

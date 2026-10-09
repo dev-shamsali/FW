@@ -38,16 +38,18 @@ Use `parseEnv(shape, source)` instead of `loadEnv` when you want the error throw
 
 ## createApp options
 
-| Option              | Default                     | Notes                                                            |
-| ------------------- | --------------------------- | ---------------------------------------------------------------- |
-| `env`               | `NODE_ENV` or `development` | `production` hides internals and rejects wildcard CORS           |
-| `logger`            | pretty outside production   | A `Logger` or `{ level, pretty, name, redact }`                  |
-| `requestLogging`    | `true`                      | One line per request                                             |
-| `cors`              | disabled                    | `{ origin: string[], credentials?, allowWildcardInProduction? }` |
-| `rateLimit`         | 100 per 60 s                | `{ limit, windowMs, enabled }`                                   |
-| `bodyLimit`         | `"100kb"`                   | Passed to the JSON parser                                        |
-| `requestTimeoutMs`  | `30000`                     | `0` disables. Responds `503 REQUEST_TIMEOUT`                     |
-| `trustProxy`        | `false`                     | Express `trust proxy`                                            |
-| `formatter`         | standard shape              | See [Errors](errors.html)                                        |
-| `shutdownTimeoutMs` | `10000`                     | Then open connections are closed                                 |
-| `handleSignals`     | `true`                      | SIGTERM and SIGINT                                               |
+| Option                | Default                     | Notes                                                             |
+| --------------------- | --------------------------- | ----------------------------------------------------------------- |
+| `env`                 | `NODE_ENV` or `development` | `production` hides internals and rejects wildcard CORS            |
+| `logger`              | pretty outside production   | A `Logger` or `{ level, pretty, name, redact }`                   |
+| `requestLogging`      | `true`                      | One line per request                                              |
+| `cors`                | disabled                    | `{ origin: string[], credentials?, allowWildcardInProduction? }`  |
+| `rateLimit`           | 100 per 60 s                | `{ limit, windowMs, enabled, store, keyGenerator, skip }`         |
+| `bodyLimit`           | `"100kb"`                   | Passed to the JSON parser                                         |
+| `requestTimeoutMs`    | `30000`                     | `0` disables. Responds `503 REQUEST_TIMEOUT`                      |
+| `trustProxy`          | `false`                     | Express `trust proxy`                                             |
+| `formatter`           | standard shape              | See [Errors](errors.html)                                         |
+| `shutdownTimeoutMs`   | `10000`                     | Then open connections are closed                                  |
+| `handleSignals`       | `true`                      | SIGTERM and SIGINT                                                |
+| `handleProcessErrors` | `true`                      | Uncaught exception or unhandled rejection: log, shut down, exit 1 |
+| `server`              | 65 s / 30 s / 120 s         | `{ keepAliveTimeoutMs, headersTimeoutMs, requestTimeoutMs }`      |

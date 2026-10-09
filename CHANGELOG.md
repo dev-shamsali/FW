@@ -4,6 +4,12 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 
 ## [Unreleased]
 
+### Added
+
+- `rateLimit` accepts `store`, `keyGenerator` and `skip`. `rateLimiter()` protects a single route. `redisRateLimitStore()` shares counters across instances.
+- `handleProcessErrors` (default on): an uncaught exception or unhandled rejection logs, shuts down gracefully and exits with code 1.
+- `server` option for keep-alive, headers and request timeouts, with defaults suited to load balancers.
+
 ## [0.1.0-alpha.1]
 
 ### Added
