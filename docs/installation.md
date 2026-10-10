@@ -2,7 +2,7 @@
 
 Requirements: Node.js 20.19 or newer and npm 10 or newer. (Generated projects use tooling that needs 20.19+. CommonJS projects rely on Node loading the ES-module build of `@rheajs/core` through `require()`, which is on by default from 20.19.)
 
-> Rhea.js is published to npm as an alpha (`0.1.0-alpha.1`). The API can change between alpha releases.
+> Rhea.js is published to npm as an alpha (`0.1.0-alpha.2`). The API can change between alpha releases.
 
 ```bash
 npx create-rhea my-api

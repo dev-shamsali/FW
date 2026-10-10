@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-09T12:20:58.729Z",
+  "generatedAt": "2026-10-10T06:43:20.068Z",
   "node": "26.10.0",
   "platform": "linux",
   "versions": {
-    "core": "0.1.0-alpha.1",
-    "cli": "0.1.0-alpha.1"
+    "core": "0.1.0-alpha.2",
+    "cli": "0.1.0-alpha.2"
   },
   "scenarios": [
     {
@@ -57,7 +57,7 @@
           "error": {
             "code": "RATE_LIMITED",
             "message": "Too many requests",
-            "requestId": "c727029e-b04b-4b4e-8962-06ac6b521484"
+            "requestId": "85976bf4-2599-4cd6-94a6-3abc7d30e237"
           }
         }
       }
@@ -76,7 +76,7 @@
           "error": {
             "code": "REQUEST_TIMEOUT",
             "message": "Request timed out",
-            "requestId": "6e2e1b70-d390-46c4-9f7d-0c8e2bc6e843"
+            "requestId": "0d12aa05-c3f4-4773-a770-101a839b6006"
           }
         }
       }
@@ -95,7 +95,7 @@
           "error": {
             "code": "PAYLOAD_TOO_LARGE",
             "message": "Request body too large",
-            "requestId": "e5ee5bee-598f-42a1-90a9-4b149da5b9d8"
+            "requestId": "6324b077-a6df-4fbf-ac5a-097061a0c5b7"
           }
         }
       }
@@ -114,7 +114,7 @@
           "error": {
             "code": "INVALID_BODY",
             "message": "Invalid request body",
-            "requestId": "311c0b45-dd85-4aa8-bd02-e486d0cc3541"
+            "requestId": "98140cd5-d3ff-4378-98d0-af3565e0f108"
           }
         }
       }
@@ -140,7 +140,7 @@
                 "message": "Invalid email address"
               }
             ],
-            "requestId": "f9db6a5f-f0b0-4db4-b71d-d7c971ff3440"
+            "requestId": "9620dca3-2911-4c97-b7dc-e43c9925b4cb"
           }
         }
       }
@@ -159,7 +159,7 @@
           "error": {
             "code": "INTERNAL_ERROR",
             "message": "Internal server error",
-            "requestId": "3abead29-7cb9-45a7-9c98-24cda9f103d4"
+            "requestId": "263da2a7-0195-4cd0-ae50-03cc51110389"
           }
         }
       }
@@ -178,7 +178,7 @@
     },
     {
       "cmd": "npx rhea build",
-      "output": "Type checking + compiling (tsc, single pass, no output on type errors)...\n✓ Built to dist/ in 4.3s",
+      "output": "Type checking + compiling (tsc, single pass, no output on type errors)...\n✓ Built to dist/ in 4.7s",
       "exit": 0
     },
     {

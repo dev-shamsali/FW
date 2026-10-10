@@ -63,13 +63,13 @@ You should see only `dist/*.js`, `dist/*.d.ts`, `README.md`, `LICENSE` and `pack
 
 ```bash
 git checkout main && git pull
-git tag v0.1.0-alpha.1
-git push origin v0.1.0-alpha.1
+git tag v0.1.0-alpha.2
+git push origin v0.1.0-alpha.2
 ```
 
 Pushing the tag starts **Release**. It re-runs every check, then waits for you to approve the `npm-publish` environment. After you approve, it publishes `@rheajs/core`, `@rheajs/cli` and `create-rhea` with npm provenance. It never runs on pull requests.
 
-Then create the GitHub Release: _Releases → Draft a new release → choose tag `v0.1.0-alpha.1` → tick "Set as a pre-release" → paste `release-notes/v0.1.0-alpha.1.md`_.
+Then create the GitHub Release: _Releases → Draft a new release → choose tag `v0.1.0-alpha.2` → tick "Set as a pre-release" → paste `release-notes/v0.1.0-alpha.2.md`_.
 
 Manual alternative (not recommended, no provenance): `npm login` then `npm publish -w @rheajs/core -w @rheajs/cli -w create-rhea --access public`.
 
@@ -89,7 +89,7 @@ If that works, only then announce it. Do not claim downloads, users or stars.
 
 ## 6. If something goes wrong
 
-- A published version cannot be republished. Fix, bump to `0.1.0-alpha.1`, update `CHANGELOG.md`, tag again.
+- A published version cannot be republished. Fix, bump to the next version, update `CHANGELOG.md`, tag again.
 - Within 72 hours you can `npm unpublish <pkg>@<version>`; otherwise use `npm deprecate`.
 - If a token leaks: revoke it on npmjs.com immediately, then create a new one.
 

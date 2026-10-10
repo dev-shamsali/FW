@@ -1,6 +1,6 @@
 {
   "name": "@rheajs/auth",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "Authentication for Rhea.js: password hashing, JWT access tokens, and route guards. Made by Shams Ali Shaikh.",
   "keywords": [
     "rhea",

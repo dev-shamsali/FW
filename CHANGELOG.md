@@ -4,6 +4,8 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 
 ## [Unreleased]
 
+## [0.1.0-alpha.2]
+
 ### Security
 
 - The prototype-pollution guard no longer lets a forbidden key hide below depth 32: bodies nested deeper than 32 levels are rejected.

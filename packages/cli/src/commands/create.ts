@@ -105,9 +105,9 @@ export async function create(argv: string[]): Promise<number> {
 
   const install = flags["install"] === true ? true : flags["no-install"] === true ? false : yes ? false : await confirm("Install dependencies now?");
 
-  const coreSpec = String(flags["core-spec"] ?? process.env["RHEA_CORE_SPEC"] ?? "^0.1.0-alpha.1");
-  const cliSpec = String(flags["cli-spec"] ?? process.env["RHEA_CLI_SPEC"] ?? "^0.1.0-alpha.1");
-  const authSpec = String(flags["auth-spec"] ?? process.env["RHEA_AUTH_SPEC"] ?? "^0.1.0-alpha.1");
+  const coreSpec = String(flags["core-spec"] ?? process.env["RHEA_CORE_SPEC"] ?? "^0.1.0-alpha.2");
+  const cliSpec = String(flags["cli-spec"] ?? process.env["RHEA_CLI_SPEC"] ?? "^0.1.0-alpha.2");
+  const authSpec = String(flags["auth-spec"] ?? process.env["RHEA_AUTH_SPEC"] ?? "^0.1.0-alpha.2");
   const files = projectFiles({ ...options, name, coreSpec, cliSpec, authSpec });
   writeFiles(dir, files);
   out(

@@ -30,7 +30,7 @@ describe.skipIf(!canRun)("redisRateLimitStore with real Redis", () => {
   beforeAll(async () => {
     const r = docker(["run", "-d", "--rm", "--name", NAME, "-p", `127.0.0.1:${PORT}:6379`, "redis:7-alpine"]);
     expect(r.status, r.stderr).toBe(0);
-    redis = new Redis({ port: PORT, host: "127.0.0.1", maxRetriesPerRequest: 1, retryStrategy: () => null });
+    redis = new Redis({ port: PORT, host: "127.0.0.1", maxRetriesPerRequest: 1, retryStrategy: (n) => (n > 150 ? null : 100) });
     for (let i = 0; i < 50; i++) {
       try {
         if ((await redis.ping()) === "PONG") return;
