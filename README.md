@@ -6,7 +6,7 @@ Build Express 5 APIs with TypeScript, security-first defaults, a CLI and a predi
 
 Made by **Shams Ali Shaikh**. MIT licensed.
 
-> **Alpha (0.1.0-alpha).** The API can change between alpha releases. It is not production-ready and has had no independent security review.
+> **Alpha (0.1.0-alpha.2).** The API can change between alpha releases. It is not production-ready and has had no independent security review. See [SECURITY_AUDIT.md](SECURITY_AUDIT.md) for what was tested and what is still open.
 
 Website: https://rhea.devcodehub.cloud · Docs: https://rhea.devcodehub.cloud/docs/introduction/
 
@@ -36,12 +36,13 @@ Requires Node.js 20.19 or newer (generated projects use Vite 7 through Vitest).
 | Package        | Purpose                      |
 | -------------- | ---------------------------- |
 | `@rheajs/core` | The framework runtime        |
+| `@rheajs/auth` | Passwords, JWT, route guards |
 | `@rheajs/cli`  | The `rhea` command           |
 | `create-rhea`  | `npx create-rhea` scaffolder |
 
 ## Not included yet
 
-Authentication, an ORM or query layer, a shared rate-limit store. See the roadmap in [ROADMAP.md](ROADMAP.md).
+Sessions, refresh tokens, OAuth/OIDC and MFA, an ORM or query layer. The rate limit is per process unless you pass a shared store. See [ROADMAP.md](ROADMAP.md).
 
 ## Develop
 

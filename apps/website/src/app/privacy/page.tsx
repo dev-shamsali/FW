@@ -86,8 +86,8 @@ export default function Privacy() {
               </>
             ) : (
               <>
-                A contact address has not been published yet. Until it is, please raise questions through the project&apos;s issue tracker once the repository
-                is public.
+                A contact address has not been published yet. Until it is, please raise questions through the project&apos;s{" "}
+                {site.repoUrl ? <a href={`${site.repoUrl}/issues`}>issue tracker on GitHub</a> : "issue tracker"}.
               </>
             )}
           </p>

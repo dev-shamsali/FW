@@ -4,7 +4,10 @@ import { Pipeline } from "../components/Pipeline";
 import { Code, Section } from "../components/Section";
 import { Terminal, capturedWith } from "../components/Terminal";
 import { Footer, Header } from "../components/SiteChrome";
+import nav from "../../../../docs/nav.json";
 import { site } from "../site";
+
+const docPages = nav.flatMap((s) => s.pages).length;
 
 const features: [string, string][] = [
   [
@@ -34,8 +37,9 @@ const onByDefault = [
   "Startup aborts on invalid configuration",
 ];
 const notIncluded = [
-  "Authentication and authorization",
-  "A shared rate-limit store: counters live in each process",
+  "Sessions, refresh tokens, OAuth/OIDC and MFA",
+  "Rights checks on a specific record: that part is your code",
+  "A shared rate limit unless you pass a store such as Redis: counters live in each process",
   "Protection for routes where you skip validate()",
   "An independent audit",
 ];
@@ -48,9 +52,12 @@ const stackChoices: [string, string, string[]][] = [
 ];
 
 const roadmap: [string, string][] = [
-  ["Done", "Core framework, CLI, project template, test suite with an end-to-end journey, documentation, this website"],
-  ["Next", "Package publishing checks, repository and community files, first public alpha"],
-  ["After the alpha", "Authentication plugin, database adapters (PostgreSQL, SQLite first), OpenAPI generation, queue and cache plugins, observability, OIDC"],
+  [
+    "Done",
+    "Core framework, CLI, project template, authentication package, shared rate-limit store, load and soak tests, a published self-audit, documentation, this website, three alpha releases on npm",
+  ],
+  ["Next", "Independent security review, real-world use, refresh tokens and sessions"],
+  ["After that", "Database adapters (PostgreSQL, SQLite first), OpenAPI generation, queue and cache plugins, observability, OIDC"],
   ["Before 1.0", "Stable public API, mature docs, migration guides, independent security review, stable generated projects"],
 ];
 
@@ -306,8 +313,8 @@ expect(res.status).toBe(200);`}</Code>
 
         <Section id="documentation" title="Documentation">
           <p>
-            24 pages covering installation, every part of the framework, security, Docker and troubleshooting. Code examples in the docs are type-checked
-            against the real build by the test suite. <a href="/docs/introduction/">Read the docs</a>.
+            {docPages} pages covering installation, every part of the framework, security, Docker and troubleshooting. Code examples in the docs are
+            type-checked against the real build by the test suite. <a href="/docs/introduction/">Read the docs</a>.
           </p>
         </Section>
 

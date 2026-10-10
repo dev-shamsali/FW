@@ -89,7 +89,7 @@ The logger replaces these keys with `[REDACTED]` at nesting levels 1 to 4: `pass
 ## Limits to know about
 
 - By default the rate limiter keeps counters in process memory: they reset on restart and are not shared between instances. For several instances, use a shared store (below) or rate limit at the gateway.
-- No authentication or authorization is included. Do not expose sensitive endpoints without adding it.
+- Rhea.js core has no authentication. Use `@rheajs/auth` (see [Authentication](authentication.html)) or your own, and do not expose sensitive endpoints without it. Authentication says who is calling; checking that they may touch a given record is your code's job.
 - Helmet's default Content-Security-Policy is meant for HTML. For a pure JSON API it is harmless; for HTML responses review it.
 - Validation protects handlers only where you apply `validate()`.
 

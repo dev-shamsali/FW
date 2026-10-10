@@ -1,6 +1,15 @@
 # Migration guides
 
-There are no version migrations yet: 0.1.0-alpha is the first release. Breaking changes between alpha releases will be listed here and in the changelog.
+Breaking changes between alpha releases are listed here and in the [changelog](https://github.com/dev-shamsali/FW/blob/main/CHANGELOG.md).
+
+## From 0.1.0-alpha.1 to 0.1.0-alpha.2
+
+No API was removed. Two behaviours changed, both for safety:
+
+- JSON bodies nested deeper than 32 levels are now rejected with `400 INVALID_BODY`. Before, a forbidden key (such as `__proto__`) could hide below that depth.
+- Log redaction now covers nested values (levels 1 to 4) and more key names, so a field you relied on seeing in logs, such as a property called `token`, may now show `[REDACTED]`.
+
+New and optional: `@rheajs/auth`, `rateLimit` options `store`, `keyGenerator` and `skip`, `rateLimiter()`, `redisRateLimitStore()`, `handleProcessErrors` and `server` timeouts. An uncaught exception or unhandled rejection now shuts the process down and exits with code 1 (set `handleProcessErrors: false` to keep the old behaviour).
 
 ## From a raw Express app
 
