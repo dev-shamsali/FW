@@ -4,32 +4,35 @@ import type { RequestHandler } from "express";
 export type Logger = PinoLogger;
 export type LogLevel = "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent";
 
-/** Keys redacted from every log line. Extend via `redact` option. */
-export const DEFAULT_REDACT = [
+const SENSITIVE_KEYS = [
   "password",
-  "*.password",
   "passwordHash",
-  "*.passwordHash",
   "token",
-  "*.token",
   "accessToken",
-  "*.accessToken",
   "refreshToken",
-  "*.refreshToken",
+  "idToken",
+  "jwt",
   "secret",
-  "*.secret",
+  "clientSecret",
+  "privateKey",
   "apiKey",
-  "*.apiKey",
   "authorization",
-  "*.authorization",
   "cookie",
-  "*.cookie",
-  "*.headers.authorization",
-  "*.headers.cookie",
-  "*.headers['x-api-key']",
+];
+/** A sensitive key is caught at this many nesting levels, counting the top level of the logged object as 1. pino wildcards match exactly one level each. */
+const REDACT_DEPTH = 4;
+const prefixes = Array.from({ length: REDACT_DEPTH }, (_, n) => "*.".repeat(n));
+
+/** Keys redacted from every log line, at nesting levels 1 to 4. Extend via `redact` option. */
+export const DEFAULT_REDACT = [
+  ...prefixes.flatMap((p) => SENSITIVE_KEYS.map((k) => `${p}${k}`)),
+  ...prefixes.flatMap((p) => [`${p}*.headers.authorization`, `${p}*.headers.cookie`, `${p}*.headers['x-api-key']`]),
   "DATABASE_URL",
   "JWT_SECRET",
   "SESSION_SECRET",
+  "*.DATABASE_URL",
+  "*.JWT_SECRET",
+  "*.SESSION_SECRET",
 ];
 
 const COLORS: Record<number, [string, string]> = {

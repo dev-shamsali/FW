@@ -4,6 +4,13 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 
 ## [Unreleased]
 
+### Security
+
+- The prototype-pollution guard no longer lets a forbidden key hide below depth 32: bodies nested deeper than 32 levels are rejected.
+- Log redaction now reaches nested values (levels 1 to 4) and covers `jwt`, `idToken`, `clientSecret` and `privateKey`.
+- `rhea generate` refuses Windows device names such as `con`.
+- Added [SECURITY_AUDIT.md](SECURITY_AUDIT.md): what was probed, found, fixed and left open.
+
 ### Added
 
 - `redisRateLimitStore` is tested against a real Redis 7 (shared limit across instances, TTL expiry, concurrency, Redis down). `BENCHMARKS.md`, `npm run bench` and `npm run soak` add a load test and a 180 s soak test with the exact method and caveats.

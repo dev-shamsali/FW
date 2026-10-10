@@ -3,6 +3,9 @@
 **`rhea: command not found` or `nodemon: command not found` when running `npm run dev`.**
 Dependencies are not installed. Run `npm install` inside the project folder. `npx rhea doctor` reports "Dependencies are not installed" when `node_modules` is missing.
 
+**`npm audit` reports vitest advisories in a generated project.**
+Generated projects pin Vitest 4.0.x. `npm audit` flags it and `@vitest/mocker`, because the fix (Vitest 4.1.11) crashes npm 10, which Node.js 20 ships. `npm audit --omit=dev` is clean. The advisories affect Vitest only when its UI server runs or a test uses a redirecting mock from untrusted input. On Node.js 22.12 or newer you can upgrade Vitest. Details: [SECURITY_AUDIT.md](https://github.com/dev-shamsali/FW/blob/main/SECURITY_AUDIT.md).
+
 **`Cannot find "tsx" in this project. Run "npm install" first.`**
 Dependencies are not installed. Run `npm install`. The same message appears for `typescript` and `vitest`.
 

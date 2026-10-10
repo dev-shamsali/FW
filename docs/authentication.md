@@ -55,6 +55,7 @@ Details that matter:
 
 - The hash string holds the algorithm, cost, salt and hash, so you can raise the cost later and `needsRehash` tells you which users to upgrade at their next login.
 - The default cost is scrypt N=2^17, r=8, p=1 (the OWASP minimum for scrypt) and uses about 128 MiB per hash. Size your servers for it: many logins at once use a lot of memory. Add a login rate limit.
+- Each hash in progress needs about 128 MiB of memory, and Node.js runs four at a time by default (`UV_THREADPOOL_SIZE`). 24 simultaneous logins peaked at about 600 MiB of resident memory in a test. Give the container at least 1 GiB, and keep the login rate limit.
 - Passwords longer than 1024 characters are refused before hashing, so one huge input cannot burn CPU.
 - `verifyPassword` never throws for a wrong password or a damaged hash. It returns `false`.
 - Visually identical Unicode passwords (for example `é` typed two ways) match.

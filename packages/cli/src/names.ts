@@ -65,6 +65,9 @@ const RESERVED = new Set([
   "arguments",
   "eval",
 ]);
+/** Device names Windows refuses as file or folder names, so a module called "con" could not be created there. */
+const WINDOWS_DEVICES = /^(con|prn|aux|nul|com[1-9]|lpt[1-9])$/;
+
 export const isReservedWord = (camel: string): boolean => RESERVED.has(camel);
 
 const VALID = /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/;
@@ -89,6 +92,7 @@ const camel = (k: string) => {
 export function parseName(raw: string | undefined): Names {
   if (!raw) throw new CliError("Missing name. Example: rhea generate module users", 2);
   const kebab = raw.toLowerCase();
+  if (WINDOWS_DEVICES.test(kebab)) throw new CliError(`"${kebab}" is a reserved device name on Windows. Choose another name.`, 2);
   if (!VALID.test(kebab)) throw new CliError(`Invalid name "${raw}". Use lowercase letters, digits and hyphens, starting with a letter.`, 2);
   const s = singular(kebab);
   return {

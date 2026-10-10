@@ -78,6 +78,14 @@ After an uncaught exception or unhandled rejection the process state is unknown.
 
 The HTTP server sets `keepAliveTimeout` to 65 s (above the common 60 s load balancer idle timeout), `headersTimeout` to 30 s and `requestTimeout` to 120 s. Change them with the `server` option.
 
+## Prototype pollution and deep bodies
+
+JSON bodies containing `__proto__`, `constructor` or `prototype` keys are rejected with `400 INVALID_BODY`. So are bodies nested deeper than 32 levels, because a forbidden key could hide below the depth that is inspected.
+
+## Logging
+
+The logger replaces these keys with `[REDACTED]` at nesting levels 1 to 4: `password`, `passwordHash`, `token`, `accessToken`, `refreshToken`, `idToken`, `jwt`, `secret`, `clientSecret`, `privateKey`, `apiKey`, `authorization`, `cookie`, plus `headers.authorization`, `headers.cookie` and `headers['x-api-key']`. A secret nested deeper, or under another name, is logged in clear text. Add your own paths with the `redact` option. The request log records the path only: never the query string, headers or body.
+
 ## Limits to know about
 
 - By default the rate limiter keeps counters in process memory: they reset on restart and are not shared between instances. For several instances, use a shared store (below) or rate limit at the gateway.

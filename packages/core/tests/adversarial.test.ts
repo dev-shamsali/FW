@@ -161,16 +161,19 @@ describe("error handling edge cases", () => {
 describe("shutdown", () => {
   it("lets an in-flight request finish before closing", async () => {
     const app = build({ shutdownTimeoutMs: 2000 });
+    let started!: () => void;
+    const handlerStarted = new Promise<void>((r) => (started = r));
     app.mount(
       "/",
       Router().get("/work", async (_q, res) => {
+        started();
         await new Promise((r) => setTimeout(r, 150));
         sendSuccess(res, "done");
       }),
     );
     const srv = await app.start(0, "127.0.0.1");
     const inflight = fetch(`http://127.0.0.1:${port(srv)}/work`).then((r) => r.json());
-    await new Promise((r) => setTimeout(r, 30));
+    await handlerStarted; // the request is certainly in flight, however busy the machine is
     await app.stop();
     expect((await inflight).data).toBe("done");
   });

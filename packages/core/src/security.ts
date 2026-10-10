@@ -76,8 +76,11 @@ export function timeoutMiddleware(ms: number): RequestHandler {
 }
 
 const FORBIDDEN = new Set(["__proto__", "constructor", "prototype"]);
+const MAX_DEPTH = 32;
 function polluted(v: unknown, depth: number): boolean {
-  if (depth > 32 || v === null || typeof v !== "object") return false;
+  // Too deep to inspect is treated as hostile. Returning false here would let a forbidden key hide below the limit.
+  if (depth > MAX_DEPTH) return true;
+  if (v === null || typeof v !== "object") return false;
   if (Array.isArray(v)) return v.some((x) => polluted(x, depth + 1));
   for (const k of Object.keys(v)) {
     if (FORBIDDEN.has(k) || polluted((v as Record<string, unknown>)[k], depth + 1)) return true;
@@ -85,7 +88,7 @@ function polluted(v: unknown, depth: number): boolean {
   return false;
 }
 
-/** Rejects JSON bodies carrying __proto__/constructor/prototype keys (prototype pollution vectors). */
+/** Rejects JSON bodies carrying __proto__/constructor/prototype keys (prototype pollution vectors) or nested deeper than 32 levels. */
 export const rejectPrototypePollution: RequestHandler = (req, _res, next) => {
   if (req.body && typeof req.body === "object" && polluted(req.body, 0)) {
     return next(new BadRequestError("Invalid request body", { code: "INVALID_BODY" }));
