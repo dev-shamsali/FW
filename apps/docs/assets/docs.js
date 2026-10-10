@@ -113,7 +113,13 @@
         .map(function (w) {
           return w.length > 5 ? w.replace(/(ation|ing|ion|ed|es|e|s)$/, "") : w;
         });
-    if (!terms.length) return;
+    if (!terms.length) {
+      var hint = document.createElement("li");
+      hint.className = "none";
+      hint.textContent = "Type to search the documentation.";
+      hits.appendChild(hint);
+      return;
+    }
     var scored = [];
     (index || []).forEach(function (e) {
       var h = e.h.toLowerCase(),
@@ -182,6 +188,20 @@
     });
     dlg.addEventListener("click", function (e) {
       if (e.target === dlg) dlg.close();
+    });
+    var closeBtn = dlg.querySelector("[data-close-search]");
+    if (closeBtn)
+      closeBtn.addEventListener("click", function () {
+        dlg.close();
+      });
+    // Enter opens the best match, so a phone keyboard's "Go" key works.
+    input.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      var first = hits.querySelector("a");
+      if (first) {
+        e.preventDefault();
+        window.location.href = first.href;
+      }
     });
     dlg.addEventListener("keydown", function (e) {
       var items = [].slice.call(hits.querySelectorAll("a")),

@@ -1,5 +1,6 @@
 import { site } from "../site";
 import { Logo } from "./Logo";
+import { MobileMenu } from "./MobileMenu";
 import { ThemeToggle } from "./ThemeToggle";
 
 const links: [string, string][] = [
@@ -39,7 +40,7 @@ export function Header() {
               Docs
             </a>
             <ThemeToggle />
-            <details className="group relative md:hidden">
+            <MobileMenu>
               <summary
                 aria-label="Menu"
                 className="grid h-9 w-9 cursor-pointer list-none place-items-center rounded-lg border border-line bg-panel marker:hidden [&::-webkit-details-marker]:hidden"
@@ -61,7 +62,7 @@ export function Header() {
                   </a>
                 )}
               </nav>
-            </details>
+            </MobileMenu>
           </div>
         </div>
       </header>

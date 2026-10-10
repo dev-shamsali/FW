@@ -239,7 +239,7 @@ ${render(p.body)}
 ${toc(p)}
 </div>
 <footer class="site"><span>Rhea.js ${esc(cfg.version)} is alpha software. Made by ${esc(cfg.author)}. MIT licensed.</span><a href="/">Home</a><a href="/privacy/">Privacy policy</a></footer>
-<dialog id="search" class="search" aria-label="Search documentation"><input id="q" type="search" placeholder="Search the docs" autocomplete="off" aria-label="Search the docs"><ul id="hits" aria-live="polite"></ul></dialog>
+<dialog id="search" class="search" aria-label="Search documentation"><div class="search-bar"><input id="q" type="search" placeholder="Search the docs" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go" aria-label="Search the docs"><button class="search-close" type="button" data-close-search>Close</button></div><ul id="hits" aria-live="polite"></ul></dialog>
 <script src="${BASE}assets/${JS}" defer></script>
 </body></html>`;
 };
