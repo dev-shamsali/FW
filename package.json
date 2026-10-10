@@ -23,7 +23,9 @@
     "verify": "npm run build && npm run lint && npm run typecheck && npm test",
     "build:website": "npm run build -w @rheajs/website",
     "release:check": "node scripts/check-release.mjs",
-    "set-repo": "node scripts/set-repo.mjs"
+    "set-repo": "node scripts/set-repo.mjs",
+    "bench": "node scripts/bench.mjs",
+    "soak": "node scripts/soak.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
@@ -31,7 +33,9 @@
     "@types/node": "^22.0.0",
     "@types/supertest": "^6.0.3",
     "@vitest/coverage-v8": "~4.0.18",
+    "autocannon": "^8.0.0",
     "eslint": "^9.39.5",
+    "ioredis": "^5.11.1",
     "prettier": "^3.9.9",
     "supertest": "^7.3.1",
     "typescript": "~5.9.3",

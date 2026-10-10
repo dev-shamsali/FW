@@ -70,7 +70,7 @@ const redis = new Redis(process.env["REDIS_URL"]!);
 const app = createApp({ rateLimit: { store: redisRateLimitStore(redis) } });
 ```
 
-If Redis is unreachable the request fails with a generic 500 and is logged. Plan for that in your deployment. `ioredis` is not a dependency of Rhea.js: install it yourself.
+If Redis is unreachable the request fails with a generic 500 and is logged. Plan for that in your deployment. `ioredis` is not a dependency of Rhea.js: install it yourself. The store is tested against Redis 7 with ioredis, including two instances sharing one limit.
 
 ## Process errors and timeouts
 

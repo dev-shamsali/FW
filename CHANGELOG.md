@@ -6,6 +6,7 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 
 ### Added
 
+- `redisRateLimitStore` is tested against a real Redis 7 (shared limit across instances, TTL expiry, concurrency, Redis down). `BENCHMARKS.md`, `npm run bench` and `npm run soak` add a load test and a 180 s soak test with the exact method and caveats.
 - `create` offers authentication when a database is chosen (`--auth`, `--no-auth`): users in MongoDB or MySQL, `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`, a generated `JWT_SECRET`, and a database-free test. `rhea doctor` checks the secret.
 - New package `@rheajs/auth`: scrypt password hashing (`hashPassword`, `verifyPassword`, `needsRehash`), HS256 JWT access tokens (`createJwt`), and route guards (`authenticate`, `optionalAuth`, `requireRole`).
 - `rateLimit` accepts `store`, `keyGenerator` and `skip`. `rateLimiter()` protects a single route. `redisRateLimitStore()` shares counters across instances.
