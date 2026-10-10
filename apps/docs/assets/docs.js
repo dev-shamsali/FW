@@ -131,7 +131,8 @@
         if (new RegExp("\\b" + terms[i].replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).test(h)) s += 4;
         else if (h.indexOf(terms[i]) !== -1) s += 2;
         if (t.indexOf(terms[i]) !== -1) s += 2;
-        s += 1;
+        // A section that talks about the term outranks one that only mentions it once.
+        s += 1 + Math.min(e.x.toLowerCase().split(terms[i]).length - 1, 6) * 1.5;
       }
       var joined = terms.join(" ");
       if (terms.length > 1) {
@@ -194,6 +195,13 @@
       closeBtn.addEventListener("click", function () {
         dlg.close();
       });
+    // Escape always closes the sheet (Chrome would otherwise clear a search field first).
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        dlg.close();
+      }
+    });
     // Enter opens the best match, so a phone keyboard's "Go" key works.
     input.addEventListener("keydown", function (e) {
       if (e.key !== "Enter") return;
