@@ -77,21 +77,55 @@ export function timeoutMiddleware(ms: number): RequestHandler {
 
 const FORBIDDEN = new Set(["__proto__", "constructor", "prototype"]);
 const MAX_DEPTH = 32;
-function polluted(v: unknown, depth: number): boolean {
-  // Too deep to inspect is treated as hostile. Returning false here would let a forbidden key hide below the limit.
+
+/** Walks a parsed body. A value nested deeper than MAX_DEPTH counts as a match: a forbidden key could hide below the limit. */
+function hasKey(v: unknown, isBad: (key: string) => boolean, depth: number): boolean {
   if (depth > MAX_DEPTH) return true;
   if (v === null || typeof v !== "object") return false;
-  if (Array.isArray(v)) return v.some((x) => polluted(x, depth + 1));
+  if (Array.isArray(v)) return v.some((x) => hasKey(x, isBad, depth + 1));
   for (const k of Object.keys(v)) {
-    if (FORBIDDEN.has(k) || polluted((v as Record<string, unknown>)[k], depth + 1)) return true;
+    if (isBad(k) || hasKey((v as Record<string, unknown>)[k], isBad, depth + 1)) return true;
   }
   return false;
 }
 
 /** Rejects JSON bodies carrying __proto__/constructor/prototype keys (prototype pollution vectors) or nested deeper than 32 levels. */
 export const rejectPrototypePollution: RequestHandler = (req, _res, next) => {
-  if (req.body && typeof req.body === "object" && polluted(req.body, 0)) {
+  if (req.body && typeof req.body === "object" && hasKey(req.body, (k) => FORBIDDEN.has(k), 0)) {
     return next(new BadRequestError("Invalid request body", { code: "INVALID_BODY" }));
   }
+  next();
+};
+
+/**
+ * Rejects bodies that contain keys starting with "$", the operators of MongoDB queries ($ne, $gt, $where).
+ * Without it, `{"email": {"$ne": null}}` can turn a lookup into "match anything" when a body reaches a query unchecked.
+ */
+export const rejectOperatorKeys: RequestHandler = (req, _res, next) => {
+  if (req.body && typeof req.body === "object" && hasKey(req.body, (k) => k.startsWith("$"), 0)) {
+    return next(new BadRequestError("Invalid request body", { code: "INVALID_BODY" }));
+  }
+  next();
+};
+
+const BODY_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"]);
+const JSON_TYPE = /^application\/(?:[\w.+-]+\+)?json\s*(?:;|$)/i;
+
+/**
+ * Answers 415 when a request with a body is not JSON. Without it a form or text body is silently dropped
+ * and handlers see an empty object, which hides client bugs and some injection tricks.
+ */
+export const requireJsonBody: RequestHandler = (req, _res, next) => {
+  if (!BODY_METHODS.has(req.method)) return next();
+  const hasBody = req.headers["transfer-encoding"] !== undefined || Number(req.headers["content-length"] ?? 0) > 0;
+  if (!hasBody) return next();
+  const type = req.headers["content-type"];
+  if (typeof type === "string" && JSON_TYPE.test(type)) return next();
+  next(new AppError(415, "UNSUPPORTED_MEDIA_TYPE", "Content-Type must be application/json"));
+};
+
+/** Turns off powerful browser features by default. Helmet does not set this header. */
+export const permissionsPolicy: RequestHandler = (_req, res, next) => {
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=(), usb=()");
   next();
 };

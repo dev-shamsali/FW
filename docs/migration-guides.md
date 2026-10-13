@@ -2,6 +2,21 @@
 
 Breaking changes between alpha releases are listed here and in the [changelog](https://github.com/dev-shamsali/FW/blob/main/CHANGELOG.md).
 
+## From 0.1.0-alpha.2 to 0.1.0-alpha.3
+
+**Breaking:** request bodies must be JSON. A `POST`, `PUT`, `PATCH` or `DELETE` with a form or text body now gets `415 UNSUPPORTED_MEDIA_TYPE` instead of reaching your handler empty. Clients that send JSON are not affected. If you accept forms or uploads, create the app with `requireJson: false`.
+
+Behaviour that changed in development only: morgan prints a short line per request, and the pino request line is skipped (`accessLog: false` or `requestLogging: true` change that). Production logging is unchanged.
+
+New, all optional:
+
+- Responses carry a `Permissions-Policy` header.
+- `rejectOperatorKeys` (MongoDB `$` keys), `accessLog`, and a one-time warning when `X-Forwarded-For` arrives with `trustProxy` off.
+- `@rheajs/auth`: `createRefreshTokens`, `createMemoryRefreshStore`, cookie helpers, `createLockout`, `isCommonPassword`.
+- `create-rhea --auth` projects get refresh tokens, logout, logout-all, account lockout and a cookie mode.
+
+Projects generated with alpha.2 keep working. Their login does not return a refresh token until you add the new auth module files (create a project with `--auth` in a scratch folder and copy `src/modules/auth/` and `src/config/auth`, then merge the new `.env` keys). The users table or collection is upgraded automatically on the first start: MySQL gets two new columns, MongoDB needs nothing.
+
 ## From 0.1.0-alpha.1 to 0.1.0-alpha.2
 
 No API was removed. Two behaviours changed, both for safety:

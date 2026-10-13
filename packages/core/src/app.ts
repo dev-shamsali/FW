@@ -1,6 +1,7 @@
 import { createServer, type Server } from "node:http";
 import type { AddressInfo } from "node:net";
 import express, { type Express, type ErrorRequestHandler, type RequestHandler, type Router } from "express";
+import { accessLog, type AccessLogFormat } from "./access-log.js";
 import { AppError, ConfigError } from "./errors.js";
 import { Hooks, type HookFn, type HookName } from "./lifecycle.js";
 import { createLogger, requestLogger, type Logger, type LoggerConfig } from "./logger.js";
@@ -10,8 +11,11 @@ import { defaultFormatter, type ErrorBody, type ResponseFormatter } from "./resp
 import {
   corsMiddleware,
   helmetMiddleware,
+  permissionsPolicy,
   rateLimitMiddleware,
+  rejectOperatorKeys,
   rejectPrototypePollution,
+  requireJsonBody,
   timeoutMiddleware,
   type CorsConfig,
   type RateLimitConfig,
@@ -21,8 +25,20 @@ export interface RheaOptions {
   /** Defaults to NODE_ENV or "development". */
   env?: "development" | "test" | "production";
   logger?: Logger | LoggerConfig;
-  /** Log one line per request. Default true. */
+  /**
+   * Structured pino line per request (id, method, path, status, duration).
+   * Default: on, except when `accessLog` is active, which replaces it. Set true to keep both, false to turn it off.
+   */
   requestLogging?: boolean;
+  /**
+   * Morgan access log: "dev" (colored, short), "combined", "common" or "tiny". Query strings are never printed.
+   * Default: "dev" in development, off elsewhere. Pass false to turn it off.
+   */
+  accessLog?: AccessLogFormat | false;
+  /** Answer 415 to POST, PUT, PATCH and DELETE bodies that are not JSON. Default true. Turn off for file uploads or form posts. */
+  requireJson?: boolean;
+  /** Reject bodies with keys starting with "$" (MongoDB query operators). Default false; generated MongoDB projects turn it on. */
+  rejectOperatorKeys?: boolean;
   cors?: CorsConfig;
   rateLimit?: RateLimitConfig;
   /** Max body size passed to express.json. Default "100kb". */
@@ -104,8 +120,24 @@ export function createApp(options: RheaOptions = {}): RheaApp {
 
   // Fixed order: id -> logging -> security headers -> cors -> rate limit -> timeout -> body -> sanitize
   app.use(requestId());
-  if (options.requestLogging !== false) app.use(requestLogger(logger));
+  const access = options.accessLog === undefined ? (env === "development" ? "dev" : false) : options.accessLog;
+  if (access) app.use(accessLog(access));
+  if (options.requestLogging === true || (options.requestLogging === undefined && !access)) app.use(requestLogger(logger));
+  if (production && !options.trustProxy) {
+    // Behind a reverse proxy every client shows the proxy's address, so they all share one rate-limit bucket.
+    let warned = false;
+    app.use((req, _res, next) => {
+      if (!warned && req.headers["x-forwarded-for"] !== undefined) {
+        warned = true;
+        logger.warn(
+          "X-Forwarded-For seen but trustProxy is off: every client shares one rate-limit bucket. Set TRUST_PROXY to the number of proxies in front of the app.",
+        );
+      }
+      next();
+    });
+  }
   app.use(helmetMiddleware());
+  app.use(permissionsPolicy);
   const corsMw = corsMiddleware(options.cors ?? {}, production);
   if (corsMw) app.use(corsMw);
   const rl = rateLimitMiddleware(options.rateLimit);
@@ -113,8 +145,10 @@ export function createApp(options: RheaOptions = {}): RheaApp {
   if (rl && (env !== "test" || options.rateLimit)) app.use(rl);
   const timeout = options.requestTimeoutMs ?? 30_000;
   if (timeout > 0) app.use(timeoutMiddleware(timeout));
+  if (options.requireJson !== false) app.use(requireJsonBody);
   app.use(express.json({ limit: options.bodyLimit ?? "100kb", strict: true }));
   app.use(rejectPrototypePollution);
+  if (options.rejectOperatorKeys) app.use(rejectOperatorKeys);
 
   const errorHandler: ErrorRequestHandler = (err: unknown, req, res, _next) => {
     let status = 500;

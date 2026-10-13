@@ -47,7 +47,7 @@ Scope: `@rheajs/core`, `@rheajs/auth`, the `rhea` CLI and the generated project 
 ## Known limits (not fixed, by design or for later)
 
 - **Password hashing memory.** Each in-flight hash needs about 128 MiB. Node.js runs four at a time by default (`UV_THREADPOOL_SIZE`). 24 concurrent verifications peaked at about 609 MiB resident memory. Size containers for this when using `@rheajs/auth`. The per-IP login limit bounds one client, not a distributed attack.
-- **No account lockout, MFA, refresh tokens, sessions, password reset or OAuth/OIDC.** Access tokens cannot be revoked before they expire.
+- **No MFA, server-side sessions, password reset or OAuth/OIDC.** Account lockout and rotating refresh tokens were added in alpha.3 after this audit and are covered by tests and real-database checks, not by the audit itself. Access tokens cannot be revoked before they expire; logout stops them being renewed.
 - **HS256 only.** One shared secret signs and verifies, so every service that verifies tokens can also forge them.
 - **Registration reveals whether an email exists** (409). That is a deliberate usability trade-off.
 - **Rate-limit counters are per process** unless you pass a shared store. A failing Redis store returns 500 (it fails closed).

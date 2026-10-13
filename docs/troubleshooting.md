@@ -3,6 +3,18 @@
 **`rhea: command not found` or `nodemon: command not found` when running `npm run dev`.**
 Dependencies are not installed. Run `npm install` inside the project folder. `npx rhea doctor` reports "Dependencies are not installed" when `node_modules` is missing.
 
+**`415 UNSUPPORTED_MEDIA_TYPE` after upgrading, or from a form or curl call.**
+Since 0.1.0-alpha.3 a request body must be JSON. Send `Content-Type: application/json` (curl: `-H "content-type: application/json" -d '{"a":1}'`). If a route really needs form or multipart bodies, create the app with `requireJson: false`.
+
+**`AUTH_REFRESH_COOKIE=true needs CORS_ORIGIN`.**
+Cookie mode checks the request's `Origin` against `CORS_ORIGIN` (a CSRF defence). Set `CORS_ORIGIN=https://your-frontend.example` in `.env`.
+
+**`403 CSRF_ORIGIN` on `/api/auth/refresh`.**
+In cookie mode the browser must send an `Origin` header that is listed in `CORS_ORIGIN`. Call from the real frontend origin with `credentials: "include"`. Postman and curl send no `Origin`: use body mode (`AUTH_REFRESH_COOKIE=false`) for them.
+
+**`429 ACCOUNT_LOCKED`.**
+Five wrong passwords lock an account for 15 minutes. It unlocks by itself; `Retry-After` says how many seconds remain. To unlock now, set `failedLogins` to 0 and `lockedUntil` to null on the user.
+
 **`npm audit` reports vitest advisories in a generated project.**
 Generated projects pin Vitest 4.0.x. `npm audit` flags it and `@vitest/mocker`, because the fix (Vitest 4.1.11) crashes npm 10, which Node.js 20 ships. `npm audit --omit=dev` is clean. The advisories affect Vitest only when its UI server runs or a test uses a redirecting mock from untrusted input. On Node.js 22.12 or newer you can upgrade Vitest. Details: [SECURITY_AUDIT.md](https://github.com/dev-shamsali/FW/blob/main/SECURITY_AUDIT.md).
 

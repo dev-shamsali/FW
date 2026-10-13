@@ -180,10 +180,10 @@ export default defineConfig({
 
 function envFiles(i: ProjectInput): { env: string; example: string } {
   const authLocal = i.auth
-    ? `\n# Signs access tokens. Generated for you. Use a different long random value in production.\nJWT_SECRET=${randomBytes(48).toString("base64url")}\n# JWT_EXPIRES_IN=15m\n`
+    ? `\n# Signs access tokens. Generated for you. Use a different long random value in production.\nJWT_SECRET=${randomBytes(48).toString("base64url")}\n# JWT_EXPIRES_IN=15m\n# REFRESH_TOKEN_IDLE_DAYS=7\n# REFRESH_TOKEN_MAX_DAYS=30\n# true keeps the refresh token in an httpOnly cookie for browser apps (needs CORS_ORIGIN)\n# AUTH_REFRESH_COOKIE=false\n`
     : "";
   const authExample = i.auth
-    ? `\n# Signs access tokens. At least 32 characters. Generate one with: openssl rand -base64 48\nJWT_SECRET=\n# JWT_ISSUER=\n# JWT_AUDIENCE=\n# JWT_EXPIRES_IN=15m\n`
+    ? `\n# Signs access tokens. At least 32 characters. Generate one with: openssl rand -base64 48\nJWT_SECRET=\n# JWT_ISSUER=\n# JWT_AUDIENCE=\n# JWT_EXPIRES_IN=15m\n# REFRESH_TOKEN_IDLE_DAYS=7\n# REFRESH_TOKEN_MAX_DAYS=30\n# AUTH_REFRESH_COOKIE=false\n`
     : "";
   const common = (url: string, extra: string): string => `NODE_ENV=development
 PORT=5000
@@ -248,7 +248,7 @@ ${s.ts ? "| `npm run build` | type check and compile to `dist/` |\n| `npm run ty
 - \`GET /health\`: liveness
 - \`GET /health/ready\`: readiness${i.database === "none" ? "" : " (checks the database)"}
 ${dbLine}
-${i.auth ? `\n## Authentication\n\nUsers live in your ${LABEL.database[i.database]} database (\`users\`, created on start). Passwords are hashed with scrypt. Access tokens are short-lived JWTs signed with \`JWT_SECRET\`.\n\n- \`POST /api/auth/register\` with \`{ "email", "password" }\` (12+ characters)\n- \`POST /api/auth/login\` returns \`{ accessToken }\`\n- \`GET /api/auth/me\` with \`Authorization: Bearer <token>\`\n\nProtect your own routes with \`authenticate(jwt)\` and \`requireRole("admin")\` from \`@rheajs/auth\`. New users get the role \`user\`; grant \`admin\` yourself in the database. Register and login are rate limited per process: use a shared store when you run several instances. Read the authentication guide: https://rhea.devcodehub.cloud/docs/authentication/\n` : ""}
+${i.auth ? `\n## Authentication\n\nUsers live in your ${LABEL.database[i.database]} database (\`users\` and \`refresh_tokens\`, created on start). Passwords are hashed with scrypt. The **access token** is a JWT that lives 15 minutes (signed with \`JWT_SECRET\`). The **refresh token** is random, stored only as a hash, valid 7 days unused and 30 days in total, and replaced every time you use it.\n\n- \`POST /api/auth/register\` with \`{ "email", "password" }\` (12+ characters, not a common password)\n- \`POST /api/auth/login\` returns \`{ accessToken, refreshToken }\`\n- \`POST /api/auth/refresh\` with \`{ "refreshToken" }\` returns a new pair; the old refresh token stops working, and reusing it ends the whole session\n- \`POST /api/auth/logout\` with \`{ "refreshToken" }\` ends one session; \`POST /api/auth/logout-all\` (with the access token) ends all of them\n- \`GET /api/auth/me\` with \`Authorization: Bearer <access token>\`\n\nFive wrong passwords lock an account for 15 minutes. For a browser app set \`AUTH_REFRESH_COOKIE=true\` and \`CORS_ORIGIN\` in \`.env\`: the refresh token then lives in an httpOnly cookie instead of the JSON.\n\nProtect your own routes with \`authenticate(jwt)\` and \`requireRole("admin")\` from \`@rheajs/auth\`. New users get the role \`user\`; grant \`admin\` yourself in the database. Register, login and refresh are rate limited per process: use a shared store when you run several instances. Read the authentication guide: https://rhea.devcodehub.cloud/docs/authentication/\n` : ""}
 ## Production
 
 Set \`NODE_ENV=production\`, provide every variable from \`.env.example\` as a real environment variable, and run behind a reverse proxy with \`TRUST_PROXY=1\`. \`npx rhea docker\` writes a Dockerfile${i.database === "none" ? "" : " and a docker-compose.yml with a database"}.
@@ -416,7 +416,11 @@ const env = loadEnv({
   JWT_SECRET: z.string().min(32, "must be at least 32 characters. Generate one with: openssl rand -base64 48"),
   JWT_ISSUER: z.string().min(1).default("${i.name}"),
   JWT_AUDIENCE: z.string().min(1).default("${i.name}-clients"),
-  JWT_EXPIRES_IN: z.string().regex(/^\\d+[smhd]$/, "use a number and a unit, for example 15m or 1h").default("15m"),`
+  JWT_EXPIRES_IN: z.string().regex(/^\\d+[smhd]$/, "use a number and a unit, for example 15m or 1h").default("15m"),
+  REFRESH_TOKEN_IDLE_DAYS: z.coerce.number().int().min(1).max(90).default(7),
+  REFRESH_TOKEN_MAX_DAYS: z.coerce.number().int().min(1).max(365).default(30),
+  // true: the refresh token lives in an httpOnly cookie (browsers). false: it is returned in the JSON body (mobile apps, scripts).
+  AUTH_REFRESH_COOKIE: z.enum(["true", "false"]).default("false").transform((v) => v === "true"),`
       : ""
   }
 });
@@ -437,7 +441,11 @@ function buildApp()${t(": RheaApp")} {
     env: env.NODE_ENV,
     logger: { level: env.LOG_LEVEL },
     cors: { origin: env.CORS_ORIGIN },
-    trustProxy: env.TRUST_PROXY > 0 ? env.TRUST_PROXY : false,
+    trustProxy: env.TRUST_PROXY > 0 ? env.TRUST_PROXY : false,${
+      i.database === "mongodb"
+        ? '\n    // MongoDB: refuse bodies with $-operator keys such as {"$ne": null}, the classic login bypass.\n    rejectOperatorKeys: true,'
+        : ""
+    }
   });
 ${
   db

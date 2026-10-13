@@ -37,7 +37,7 @@ const onByDefault = [
   "Startup aborts on invalid configuration",
 ];
 const notIncluded = [
-  "Sessions, refresh tokens, OAuth/OIDC and MFA",
+  "Server-side sessions, OAuth/OIDC, MFA and password reset",
   "Rights checks on a specific record: that part is your code",
   "A shared rate limit unless you pass a store such as Redis: counters live in each process",
   "Protection for routes where you skip validate()",
@@ -48,15 +48,15 @@ const stackChoices: [string, string, string[]][] = [
   ["Language", "--ts  --js", ["TypeScript", "JavaScript"]],
   ["Modules", "--esm  --cjs", ["ES Modules", "CommonJS"]],
   ["Database", "--db none|mongodb|mysql", ["None", "MongoDB", "MySQL"]],
-  ["Authentication", "--auth  (needs a database)", ["Register and login", "JWT tokens", "Role guards"]],
+  ["Authentication", "--auth  (needs a database)", ["Access + refresh tokens", "Account lockout", "Role guards"]],
 ];
 
 const roadmap: [string, string][] = [
   [
     "Done",
-    "Core framework, CLI, project template, authentication package, shared rate-limit store, load and soak tests, a published self-audit, documentation, this website, three alpha releases on npm",
+    "Core framework, CLI, project template, authentication with rotating refresh tokens and lockout, shared rate-limit store, morgan access log, load and soak tests, a published self-audit, documentation, this website, alpha releases on npm",
   ],
-  ["Next", "Independent security review, real-world use, refresh tokens and sessions"],
+  ["Next", "Independent security review, real-world use, password reset and change-password"],
   ["After that", "Database adapters (PostgreSQL, SQLite first), OpenAPI generation, queue and cache plugins, observability, OIDC"],
   ["Before 1.0", "Stable public API, mature docs, migration guides, independent security review, stable generated projects"],
 ];

@@ -43,10 +43,12 @@ describe("HTTP edge cases", () => {
       const r = await request(app.express).post("/u").set("content-type", "application/json").send(body);
       expect([400, 422], body).toContain(r.status);
     }
+    // Not JSON: refused with 415 before any handler sees an empty body (requireJson is on by default).
     const form = await request(app.express).post("/u").type("form").send("n=1");
-    expect(form.status).toBe(422);
+    expect(form.status).toBe(415);
+    expect(form.body.error.code).toBe("UNSUPPORTED_MEDIA_TYPE");
     const text = await request(app.express).post("/u").set("content-type", "text/plain").send("hi");
-    expect(text.status).toBe(422);
+    expect(text.status).toBe(415);
   });
 
   it("rejects deeply nested pollution and constructor.prototype chains", async () => {

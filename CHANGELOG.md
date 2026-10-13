@@ -4,6 +4,26 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 
 ## [Unreleased]
 
+## [0.1.0-alpha.3]
+
+### Added
+
+- **Refresh tokens** in `@rheajs/auth`: `createRefreshTokens` (random opaque tokens stored as SHA-256 hashes, rotation on every use, reuse detection that revokes the whole session, a 10 second grace window for parallel requests, 7 day idle and 30 day absolute lifetimes), `createMemoryRefreshStore` for tests, and a small `RefreshTokenStore` interface.
+- **Cookie mode** for browser apps: `setRefreshCookie`, `clearRefreshCookie`, `readCookie` (httpOnly, SameSite=Strict, Secure in production) and a CSRF origin check, `assertAllowedOrigin` / `requireAllowedOrigin`. `noStore` keeps token responses out of caches.
+- **Account lockout** in `@rheajs/auth` (`createLockout`: 5 failures, 15 minutes) and a **common-password blocklist** (`isCommonPassword`).
+- **Generated `--auth` projects** now include `POST /api/auth/refresh`, `/logout` and `/logout-all`, a `refresh_tokens` collection or table, lockout columns (a users table from alpha.2 is upgraded on start), `AUTH_REFRESH_COOKIE`, `REFRESH_TOKEN_IDLE_DAYS` and `REFRESH_TOKEN_MAX_DAYS`, and tests that need no database.
+- **Morgan access log** in `@rheajs/core` (`accessLog`): short colored lines in development, off in production where the pino JSON line stays. Query strings, cookies and most headers are never printed.
+- `rejectOperatorKeys` option (switched on in generated MongoDB projects), a `Permissions-Policy` header on every response, and a one-time warning when `X-Forwarded-For` arrives while `trustProxy` is off.
+
+### Changed
+
+- **Breaking:** a `POST`, `PUT`, `PATCH` or `DELETE` with a body that is not JSON now gets `415 UNSUPPORTED_MEDIA_TYPE` (`requireJson`, on by default). Set `requireJson: false` for forms or uploads.
+- Generated register rejects common passwords (422). Generated login answers `429 ACCOUNT_LOCKED` with `Retry-After` after 5 failures. Login and register responses include `refreshToken` (or set it as a cookie in cookie mode).
+
+### Verified
+
+- Real MongoDB 7 and MySQL 8.4: 74 end-to-end checks over HTTP, including exactly one winner among 10 parallel refreshes with the same token, reuse detection ending the session, logout-all, lockout, operator-key rejection and cookie mode with CSRF checks. An alpha.2 users table and users collection keep working.
+
 ## [0.1.0-alpha.2]
 
 ### Security

@@ -38,18 +38,21 @@ Use `parseEnv(shape, source)` instead of `loadEnv` when you want the error throw
 
 ## createApp options
 
-| Option                | Default                     | Notes                                                             |
-| --------------------- | --------------------------- | ----------------------------------------------------------------- |
-| `env`                 | `NODE_ENV` or `development` | `production` hides internals and rejects wildcard CORS            |
-| `logger`              | pretty outside production   | A `Logger` or `{ level, pretty, name, redact }`                   |
-| `requestLogging`      | `true`                      | One line per request                                              |
-| `cors`                | disabled                    | `{ origin: string[], credentials?, allowWildcardInProduction? }`  |
-| `rateLimit`           | 100 per 60 s                | `{ limit, windowMs, enabled, store, keyGenerator, skip }`         |
-| `bodyLimit`           | `"100kb"`                   | Passed to the JSON parser                                         |
-| `requestTimeoutMs`    | `30000`                     | `0` disables. Responds `503 REQUEST_TIMEOUT`                      |
-| `trustProxy`          | `false`                     | Express `trust proxy`                                             |
-| `formatter`           | standard shape              | See [Errors](errors.html)                                         |
-| `shutdownTimeoutMs`   | `10000`                     | Then open connections are closed                                  |
-| `handleSignals`       | `true`                      | SIGTERM and SIGINT                                                |
-| `handleProcessErrors` | `true`                      | Uncaught exception or unhandled rejection: log, shut down, exit 1 |
-| `server`              | 65 s / 30 s / 120 s         | `{ keepAliveTimeoutMs, headersTimeoutMs, requestTimeoutMs }`      |
+| Option                | Default                               | Notes                                                                                                 |
+| --------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `env`                 | `NODE_ENV` or `development`           | `production` hides internals and rejects wildcard CORS                                                |
+| `logger`              | pretty outside production             | A `Logger` or `{ level, pretty, name, redact }`                                                       |
+| `requestLogging`      | on, unless `accessLog` is active      | Structured pino line per request (id, method, path, status, ms). `true` keeps it next to morgan       |
+| `accessLog`           | `"dev"` in development, off elsewhere | Morgan access log: `"dev"`, `"combined"`, `"common"`, `"tiny"` or `false`. Never prints query strings |
+| `requireJson`         | `true`                                | `415` for POST, PUT, PATCH and DELETE bodies that are not JSON                                        |
+| `rejectOperatorKeys`  | `false`                               | `400` for bodies with keys starting with `$` (MongoDB operators)                                      |
+| `cors`                | disabled                              | `{ origin: string[], credentials?, allowWildcardInProduction? }`                                      |
+| `rateLimit`           | 100 per 60 s                          | `{ limit, windowMs, enabled, store, keyGenerator, skip }`                                             |
+| `bodyLimit`           | `"100kb"`                             | Passed to the JSON parser                                                                             |
+| `requestTimeoutMs`    | `30000`                               | `0` disables. Responds `503 REQUEST_TIMEOUT`                                                          |
+| `trustProxy`          | `false`                               | Express `trust proxy`                                                                                 |
+| `formatter`           | standard shape                        | See [Errors](errors.html)                                                                             |
+| `shutdownTimeoutMs`   | `10000`                               | Then open connections are closed                                                                      |
+| `handleSignals`       | `true`                                | SIGTERM and SIGINT                                                                                    |
+| `handleProcessErrors` | `true`                                | Uncaught exception or unhandled rejection: log, shut down, exit 1                                     |
+| `server`              | 65 s / 30 s / 120 s                   | `{ keepAliveTimeoutMs, headersTimeoutMs, requestTimeoutMs }`                                          |

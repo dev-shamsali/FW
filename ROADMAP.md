@@ -18,4 +18,4 @@ Draft. Dates intentionally absent. No stage is complete unless verified.
 
 Versions: 0.1.0-alpha, then 0.2.x, 0.3.x, 0.5.x, 1.0.0. 1.0 requires stable API, mature docs, comprehensive tests, migration strategy, security review, stable generated projects.
 
-Likely next features: refresh tokens and sessions, Postgres adapter, SQLite adapter, OpenAPI generation, Docker generator, queue plugin, caching plugin, observability plugin, OIDC, plugin registry docs.
+Likely next features: password reset and change-password, server-side sessions, Postgres adapter, SQLite adapter, OpenAPI generation, Docker generator, queue plugin, caching plugin, observability plugin, OIDC, plugin registry docs.

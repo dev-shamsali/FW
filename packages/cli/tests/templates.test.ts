@@ -13,7 +13,7 @@ const LANGS: Language[] = ["ts", "js"];
 const MODULES: ModuleSystem[] = ["esm", "cjs"];
 const DBS: Database[] = ["none", "mongodb", "mysql"];
 const combos = LANGS.flatMap((language) => MODULES.flatMap((module) => DBS.map((database) => ({ language, module, database, auth: false }))));
-const gen = (c: (typeof combos)[number]) => projectFiles({ ...c, name: "demo-api", coreSpec: "^0.1.0-alpha.2", cliSpec: "^0.1.0-alpha.2" });
+const gen = (c: (typeof combos)[number]) => projectFiles({ ...c, name: "demo-api", coreSpec: "^0.1.0-alpha.3", cliSpec: "^0.1.0-alpha.3" });
 
 const authCombos = LANGS.flatMap((language) =>
   MODULES.flatMap((module) => (["mongodb", "mysql"] as const).map((database) => ({ language, module, database, auth: true }))),
@@ -23,16 +23,30 @@ describe("project template with authentication (8 combinations)", () => {
   it.each(authCombos)("%o adds the auth module, wiring and secrets", (c) => {
     const f = gen(c);
     const ext = c.language === "ts" ? "ts" : "js";
-    for (const p of ["config/auth", "modules/auth/auth.routes", "modules/auth/auth.service", "modules/auth/auth.schema", "modules/auth/auth.repository"])
+    for (const p of [
+      "config/auth",
+      "modules/auth/auth.routes",
+      "modules/auth/auth.service",
+      "modules/auth/auth.schema",
+      "modules/auth/auth.repository",
+      "modules/auth/auth.refresh-store",
+    ])
       expect(Object.keys(f), p).toContain(`src/${p}.${ext}`);
     expect(Object.keys(f).some((p) => p.endsWith("auth.types.ts"))).toBe(c.language === "ts");
-    expect(JSON.parse(f["package.json"]!).dependencies["@rheajs/auth"]).toBe("^0.1.0-alpha.2");
+    expect(JSON.parse(f["package.json"]!).dependencies["@rheajs/auth"]).toBe("^0.1.0-alpha.3");
     expect(JSON.parse(f["rhea.config.json"]!).auth).toBe(true);
     expect(f[`src/modules/index.${ext}`]).toContain("/api/auth");
     expect(f[`src/app.${ext}`]).toContain("ensureUserStore");
     // a real random secret locally, an empty one in the example file
     expect(f[".env"]).toMatch(/^JWT_SECRET=[A-Za-z0-9_-]{32,}$/m);
     expect(f[".env.example"]).toMatch(/^JWT_SECRET=$/m);
+    expect(f[`src/config/env.${ext}`]).toContain("REFRESH_TOKEN_IDLE_DAYS");
+    expect(f[`src/config/env.${ext}`]).toContain("AUTH_REFRESH_COOKIE");
+    expect(f[`src/modules/auth/auth.routes.${ext}`]).toContain("/refresh");
+    expect(f[`src/modules/auth/auth.routes.${ext}`]).toContain("/logout-all");
+    expect(f[`src/modules/auth/auth.service.${ext}`]).toContain("ACCOUNT_LOCKED");
+    // MongoDB projects switch on operator-key rejection, MySQL projects do not
+    expect(f[`src/app.${ext}`]!.includes("rejectOperatorKeys")).toBe(c.database === "mongodb");
     expect(f[`src/config/env.${ext}`]).toContain("JWT_SECRET");
     expect(f[c.language === "ts" ? "vitest.config.ts" : "vitest.config.mjs"]).toContain("JWT_SECRET");
     expect(Object.keys(f).some((p) => p.startsWith("tests/integration/auth.test."))).toBe(true);

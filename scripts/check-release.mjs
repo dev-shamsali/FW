@@ -38,7 +38,7 @@ if (tag && tag !== `v${version}`) fail(`tag ${tag} does not match package versio
 const changelog = readFileSync(join(root, "CHANGELOG.md"), "utf8");
 if (!changelog.includes(`[${version}]`)) fail(`CHANGELOG.md has no entry for ${version}`);
 const cfg = JSON.parse(readFileSync(join(root, "site.config.json"), "utf8"));
-if (!cfg.version || !version.startsWith(cfg.version.replace("-alpha", ""))) warn(`site.config.json version (${cfg.version}) differs from ${version}`);
+if (cfg.version !== version) warn(`site.config.json version (${cfg.version}) differs from ${version}`);
 
 // 2. what would be published
 const allowed = (p) => p === "package.json" || p === "README.md" || p === "LICENSE" || /^dist\/.+\.(js|d\.ts)$/.test(p);

@@ -86,10 +86,18 @@ JSON bodies containing `__proto__`, `constructor` or `prototype` keys are reject
 
 The logger replaces these keys with `[REDACTED]` at nesting levels 1 to 4: `password`, `passwordHash`, `token`, `accessToken`, `refreshToken`, `idToken`, `jwt`, `secret`, `clientSecret`, `privateKey`, `apiKey`, `authorization`, `cookie`, plus `headers.authorization`, `headers.cookie` and `headers['x-api-key']`. A secret nested deeper, or under another name, is logged in clear text. Add your own paths with the `redact` option. The request log records the path only: never the query string, headers or body.
 
+## Request and response defaults
+
+- **JSON only.** A `POST`, `PUT`, `PATCH` or `DELETE` with a body that is not `application/json` (or `+json`) gets `415 UNSUPPORTED_MEDIA_TYPE`. Without this a form or text body is silently dropped, and your handler sees an empty object. File uploads and form posts need `requireJson: false` on that app, or their own app.
+- **`Permissions-Policy`** turns off camera, microphone, geolocation, payment and USB for your responses. Helmet does not set this header.
+- **MongoDB operators.** `rejectOperatorKeys: true` answers `400 INVALID_BODY` to any body with a key that starts with `$` (`$ne`, `$gt`, `$where`, `$regex`). That blocks the classic `{"email": {"$ne": null}}` login bypass if a body ever reaches a query unchecked. Generated MongoDB projects turn it on. Validate bodies with `validate()` too: it is the stronger defence.
+- **Proxy warning.** In production, if a request arrives with `X-Forwarded-For` while `trustProxy` is off, Rhea.js logs one warning: every client behind your proxy then shares one rate-limit bucket. Set `TRUST_PROXY` to the number of proxies in front of the app.
+- **Access log.** Morgan in development, never printing query strings. See [Logging](logging.html).
+
 ## Limits to know about
 
 - By default the rate limiter keeps counters in process memory: they reset on restart and are not shared between instances. For several instances, use a shared store (below) or rate limit at the gateway.
-- Rhea.js core has no authentication. Use `@rheajs/auth` (see [Authentication](authentication.html)) or your own, and do not expose sensitive endpoints without it. Authentication says who is calling; checking that they may touch a given record is your code's job.
+- Rhea.js core has no authentication. `@rheajs/auth` adds login, rotating refresh tokens and account lockout. Use `@rheajs/auth` (see [Authentication](authentication.html)) or your own, and do not expose sensitive endpoints without it. Authentication says who is calling; checking that they may touch a given record is your code's job.
 - Helmet's default Content-Security-Policy is meant for HTML. For a pure JSON API it is harmless; for HTML responses review it.
 - Validation protects handlers only where you apply `validate()`.
 

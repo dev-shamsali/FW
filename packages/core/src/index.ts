@@ -7,6 +7,7 @@ export * from "./errors.js";
 export { sendSuccess, defaultFormatter, type ResponseFormatter, type SuccessBody, type ErrorBody } from "./response.js";
 export { validate, type ValidationSchemas } from "./validate.js";
 export { parseEnv, loadEnv, baseEnvShape, EnvValidationError } from "./env.js";
+export type { AccessLogFormat } from "./access-log.js";
 export { createLogger, DEFAULT_REDACT, type Logger, type LoggerConfig, type LogLevel } from "./logger.js";
 export { requestId } from "./request-id.js";
 export { rateLimiter, type CorsConfig, type RateLimitConfig } from "./security.js";
