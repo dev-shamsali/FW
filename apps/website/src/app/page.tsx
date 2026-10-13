@@ -54,7 +54,7 @@ const stackChoices: [string, string, string[]][] = [
 const roadmap: [string, string][] = [
   [
     "Done",
-    "Core framework, CLI, project template, authentication with rotating refresh tokens and lockout, shared rate-limit store, morgan access log, load and soak tests, a published self-audit, documentation, this website, and the 1.0.0 release",
+    "Core framework, CLI, project template, authentication with rotating refresh tokens and lockout, shared rate-limit store, morgan access log, load and soak tests, a published self-audit, documentation, this website, and the 1.0.1 release",
   ],
   ["Next", "Independent security review, real-world use, password reset and change-password"],
   ["After that", "Database adapters (PostgreSQL, SQLite first), OpenAPI generation, queue and cache plugins, observability, OIDC"],
@@ -353,7 +353,7 @@ expect(res.status).toBe(200);`}</Code>
             ))}
           </ol>
           <p className="text-sm text-slate">
-            No dates are promised. 1.0.0 was released without an independent security review, which is why that review is the first item under Next.
+            No dates are promised. 1.0.1 was released without an independent security review, which is why that review is the first item under Next.
           </p>
         </Section>
       </main>
