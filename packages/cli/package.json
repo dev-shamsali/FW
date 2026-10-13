@@ -1,6 +1,6 @@
 {
   "name": "@rheajs/cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Rhea.js command line interface. Made by Shams Ali Shaikh.",
   "keywords": [
     "rhea",

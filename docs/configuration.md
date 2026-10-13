@@ -46,7 +46,7 @@ Use `parseEnv(shape, source)` instead of `loadEnv` when you want the error throw
 | `accessLog`           | `"dev"` in development, off elsewhere | Morgan access log: `"dev"`, `"combined"`, `"common"`, `"tiny"` or `false`. Never prints query strings |
 | `requireJson`         | `true`                                | `415` for POST, PUT, PATCH and DELETE bodies that are not JSON                                        |
 | `rejectOperatorKeys`  | `false`                               | `400` for bodies with keys starting with `$` (MongoDB operators)                                      |
-| `cors`                | disabled                              | `{ origin: string[], credentials?, allowWildcardInProduction? }`                                      |
+| `cors`                | disabled                              | `{ origin: string[], credentials?, exposedHeaders?, allowWildcardInProduction? }`                     |
 | `rateLimit`           | 100 per 60 s                          | `{ limit, windowMs, enabled, store, keyGenerator, skip }`                                             |
 | `bodyLimit`           | `"100kb"`                             | Passed to the JSON parser                                                                             |
 | `requestTimeoutMs`    | `30000`                               | `0` disables. Responds `503 REQUEST_TIMEOUT`                                                          |

@@ -26,7 +26,7 @@ Also generated:
 - A `users` collection (MongoDB, unique email index) or table (MySQL), and a `refresh_tokens` collection or table, created on start. A users table from an older version gets its new columns added automatically.
 - `JWT_SECRET` generated into your `.env`. `.env.example` leaves it empty, and the app refuses to start without 32 or more characters. `rhea doctor` checks it.
 - Passwords of 12 to 128 characters that are not on the built-in common-password list. Emails are trimmed and lower-cased. Wrong password and unknown email give the same 401.
-- Register and login limited to 10 requests per 15 minutes per IP, refresh and logout to 60, per process. Pass a shared store when you run several instances.
+- Register and login limited to 10 requests per 15 minutes per IP, refresh and logout to 60 per 15 minutes per IP, per process. Hitting a limit gives `429 RATE_LIMITED`; a locked account gives `429 ACCOUNT_LOCKED`. They are different codes, and while you test it is easy to hit the 10 login limit (restart the server to reset the counters). Pass a shared store when you run several instances.
 - Every token response carries `Cache-Control: no-store`.
 - An integration test that runs without a database.
 
@@ -54,7 +54,7 @@ Two requests that arrive at the same moment with the same token (a double click,
 | `REFRESH_REUSED`   | An old token came back. The session was ended. Sign in again.       |
 | `REFRESH_CONFLICT` | The token was used a moment ago. Retry with the newest token.       |
 
-Change the lifetimes with `REFRESH_TOKEN_IDLE_DAYS` (default 7) and `REFRESH_TOKEN_MAX_DAYS` (default 30) in `.env`, and the access token with `JWT_EXPIRES_IN`.
+Change the lifetimes with `REFRESH_TOKEN_IDLE_DAYS` (default 7) and `REFRESH_TOKEN_MAX_DAYS` (default 30) in `.env`, and the access token with `JWT_EXPIRES_IN`. Token checks allow 5 seconds of clock difference, so a token with `JWT_EXPIRES_IN=30s` is accepted for about 35 seconds (wait 36 seconds or more in an expiry test).
 
 ### Browser apps: the cookie mode
 
@@ -65,11 +65,17 @@ AUTH_REFRESH_COOKIE=true
 CORS_ORIGIN=https://app.example.com
 ```
 
+Generated projects already turn on CORS credentials in `src/app.ts` (`cors: { origin: env.CORS_ORIGIN, credentials: env.AUTH_REFRESH_COOKIE }`). In your own app, set `credentials: true` yourself, or the browser blocks every call that sends the cookie with "The value of the 'Access-Control-Allow-Credentials' header ... must be 'true'". `Retry-After` is exposed to browser code by default (`cors.exposedHeaders`), so a login page can show how long a lockout lasts.
+
 The refresh token then travels in a cookie named `rhea_refresh` that is `HttpOnly` (page scripts cannot read it), `SameSite=Strict`, `Secure` in production, and only sent to `/api/auth`. It is no longer in the JSON. Call `refresh` and `logout` with `credentials: "include"` and an empty body:
 
 ```js
 await fetch("https://api.example.com/api/auth/refresh", { method: "POST", credentials: "include" });
 ```
+
+In cookie mode `login`, `register` and `refresh` return `{ accessToken, user }` in the JSON and no refresh token. A request refused with `CSRF_ORIGIN` leaves your real cookie alone; any other failed refresh clears it.
+
+React in development (strict mode) runs an effect twice, so a refresh on page load fires twice. The second call lands inside the 10 second grace window and gets `REFRESH_CONFLICT`. Share one in-flight refresh promise in your client so only one request is sent.
 
 Cookies are sent automatically, so a hostile site could try to trigger a refresh or logout. Two defences stop it: `SameSite=Strict`, and a check that the request's `Origin` header is on your `CORS_ORIGIN` list (otherwise `403 CSRF_ORIGIN`). In cookie mode the body token is ignored, so there is one way in. Mobile apps and scripts leave `AUTH_REFRESH_COOKIE` off and use the JSON body.
 

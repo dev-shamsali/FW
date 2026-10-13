@@ -440,7 +440,7 @@ function buildApp()${t(": RheaApp")} {
   const app = createApp({
     env: env.NODE_ENV,
     logger: { level: env.LOG_LEVEL },
-    cors: { origin: env.CORS_ORIGIN },
+    cors: { origin: env.CORS_ORIGIN${i.auth ? ", credentials: env.AUTH_REFRESH_COOKIE" : ""} },
     trustProxy: env.TRUST_PROXY > 0 ? env.TRUST_PROXY : false,${
       i.database === "mongodb"
         ? '\n    // MongoDB: refuse bodies with $-operator keys such as {"$ne": null}, the classic login bypass.\n    rejectOperatorKeys: true,'

@@ -19,6 +19,29 @@ describe("HTTP edge cases", () => {
     expect(bad.headers["access-control-allow-origin"]).toBeUndefined();
   });
 
+  it("allows credentials when asked and exposes Retry-After to browser code by default", async () => {
+    const app = build({ cors: { origin: ["https://ok.test"], credentials: true } });
+    app.mount(
+      "/",
+      (() => {
+        const r = Router();
+        r.get("/x", (_req, res) => res.json({ ok: true }));
+        return r;
+      })(),
+    );
+    await app.ready();
+    const res = await request(app.express).get("/x").set("Origin", "https://ok.test");
+    expect(res.headers["access-control-allow-credentials"]).toBe("true");
+    expect(res.headers["access-control-expose-headers"]).toBe("Retry-After");
+    const none = build({ cors: { origin: ["https://ok.test"] } });
+    await none.ready();
+    expect(
+      (await request(none.express).options("/x").set("Origin", "https://ok.test").set("Access-Control-Request-Method", "GET")).headers[
+        "access-control-allow-credentials"
+      ],
+    ).toBeUndefined();
+  });
+
   it("handles HEAD, unknown methods and encoded paths without crashing", async () => {
     const app = build();
     app.mount(

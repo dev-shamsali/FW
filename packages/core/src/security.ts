@@ -7,7 +7,10 @@ import { BadRequestError, AppError, ConfigError } from "./errors.js";
 export interface CorsConfig {
   /** Allowed origins. Empty/false disables CORS headers (secure default). "*" is rejected in production. */
   origin?: string[] | false;
+  /** Send `Access-Control-Allow-Credentials`. Needed when browsers call with cookies (`credentials: "include"`), for example the refresh-token cookie. Cannot be combined with "*". */
   credentials?: boolean;
+  /** Response headers browser code may read. Default `["Retry-After"]`, so a client can show how long a lockout or rate limit lasts. */
+  exposedHeaders?: string[];
   /** Explicitly allow "*" in production. Not recommended. */
   allowWildcardInProduction?: boolean;
 }
@@ -36,7 +39,7 @@ export function corsMiddleware(c: CorsConfig, production: boolean): RequestHandl
   if (origin.includes("*") && c.credentials) {
     throw new ConfigError('CORS origin "*" cannot be combined with credentials.');
   }
-  return cors({ origin: origin.includes("*") ? "*" : origin, credentials: c.credentials ?? false });
+  return cors({ origin: origin.includes("*") ? "*" : origin, credentials: c.credentials ?? false, exposedHeaders: c.exposedHeaders ?? ["Retry-After"] });
 }
 
 export function rateLimitMiddleware(c: RateLimitConfig = {}): RequestHandler | null {

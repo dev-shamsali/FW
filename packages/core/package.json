@@ -1,6 +1,6 @@
 {
   "name": "@rheajs/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Secure, convention-driven backend framework core for Node.js and Express. Made by Shams Ali Shaikh.",
   "keywords": [
     "rhea",

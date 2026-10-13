@@ -471,8 +471,9 @@ function createAuthRouter(service${t(": Service")}, tokens${t(": Jwt")}, cookie$
     try {
       return send(res, await service.refresh(refreshTokenOf(req)), "Refreshed");
     } catch (err) {
-      // A cookie that no longer works is cleared, so the browser stops sending it.
-      if (cookie.enabled) clearRefreshCookie(res, cookieOptions);
+      // A cookie that no longer works is cleared, so the browser stops sending it. A request refused as forged (CSRF_ORIGIN) must not touch the real cookie.
+      const failed = err${t(" as { code?: string }")};
+      if (cookie.enabled && failed.code !== "CSRF_ORIGIN") clearRefreshCookie(res, cookieOptions);
       throw err;
     }
   });
@@ -739,7 +740,10 @@ describe("auth: cookie mode", () => {
     const cookie = cookieOf(await post(app, "/register", good)).split(";")[0]${s.ts ? "!" : ""};
     const call = (headers${t(": Record<string, string>")}) => request(app.express).post("/api/auth/refresh").set(headers);
     expect((await call({ Cookie: cookie })).status).toBe(403);
-    expect((await call({ Cookie: cookie, Origin: "https://evil.example" })).body.error.code).toBe("CSRF_ORIGIN");
+    const forged = await call({ Cookie: cookie, Origin: "https://evil.example" });
+    expect(forged.body.error.code).toBe("CSRF_ORIGIN");
+    // a forged request must not touch the real cookie
+    expect(forged.headers["set-cookie"]).toBeUndefined();
     const ok = await call({ Cookie: cookie, Origin: origin });
     expect(ok.status).toBe(200);
     expect(ok.body.data.accessToken).toBeTruthy();
