@@ -82,7 +82,7 @@ export function Footer() {
             {site.name}
           </a>
           <p className="mt-3 max-w-xs text-sm text-slate">
-            Secure, convention-driven backend framework for Node.js. Made by {site.author}. MIT licensed. Alpha {site.version}.
+            Secure, convention-driven backend framework for Node.js. Made by {site.author}. MIT licensed. Version {site.version}.
           </p>
         </div>
         <div>

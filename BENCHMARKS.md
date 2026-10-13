@@ -23,9 +23,9 @@ Intel Core i7-8665U (4 cores, 8 threads, 1.9 GHz base), 8 GiB RAM shared with a 
 | Rhea.js, with Zod validation (`POST`)  | 2,302 to 2,340      | 25 ms       | 57 to 59 ms | 0      |
 | Rhea.js, JWT-protected route           | 1,867 to 2,127      | 28 to 29 ms | 56 to 87 ms | 0      |
 
-## Checked again for 0.1.0-alpha.3
+## Checked again for 1.0.0
 
-The new release adds a few per-request checks (JSON-only bodies, a `Permissions-Policy` header, optional operator-key rejection). To see whether that costs anything, alpha.2 (installed from npm) and alpha.3 (this repository) were run **alternately, three rounds each, on the same machine** with the same route and default logging: alpha.2 gave 3,198, 3,194 and 3,060 requests per second (median 3,194), alpha.3 gave 3,436, 3,381 and 2,801 (median 3,381). No measurable change.
+1.0.0 adds a few per-request checks (JSON-only bodies, a `Permissions-Policy` header, optional operator-key rejection). To see whether that costs anything, alpha.2 (installed from npm) and the 1.0.0 code (this repository) were run **alternately, three rounds each, on the same machine** with the same route and default logging: alpha.2 gave 3,198, 3,194 and 3,060 requests per second (median 3,194), 1.0.0 gave 3,436, 3,381 and 2,801 (median 3,381). No measurable change.
 
 The same machine produced very different absolute numbers on different days: plain Express managed about 4,200 requests per second in the table above and about 20,000 in a later session, depending on load and CPU state. So **only comparisons made in one run mean anything**. Do not compare numbers between sessions or machines.
 

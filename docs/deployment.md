@@ -14,4 +14,4 @@ General checklist for any host:
 
 Graceful shutdown waits for in-flight requests up to `shutdownTimeoutMs` (10 s by default), then closes remaining connections. Make sure your platform's termination grace period is longer.
 
-Rhea.js is alpha. Evaluate carefully before running it in production.
+Rhea.js is stable (1.x) but has had no independent security review. Test it on a staging environment first, and read the self-audit.

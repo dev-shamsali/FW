@@ -13,7 +13,7 @@ const LANGS: Language[] = ["ts", "js"];
 const MODULES: ModuleSystem[] = ["esm", "cjs"];
 const DBS: Database[] = ["none", "mongodb", "mysql"];
 const combos = LANGS.flatMap((language) => MODULES.flatMap((module) => DBS.map((database) => ({ language, module, database, auth: false }))));
-const gen = (c: (typeof combos)[number]) => projectFiles({ ...c, name: "demo-api", coreSpec: "^0.1.0-alpha.3", cliSpec: "^0.1.0-alpha.3" });
+const gen = (c: (typeof combos)[number]) => projectFiles({ ...c, name: "demo-api", coreSpec: "^1.0.0", cliSpec: "^1.0.0" });
 
 const authCombos = LANGS.flatMap((language) =>
   MODULES.flatMap((module) => (["mongodb", "mysql"] as const).map((database) => ({ language, module, database, auth: true }))),
@@ -33,7 +33,7 @@ describe("project template with authentication (8 combinations)", () => {
     ])
       expect(Object.keys(f), p).toContain(`src/${p}.${ext}`);
     expect(Object.keys(f).some((p) => p.endsWith("auth.types.ts"))).toBe(c.language === "ts");
-    expect(JSON.parse(f["package.json"]!).dependencies["@rheajs/auth"]).toBe("^0.1.0-alpha.3");
+    expect(JSON.parse(f["package.json"]!).dependencies["@rheajs/auth"]).toBe("^1.0.0");
     expect(JSON.parse(f["rhea.config.json"]!).auth).toBe(true);
     expect(f[`src/modules/index.${ext}`]).toContain("/api/auth");
     expect(f[`src/app.${ext}`]).toContain("ensureUserStore");

@@ -36,4 +36,4 @@ Hooks of the same name run in registration order, awaited one by one. Startup ho
 
 ## Status
 
-The plugin API is alpha and may change. There is no plugin registry or CLI/generator extension point yet.
+The plugin API is small on purpose and covered by the 1.x stability promise. There is no plugin registry or CLI/generator extension point yet.

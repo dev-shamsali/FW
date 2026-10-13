@@ -10,7 +10,7 @@ The project is fine and `git init` already ran. Set your identity once with `git
 No repository is created inside an existing repository, when git is missing, or with `--no-git`. The GitHub step needs the GitHub CLI: install it from https://cli.github.com and run `gh auth login`. A name that already exists on your account is refused by GitHub; choose another folder name or create the repository by hand and run `git remote add origin <url> && git push -u origin main`.
 
 **`415 UNSUPPORTED_MEDIA_TYPE` after upgrading, or from a form or curl call.**
-Since 0.1.0-alpha.3 a request body must be JSON. Send `Content-Type: application/json` (curl: `-H "content-type: application/json" -d '{"a":1}'`). If a route really needs form or multipart bodies, create the app with `requireJson: false`.
+Since 1.0.0 (and 0.1.0-alpha.3) a request body must be JSON. Send `Content-Type: application/json` (curl: `-H "content-type: application/json" -d '{"a":1}'`). If a route really needs form or multipart bodies, create the app with `requireJson: false`.
 
 **`AUTH_REFRESH_COOKIE=true needs CORS_ORIGIN`.**
 Cookie mode checks the request's `Origin` against `CORS_ORIGIN` (a CSRF defence). Set `CORS_ORIGIN=https://your-frontend.example` in `.env`.

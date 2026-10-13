@@ -6,7 +6,7 @@ Build Express 5 APIs with TypeScript, security-first defaults, a CLI and a predi
 
 Made by **Shams Ali Shaikh**. MIT licensed.
 
-> **Alpha (0.1.0-alpha.3).** The API can change between alpha releases. It is not production-ready and has had no independent security review. See [SECURITY_AUDIT.md](SECURITY_AUDIT.md) for what was tested and what is still open.
+> **Stable (1.0).** Semantic versioning applies. Rhea.js is used in production by its author. It has not had an independent security review: [SECURITY_AUDIT.md](SECURITY_AUDIT.md) lists what was tested and what is still open, and [Stability](https://rhea.devcodehub.cloud/docs/introduction/#stability-and-versioning) says what 1.x promises.
 
 Website: https://rhea.devcodehub.cloud · Docs: https://rhea.devcodehub.cloud/docs/introduction/
 

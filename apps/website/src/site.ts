@@ -8,7 +8,7 @@ export const site = {
   headline: "The secure, convention-driven backend framework for Node.js.",
   statement: "Build production-ready Express APIs with TypeScript, security-first defaults, powerful CLI tooling, and a predictable architecture.",
   description:
-    "Rhea.js is a secure, convention-driven backend framework for Node.js and Express 5, with TypeScript, security defaults, a CLI and a plugin API. Alpha.",
+    "Rhea.js is a secure, convention-driven backend framework for Node.js and Express 5, with TypeScript, security defaults, a CLI and a plugin API. Stable 1.x.",
   installCommand: "npx create-rhea my-api",
   repoUrl: cfg.repoUrl as string | null,
   npmUrl: cfg.npmUrl as string | null,

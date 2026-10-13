@@ -2,7 +2,7 @@
 
 Core of **Rhea.js**, a secure, convention-driven backend framework for Node.js on Express 5.
 
-Made by Shams Ali Shaikh. MIT licensed. Alpha: not production-ready.
+Made by Shams Ali Shaikh. MIT licensed. Stable 1.x: semantic versioning applies.
 
 ```ts
 import { createApp, Router, sendSuccess } from "@rheajs/core";

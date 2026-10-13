@@ -54,11 +54,14 @@ const stackChoices: [string, string, string[]][] = [
 const roadmap: [string, string][] = [
   [
     "Done",
-    "Core framework, CLI, project template, authentication with rotating refresh tokens and lockout, shared rate-limit store, morgan access log, load and soak tests, a published self-audit, documentation, this website, alpha releases on npm",
+    "Core framework, CLI, project template, authentication with rotating refresh tokens and lockout, shared rate-limit store, morgan access log, load and soak tests, a published self-audit, documentation, this website, and the 1.0.0 release",
   ],
   ["Next", "Independent security review, real-world use, password reset and change-password"],
   ["After that", "Database adapters (PostgreSQL, SQLite first), OpenAPI generation, queue and cache plugins, observability, OIDC"],
-  ["Before 1.0", "Stable public API, mature docs, migration guides, independent security review, stable generated projects"],
+  [
+    "Stability",
+    "1.x follows semantic versioning: the documented API, the CLI flags, the error shape and codes do not break before 2.0.0. The stability page lists what is covered.",
+  ],
 ];
 
 export default function Home() {
@@ -72,7 +75,7 @@ export default function Home() {
           <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 pt-14 pb-16 md:px-6 md:pt-20 md:pb-24 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-10">
             <div>
               <p className="mb-6 inline-block rounded-full border border-line bg-bg px-3.5 py-1 text-sm text-slate">
-                Alpha {site.version}. Not production-ready yet.
+                Version {site.version}. Used in production by its author.
               </p>
               <h1 className="text-[clamp(2.2rem,5vw,3.7rem)] leading-[1.03] font-bold tracking-[-0.035em] text-balance">{site.headline}</h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate">{site.statement}</p>
@@ -278,7 +281,7 @@ export const env = loadEnv({ ...baseEnvShape, DATABASE_URL: z.string().url() });
         <Section id="plugins" title="Plugins">
           <p>
             A plugin receives a small context: a logger, <code>addMiddleware</code>, <code>mount</code> and <code>onHook</code>. It never touches framework
-            internals, so the API can grow without breaking plugins. The plugin API is alpha and may change.
+            internals, so the API can grow without breaking plugins. The plugin API is small on purpose and covered by the 1.x stability promise.
           </p>
           <Code label="A plugin">{`import { Router, type Plugin } from "@rheajs/core";
 
@@ -349,7 +352,9 @@ expect(res.status).toBe(200);`}</Code>
               </li>
             ))}
           </ol>
-          <p className="text-sm text-slate">No dates are promised. Version 1.0 waits until the items above are true.</p>
+          <p className="text-sm text-slate">
+            No dates are promised. 1.0.0 was released without an independent security review, which is why that review is the first item under Next.
+          </p>
         </Section>
       </main>
 

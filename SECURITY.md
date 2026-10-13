@@ -2,12 +2,13 @@
 
 ## Supported versions
 
-Rhea.js is alpha software. Only the latest published `0.x` release receives security fixes.
+Only the latest published `1.x` release receives security fixes. Earlier `0.x` releases (the alpha line) are no longer supported: upgrade to 1.x.
 
-| Version                | Supported |
-| ---------------------- | --------- |
-| latest `0.1.0-alpha.x` | Yes       |
-| older                  | No        |
+| Version       | Supported |
+| ------------- | --------- |
+| latest `1.x`  | Yes       |
+| `0.x` (alpha) | No        |
+| older         | No        |
 
 ## Reporting a vulnerability
 

@@ -1,6 +1,6 @@
 # Authentication
 
-`@rheajs/auth` adds password hashing, JWT access tokens, rotating refresh tokens, account lockout and route guards. It is alpha: the API can change, and it has had no independent security review.
+`@rheajs/auth` adds password hashing, JWT access tokens, rotating refresh tokens, account lockout and route guards. It is covered by the 1.x stability promise (see [Introduction](introduction.html#stability-and-versioning)), but it has had no independent security review.
 
 ```bash
 npm install @rheajs/auth

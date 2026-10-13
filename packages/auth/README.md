@@ -2,7 +2,7 @@
 
 Authentication for **Rhea.js**: password hashing, JWT access tokens and route guards.
 
-Made by Shams Ali Shaikh. MIT licensed. Alpha: the API can change, and it has had no independent security review.
+Made by Shams Ali Shaikh. MIT licensed. Stable 1.x: semantic versioning applies. It has not had an independent security review; see SECURITY_AUDIT.md in the repository.
 
 ```ts
 import { createJwt, hashPassword, verifyPassword, authenticate, requireRole } from "@rheajs/auth";

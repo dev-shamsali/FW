@@ -59,6 +59,6 @@ Versions checked on 2026-10-07 via `npm view`. The CLI has no runtime dependenci
 
 Checked read-only on npm 2026-10-07: `rhea` is TAKEN (existing AMQP library, v3.0.5), so the unscoped package name is unavailable and the name may confuse searches. `rheajs`, `rhea.js`, `create-rhea`, `@rheajs/core`, `@rheajs/cli` returned 404 (unclaimed, not reserved). Plan: publish `rheajs` + `@rheajs/*`; CLI binary named `rhea`. `@rheajs` npm scope, GitHub org, domain, trademark: not checked. Owner approval needed before any claim.
 
-## Non-goals for 0.1.0-alpha
+## Non-goals at the start (0.1.0-alpha, historical)
 
-Auth, DB adapters, plugin marketplace, website, Docker generator may land after core+CLI work. Not production-ready.
+Auth, DB adapters, plugin marketplace, website and Docker generator were left for after the core and CLI. Auth, the website and the Docker generator have since shipped; DB adapters and a plugin marketplace have not.

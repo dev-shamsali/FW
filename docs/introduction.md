@@ -4,7 +4,7 @@ Rhea.js is a convention-driven backend framework for Node.js, built on Express 5
 
 Made by Shams Ali Shaikh. MIT licensed.
 
-> **Status: alpha (0.1.0-alpha.3).** The API can change between alpha releases. It has had no independent security review, so do not treat it as production-ready yet. See [Known limitations](#known-limitations) and the [self-audit](https://github.com/dev-shamsali/FW/blob/main/SECURITY_AUDIT.md).
+> **Status: stable (1.0).** Semantic versioning applies from 1.0.0. Rhea.js is used in production by its author. It has not had an independent security review, so read [Known limitations](#known-limitations) and the [self-audit](https://github.com/dev-shamsali/FW/blob/main/SECURITY_AUDIT.md) before you rely on it for something sensitive.
 
 ## What you get
 
@@ -28,6 +28,25 @@ Made by Shams Ali Shaikh. MIT licensed.
 - Rate limiting counts in process memory by default, so limits are per process. For several instances pass a shared store such as `redisRateLimitStore` (see [Security](security.html)).
 - Verified on Linux with Node.js 20, 22 and 26 (npm 10 and 12). macOS and Windows are covered by the CI matrix but were not verified when this was written.
 - `validate()` is synchronous: Zod schemas with async refinements are not supported.
+
+## Stability and versioning
+
+From 1.0.0 Rhea.js follows [semantic versioning](https://semver.org): a **major** version (2.0.0) may break things, a **minor** (1.1.0) adds features without breaking, a **patch** (1.0.1) fixes bugs and security problems.
+
+**Covered by that promise** (the public API):
+
+- Everything exported from `@rheajs/core` and `@rheajs/auth` and described in these docs, including the plugin API.
+- The `rhea` and `create-rhea` commands and their flags.
+- The JSON shape of successes and errors, and the error codes (`VALIDATION_ERROR`, `REFRESH_REUSED` and so on).
+- The environment variable names that the framework and generated projects read.
+
+**Not covered:**
+
+- The files `create-rhea` writes. They become your code. Later versions may generate different files, and your existing project is never rewritten.
+- Anything not exported, the layout inside the packages, log message wording, and development-only output such as the banner and the morgan line.
+- Behaviour that was unsafe. A security fix may tighten behaviour in a minor or patch release (the 415 for non-JSON bodies was such a change). Every such change is listed in the changelog and the [migration guides](migration-guides.html).
+
+Support: only the latest 1.x receives fixes. Dropping support for a Node.js version counts as a breaking change. This is a one-maintainer project, and 1.0 does not mean an outside party has reviewed it.
 
 ## How the docs are verified
 

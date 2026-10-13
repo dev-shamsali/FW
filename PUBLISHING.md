@@ -63,13 +63,13 @@ You should see only `dist/*.js`, `dist/*.d.ts`, `README.md`, `LICENSE` and `pack
 
 ```bash
 git checkout main && git pull
-git tag v0.1.0-alpha.3
-git push origin v0.1.0-alpha.3
+git tag v1.0.0
+git push origin v1.0.0
 ```
 
 Pushing the tag starts **Release**. It re-runs every check, then waits for you to approve the `npm-publish` environment. After you approve, it publishes `@rheajs/core`, `@rheajs/cli` and `create-rhea` with npm provenance. It never runs on pull requests.
 
-Then create the GitHub Release: _Releases → Draft a new release → choose tag `v0.1.0-alpha.3` → tick "Set as a pre-release" → paste `release-notes/v0.1.0-alpha.3.md`_.
+Then create the GitHub Release: _Releases → Draft a new release → choose tag `v1.0.0` → keep "Set as the latest release" ticked (not a pre-release) → paste `release-notes/v1.0.0.md`_.
 
 Manual alternative (not recommended, no provenance): `npm login` then `npm publish -w @rheajs/core -w @rheajs/cli -w create-rhea --access public`.
 

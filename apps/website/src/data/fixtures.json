@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-13T06:41:15.469Z",
+  "generatedAt": "2026-10-13T07:16:09.733Z",
   "node": "26.10.0",
   "platform": "linux",
   "versions": {
-    "core": "0.1.0-alpha.3",
-    "cli": "0.1.0-alpha.3"
+    "core": "1.0.0",
+    "cli": "1.0.0"
   },
   "scenarios": [
     {
@@ -57,7 +57,7 @@
           "error": {
             "code": "RATE_LIMITED",
             "message": "Too many requests",
-            "requestId": "d72f37dd-6dff-4a37-9eb3-ae82081199e6"
+            "requestId": "e191399c-e8c0-4e7a-8df6-1846dcb2aa85"
           }
         }
       }
@@ -76,7 +76,7 @@
           "error": {
             "code": "REQUEST_TIMEOUT",
             "message": "Request timed out",
-            "requestId": "946e5771-be42-417a-b64b-42af48ca0762"
+            "requestId": "780ce413-6a1e-4698-9805-768c89d169d7"
           }
         }
       }
@@ -95,7 +95,7 @@
           "error": {
             "code": "PAYLOAD_TOO_LARGE",
             "message": "Request body too large",
-            "requestId": "e0988099-978c-43d6-8975-80c1e5a70653"
+            "requestId": "ac716b86-c7a5-44e9-b102-caa1022e7124"
           }
         }
       }
@@ -114,7 +114,7 @@
           "error": {
             "code": "INVALID_BODY",
             "message": "Invalid request body",
-            "requestId": "62b5aa01-edf6-415b-bf65-cfc9d0a4a63e"
+            "requestId": "6b3df9fe-9cbc-40b1-90c8-68ff390aea27"
           }
         }
       }
@@ -140,7 +140,7 @@
                 "message": "Invalid email address"
               }
             ],
-            "requestId": "14c28b2a-7005-41a4-ac54-b510aa6ea373"
+            "requestId": "1da64b81-3ccc-4d3a-9cf9-34d4b4611052"
           }
         }
       }
@@ -159,7 +159,7 @@
           "error": {
             "code": "INTERNAL_ERROR",
             "message": "Internal server error",
-            "requestId": "c2953b96-b750-4b45-b8ef-1b2f290269b2"
+            "requestId": "19175e49-babe-40ef-af40-26f9925cd812"
           }
         }
       }
@@ -168,7 +168,7 @@
   "cli": [
     {
       "cmd": "npx create-rhea my-api",
-      "output": "✓ Created my-api: TypeScript, ES Modules, database None (26 files)\n\nNext steps:\n  cd my-api\n  npm install\n  npm run dev\n\nThen open http://localhost:5000/api/rhea",
+      "output": "✓ Created my-api: TypeScript, ES Modules, database None (22 files)\n✓ Initialized a git repository and made the first commit\n\nNext steps:\n  cd my-api\n  npm install\n  npm run dev\n\nThen open http://localhost:5000/api/rhea\n\nPut it on GitHub: gh repo create my-api --source=. --push",
       "exit": 0
     },
     {
@@ -178,7 +178,7 @@
     },
     {
       "cmd": "npx rhea build",
-      "output": "Type checking + compiling (tsc, single pass, no output on type errors)...\n✓ Built to dist/ in 2.2s",
+      "output": "Type checking + compiling (tsc, single pass, no output on type errors)...\n✓ Built to dist/ in 2.8s",
       "exit": 0
     },
     {

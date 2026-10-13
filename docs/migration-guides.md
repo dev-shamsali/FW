@@ -1,8 +1,8 @@
 # Migration guides
 
-Breaking changes between alpha releases are listed here and in the [changelog](https://github.com/dev-shamsali/FW/blob/main/CHANGELOG.md).
+Breaking changes are listed here and in the [changelog](https://github.com/dev-shamsali/FW/blob/main/CHANGELOG.md).
 
-## From 0.1.0-alpha.2 to 0.1.0-alpha.3
+## From 0.1.0-alpha.2 (or earlier) to 1.0.0
 
 **Breaking:** request bodies must be JSON. A `POST`, `PUT`, `PATCH` or `DELETE` with a form or text body now gets `415 UNSUPPORTED_MEDIA_TYPE` instead of reaching your handler empty. Clients that send JSON are not affected. If you accept forms or uploads, create the app with `requireJson: false`.
 
@@ -15,7 +15,7 @@ New, all optional:
 - `@rheajs/auth`: `createRefreshTokens`, `createMemoryRefreshStore`, cookie helpers, `createLockout`, `isCommonPassword`.
 - `create-rhea --auth` projects get refresh tokens, logout, logout-all, account lockout and a cookie mode.
 
-Projects generated with alpha.2 keep working. Their login does not return a refresh token until you add the new auth module files (create a project with `--auth` in a scratch folder and copy `src/modules/auth/` and `src/config/auth`, then merge the new `.env` keys). The users table or collection is upgraded automatically on the first start: MySQL gets two new columns, MongoDB needs nothing.
+Projects generated with an alpha release keep working. Their login does not return a refresh token until you add the new auth module files (create a project with `--auth` in a scratch folder and copy `src/modules/auth/` and `src/config/auth`, then merge the new `.env` keys). The users table or collection is upgraded automatically on the first start: MySQL gets two new columns, MongoDB needs nothing.
 
 ## From 0.1.0-alpha.1 to 0.1.0-alpha.2
 

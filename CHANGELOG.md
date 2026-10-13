@@ -4,7 +4,9 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 
 ## [Unreleased]
 
-## [0.1.0-alpha.3]
+## [1.0.0]
+
+Released as stable on the owner's decision. Rhea.js is used in production by its author. It has not had an independent security review, and 1.0.0 was not gated on one: see SECURITY_AUDIT.md for what was tested and what is open. From this version semantic versioning applies; the public API is defined in "Stability and versioning" (docs/introduction.md). The 0.1.0-alpha.3 changes below were never published separately; they ship in 1.0.0.
 
 ### Added
 
