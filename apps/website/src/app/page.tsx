@@ -195,10 +195,9 @@ await app.start(5000);`}</Code>
 │   │       ├── users.routes.ts
 │   │       ├── users.schema.ts
 │   │       └── users.types.ts
-│   ├── middleware/  utils/
 │   ├── app.ts               buildApp()
 │   └── server.ts
-├── tests/{unit,integration,e2e}/
+├── tests/integration/
 └── .env  .env.example  nodemon.json  rhea.config.json  vitest.config.ts`}</Code>
           <p>
             JavaScript projects use the same layout with <code>.js</code> files and no <code>tsconfig</code>.

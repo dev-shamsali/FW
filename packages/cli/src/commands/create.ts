@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, relative, resolve, sep } from "node:path";
 import { parseArgs } from "../args.js";
 import { confirm, interactive, select, text } from "../prompts.js";
+import { createGithubRepo, githubCli, initGit } from "../git.js";
 import { npm } from "../proc.js";
 import { projectFiles } from "../templates/project.js";
 import { DEFAULT_OPTIONS, LABEL, type Database, type Language, type ModuleSystem, type ProjectOptions } from "../templates/options.js";
@@ -53,6 +54,14 @@ export async function create(argv: string[]): Promise<number> {
   );
   const yes = flags["yes"] === true || argv.includes("-y") || !interactive();
   const asked = fromFlags(flags);
+  const gitOn = flags["no-git"] !== true;
+  // --github and --github-private create the repository without asking. --no-github never asks.
+  const github: "public" | "private" | "no" | undefined =
+    flags["github"] === true ? "public" : flags["github-private"] === true ? "private" : flags["no-github"] === true ? "no" : undefined;
+  if (flags["github"] === true && flags["github-private"] === true) throw new CliError("Choose either --github or --github-private, not both.", 2);
+  if ((flags["github"] === true || flags["github-private"] === true) && flags["no-github"] === true)
+    throw new CliError("--no-github cannot be combined with --github or --github-private.", 2);
+  if (!gitOn && (github === "public" || github === "private")) throw new CliError("--github needs git. Remove --no-git.", 2);
 
   let name = positionals[0];
   if (!name) {
@@ -121,6 +130,17 @@ export async function create(argv: string[]): Promise<number> {
     if (!existsSync(resolve(dir, "node_modules/@rheajs/core")))
       throw new CliError(`npm install finished but dependencies look incomplete. Run "npm install" again inside ${name}.`);
   }
+  // After the install, so the lockfile is part of the first commit.
+  const git = initGit(dir, gitOn);
+  if (git.state === "committed") out(`${c.green("✓")} Initialized a git repository and made the first commit`);
+  else if (git.state === "initialized")
+    out(
+      `${c.yellow("!")} Initialized a git repository, but the first commit was skipped: ${git.problem}\n  Then run: git add -A && git commit -m "Initial commit"`,
+    );
+  else if (git.reason === "git-missing") out(c.dim("  git was not found, so no repository was created. Install git, then run: git init"));
+  let connected = false;
+  if (git.state === "committed" && github !== "no") connected = await connectGithub(dir, name, github, yes);
+
   out("");
   out("Next steps:");
   out(`  cd ${name}`);
@@ -130,5 +150,38 @@ export async function create(argv: string[]): Promise<number> {
   out("");
   if (auth) out(`Authentication is on: ${c.cyan("POST /api/auth/register")} and ${c.cyan("POST /api/auth/login")}. Your JWT_SECRET is already in .env.\n`);
   out(`Then open ${c.cyan("http://localhost:5000/api/rhea")}`);
+  if (git.state === "committed" && !connected) out(c.dim(`\nPut it on GitHub: gh repo create ${name} --source=. --push`));
   return 0;
+}
+
+/** Creates the GitHub repository when asked to (flag) or when the person says yes. Returns true when the repository was created. */
+async function connectGithub(dir: string, name: string, flag: "public" | "private" | undefined, yes: boolean): Promise<boolean> {
+  let visibility = flag;
+  if (!visibility) {
+    // Only ask in an interactive session, and only if the GitHub CLI can actually do it.
+    if (yes || githubCli(dir) !== "ready") return false;
+    if (!(await confirm("Create a GitHub repository now?", false))) return false;
+    visibility = await select<"private" | "public">("Visibility?", [
+      { value: "private", label: "Private", hint: "only you and people you invite" },
+      { value: "public", label: "Public", hint: "anyone can see the code" },
+    ]);
+  } else {
+    const cli = githubCli(dir);
+    if (cli !== "ready") {
+      out(
+        `${c.yellow("!")} ${cli === "not-installed" ? "The GitHub CLI (gh) is not installed. Get it from https://cli.github.com" : "The GitHub CLI is not signed in. Run: gh auth login"}, then: gh repo create ${name} --${visibility} --source=. --push`,
+      );
+      return false;
+    }
+  }
+  out(`Creating the ${visibility} GitHub repository ${c.bold(name)}...`);
+  const r = createGithubRepo(dir, name, visibility);
+  if (!r.ok) {
+    out(
+      `${c.yellow("!")} Could not create the GitHub repository: ${r.problem}\n  Your project is ready. Try again later with: gh repo create ${name} --${visibility} --source=. --push`,
+    );
+    return false;
+  }
+  out(`${c.green("✓")} Created ${r.url ?? "the repository"} and pushed the first commit`);
+  return true;
 }

@@ -16,6 +16,8 @@ The terminal shows:
   Try:    http://localhost:5000/api/rhea
 ```
 
+`create` also made a git repository with a first commit. To put it on GitHub, run `gh repo create my-api --source=. --push` (or answer yes to the question during `create`, or pass `--github-private`).
+
 Open `http://localhost:5000/api/rhea`. This is your first API:
 
 ```json

@@ -3,6 +3,12 @@
 **`rhea: command not found` or `nodemon: command not found` when running `npm run dev`.**
 Dependencies are not installed. Run `npm install` inside the project folder. `npx rhea doctor` reports "Dependencies are not installed" when `node_modules` is missing.
 
+**`create` says "git does not know who you are" or "the first commit was skipped".**
+The project is fine and `git init` already ran. Set your identity once with `git config --global user.name "Your Name"` and `git config --global user.email "you@example.com"`, then in the project run `git add -A && git commit -m "Initial commit"`.
+
+**`create` did not create a repository, or the GitHub step did nothing.**
+No repository is created inside an existing repository, when git is missing, or with `--no-git`. The GitHub step needs the GitHub CLI: install it from https://cli.github.com and run `gh auth login`. A name that already exists on your account is refused by GitHub; choose another folder name or create the repository by hand and run `git remote add origin <url> && git push -u origin main`.
+
 **`415 UNSUPPORTED_MEDIA_TYPE` after upgrading, or from a form or curl call.**
 Since 0.1.0-alpha.3 a request body must be JSON. Send `Content-Type: application/json` (curl: `-H "content-type: application/json" -d '{"a":1}'`). If a route really needs form or multipart bodies, create the app with `requireJson: false`.
 

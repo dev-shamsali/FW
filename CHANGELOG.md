@@ -8,6 +8,8 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 
 ### Added
 
+- **Git by default.** `create` makes the new project a git repository on `main` with the commit `Initial commit from Create Rhea`, made after the install so the lockfile is included. It skips this inside an existing repository, without git, or with `--no-git`, and never invents an identity.
+- **GitHub from `create`.** With the GitHub CLI installed and signed in, an interactive run offers to create the repository (default No, then Private or Public). `--github-private`, `--github` and `--no-github` skip the question. Nothing is created without a yes or a flag.
 - **Refresh tokens** in `@rheajs/auth`: `createRefreshTokens` (random opaque tokens stored as SHA-256 hashes, rotation on every use, reuse detection that revokes the whole session, a 10 second grace window for parallel requests, 7 day idle and 30 day absolute lifetimes), `createMemoryRefreshStore` for tests, and a small `RefreshTokenStore` interface.
 - **Cookie mode** for browser apps: `setRefreshCookie`, `clearRefreshCookie`, `readCookie` (httpOnly, SameSite=Strict, Secure in production) and a CSRF origin check, `assertAllowedOrigin` / `requireAllowedOrigin`. `noStore` keeps token responses out of caches.
 - **Account lockout** in `@rheajs/auth` (`createLockout`: 5 failures, 15 minutes) and a **common-password blocklist** (`isCommonPassword`).
@@ -17,6 +19,7 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 
 ### Changed
 
+- New projects no longer contain empty placeholder folders and `.gitkeep` files (`src/middleware`, `src/utils`, `tests/unit`, `tests/e2e`). `rhea generate` creates a folder when it is first needed.
 - **Breaking:** a `POST`, `PUT`, `PATCH` or `DELETE` with a body that is not JSON now gets `415 UNSUPPORTED_MEDIA_TYPE` (`requireJson`, on by default). Set `requireJson: false` for forms or uploads.
 - Generated register rejects common passwords (422). Generated login answers `429 ACCOUNT_LOCKED` with `Retry-After` after 5 failures. Login and register responses include `refreshToken` (or set it as a cookie in cookie mode).
 

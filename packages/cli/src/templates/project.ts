@@ -542,11 +542,6 @@ ${exp(["healthRouter"])}
 
     ...(i.auth ? authFiles(i) : {}),
 
-    "src/middleware/.gitkeep": "",
-    "src/utils/.gitkeep": "",
-    "tests/unit/.gitkeep": "",
-    "tests/e2e/.gitkeep": "",
-
     [`tests/integration/rhea.test.${T}`]: preamble(`${s.ts ? 'import type { RheaApp } from "@rheajs/core";' : ""}
 import request from "supertest";
 import { beforeAll, describe, expect, it } from "vitest";

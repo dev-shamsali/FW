@@ -10,11 +10,9 @@ my-api/
 │   │   ├── index.ts           module registry
 │   │   ├── rhea/              your first API: GET / and GET /api/rhea
 │   │   └── health/            GET /health and GET /health/ready
-│   ├── middleware/
-│   ├── utils/
 │   ├── app.ts                 buildApp(): creates and wires the app
 │   └── server.ts              starts the server and prints the banner
-├── tests/{unit,integration,e2e}/
+├── tests/integration/
 ├── .env  .env.example  .gitignore  .gitattributes
 ├── nodemon.json  rhea.config.json
 ├── eslint.config.mjs  prettier.config.mjs  vitest.config.ts
@@ -37,7 +35,7 @@ Written by `create`. Generators (`rhea generate ...`) and `rhea docker` read it 
 
 Each feature lives in `src/modules/<name>/` with its controller, service, repository, routes, schema and types side by side. Code that changes together stays together, and a module can later become its own package or plugin without untangling layers.
 
-The cost: shared code needs a home. Put it in `src/utils`.
+The cost: shared code needs a home. Create `src/utils` for it. New projects ship without empty placeholder folders: `rhea generate middleware` creates `src/middleware` the first time you need it, and you add `tests/unit` or `tests/e2e` when you write those tests.
 
 ## app and server
 

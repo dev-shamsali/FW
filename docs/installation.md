@@ -36,11 +36,24 @@ Every question has a flag, so scripts and CI never block:
 | `--db none\|mongodb\|mysql`  | Database (default none)                               |
 | `--auth` / `--no-auth`       | Add register, login and JWT routes (needs a database) |
 | `--install` / `--no-install` | Run `npm install` after creating                      |
+| `--no-git`                   | Do not create a git repository                        |
+| `--github-private`           | Also create a private GitHub repository and push      |
+| `--github`                   | Also create a public GitHub repository and push       |
+| `--no-github`                | Never create a GitHub repository                      |
 | `--yes`, `-y`                | Accept defaults for anything not given, ask nothing   |
 
 ```bash
 npx create-rhea my-api --js --cjs --db mongodb --install
 ```
+
+## Git and GitHub
+
+Like `create-next-app`, `create` turns the new folder into a git repository on the `main` branch with one commit, `Initial commit from Create Rhea`. It is made after `npm install`, so `package-lock.json` is in that commit. Your `.env` is never committed: `.gitignore` excludes it.
+
+- It skips this when the folder is already inside a git repository (so a monorepo keeps one history), when git is not installed, or when you pass `--no-git`.
+- If git does not know who you are, the repository is still created and `create` tells you the two `git config` commands to run, then `git add -A && git commit`. It never invents an identity.
+
+To connect the project to GitHub, `create` can use the [GitHub CLI](https://cli.github.com) (`gh`). If it is installed and signed in, an interactive run asks "Create a GitHub repository now?" (default No), then Private or Public, and runs `gh repo create <name> --source=. --remote=origin --push` for you. With `--github-private` or `--github` it does that without asking. Without `gh`, or when you decline, `create` prints the command to run later. `--yes` and runs without a terminal never contact GitHub on their own. `create` never reads or stores a GitHub token: `gh` holds your sign-in. If GitHub refuses (for example the name is taken), the project is still created and the message says how to retry.
 
 When there is no terminal (a CI job, a pipe) `create` behaves as if `--yes` was passed. It refuses to write into a non-empty directory.
 
