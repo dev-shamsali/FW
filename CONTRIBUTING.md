@@ -7,7 +7,7 @@ Thanks for helping. This guide gets you from clone to pull request.
 Requirements: Node.js 20.19+ and npm.
 
 ```bash
-git clone https://github.com/dev-shamsali/FW.git
+git clone https://github.com/dev-shamsali/Rhea.js-framework.git
 cd FW
 npm install
 npm run verify

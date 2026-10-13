@@ -22,7 +22,7 @@ In cookie mode the browser must send an `Origin` header that is listed in `CORS_
 Five wrong passwords lock an account for 15 minutes. It unlocks by itself; `Retry-After` says how many seconds remain. To unlock now, set `failedLogins` to 0 and `lockedUntil` to null on the user.
 
 **`npm audit` reports vitest advisories in a generated project.**
-Generated projects pin Vitest 4.0.x. `npm audit` flags it and `@vitest/mocker`, because the fix (Vitest 4.1.11) crashes npm 10, which Node.js 20 ships. `npm audit --omit=dev` is clean. The advisories affect Vitest only when its UI server runs or a test uses a redirecting mock from untrusted input. On Node.js 22.12 or newer you can upgrade Vitest. Details: [SECURITY_AUDIT.md](https://github.com/dev-shamsali/FW/blob/main/SECURITY_AUDIT.md).
+Generated projects pin Vitest 4.0.x. `npm audit` flags it and `@vitest/mocker`, because the fix (Vitest 4.1.11) crashes npm 10, which Node.js 20 ships. `npm audit --omit=dev` is clean. The advisories affect Vitest only when its UI server runs or a test uses a redirecting mock from untrusted input. On Node.js 22.12 or newer you can upgrade Vitest. Details: [SECURITY_AUDIT.md](https://github.com/dev-shamsali/Rhea.js-framework/blob/main/SECURITY_AUDIT.md).
 
 **`Cannot find "tsx" in this project. Run "npm install" first.`**
 Dependencies are not installed. Run `npm install`. The same message appears for `typescript` and `vitest`.

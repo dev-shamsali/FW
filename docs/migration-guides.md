@@ -1,6 +1,6 @@
 # Migration guides
 
-Breaking changes are listed here and in the [changelog](https://github.com/dev-shamsali/FW/blob/main/CHANGELOG.md).
+Breaking changes are listed here and in the [changelog](https://github.com/dev-shamsali/Rhea.js-framework/blob/main/CHANGELOG.md).
 
 ## From 0.1.0-alpha.2 (or earlier) to 1.0.0
 

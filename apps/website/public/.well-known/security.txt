@@ -1,5 +1,5 @@
-Contact: https://github.com/dev-shamsali/FW/security/advisories/new
+Contact: https://github.com/dev-shamsali/Rhea.js-framework/security/advisories/new
 Expires: 2027-10-10T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://rhea.devcodehub.cloud/.well-known/security.txt
-Policy: https://github.com/dev-shamsali/FW/blob/main/SECURITY.md
+Policy: https://github.com/dev-shamsali/Rhea.js-framework/blob/main/SECURITY.md

@@ -4,7 +4,7 @@ Rhea.js is a convention-driven backend framework for Node.js, built on Express 5
 
 Made by Shams Ali Shaikh. MIT licensed.
 
-> **Status: stable (1.0).** Semantic versioning applies from 1.0.0. Rhea.js is used in production by its author. It has not had an independent security review, so read [Known limitations](#known-limitations) and the [self-audit](https://github.com/dev-shamsali/FW/blob/main/SECURITY_AUDIT.md) before you rely on it for something sensitive.
+> **Status: stable (1.0).** Semantic versioning applies from 1.0.0. Rhea.js is used in production by its author. It has not had an independent security review, so read [Known limitations](#known-limitations) and the [self-audit](https://github.com/dev-shamsali/Rhea.js-framework/blob/main/SECURITY_AUDIT.md) before you rely on it for something sensitive.
 
 ## What you get
 
@@ -21,7 +21,7 @@ Made by Shams Ali Shaikh. MIT licensed.
 
 - No server-side sessions, OAuth/OIDC, multi-factor authentication or password reset yet. `@rheajs/auth` covers passwords, access and refresh tokens, lockout and role checks. See [Authentication](authentication.html).
 - No ORM or query layer. MongoDB and MySQL connections (pooling, readiness, clean shutdown) are generated for you, but you write your own queries. See [Databases](databases.html).
-- No performance claims beyond the measured, caveated numbers in [BENCHMARKS.md](https://github.com/dev-shamsali/FW/blob/main/BENCHMARKS.md). Rhea.js is slower than bare Express on a trivial route because of the checks it runs on every request.
+- No performance claims beyond the measured, caveated numbers in [BENCHMARKS.md](https://github.com/dev-shamsali/Rhea.js-framework/blob/main/BENCHMARKS.md). Rhea.js is slower than bare Express on a trivial route because of the checks it runs on every request.
 
 ## Known limitations
 

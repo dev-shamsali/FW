@@ -2,7 +2,7 @@
 
 **Does Rhea.js replace Express?** No. It runs on Express 5 and exposes it as `app.express`.
 
-**Is it production-ready?** It is released as stable (1.0) and its author runs it in production. What it does not have is an independent security review, and it is young: few people have used it. Read [SECURITY_AUDIT.md](https://github.com/dev-shamsali/FW/blob/main/SECURITY_AUDIT.md), try it on a staging environment, and decide for your own risk level. For anything handling money or health data, get your own review.
+**Is it production-ready?** It is released as stable (1.0) and its author runs it in production. What it does not have is an independent security review, and it is young: few people have used it. Read [SECURITY_AUDIT.md](https://github.com/dev-shamsali/Rhea.js-framework/blob/main/SECURITY_AUDIT.md), try it on a staging environment, and decide for your own risk level. For anything handling money or health data, get your own review.
 
 **Why not NestJS, Fastify or Hono?** They are good choices. Rhea.js targets teams that want Express compatibility plus a fixed project layout and security defaults, without decorators or dependency injection. We have not benchmarked against them and make no speed claims.
 

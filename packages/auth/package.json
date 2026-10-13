@@ -52,10 +52,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dev-shamsali/FW.git",
+    "url": "git+https://github.com/dev-shamsali/Rhea.js-framework.git",
     "directory": "packages/auth"
   },
   "bugs": {
-    "url": "https://github.com/dev-shamsali/FW/issues"
+    "url": "https://github.com/dev-shamsali/Rhea.js-framework/issues"
   }
 }

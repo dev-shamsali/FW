@@ -47,7 +47,7 @@ Server-side sessions, OAuth/OIDC, MFA and password reset, an ORM or query layer.
 ## Develop
 
 ```bash
-git clone https://github.com/dev-shamsali/FW.git
+git clone https://github.com/dev-shamsali/Rhea.js-framework.git
 cd FW
 npm install
 npm run verify       # lint, typecheck, unit tests, build
